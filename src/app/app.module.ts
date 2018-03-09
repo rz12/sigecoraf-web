@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { EmpleadoComponent } from './nominas/components/empleado/empleado.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EmpleadoComponent
   ],
   imports: [
     BrowserModule
