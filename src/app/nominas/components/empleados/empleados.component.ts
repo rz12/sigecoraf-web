@@ -8,9 +8,11 @@ import { Empleado } from '../../models/empleado';
 })
 export class EmpleadosComponent implements OnInit {
   empleados: Empleado[];
+  saludo:String;
   constructor() { }
 
   ngOnInit() {
+    this.saludo="bienvenido.";
   }
 
 }

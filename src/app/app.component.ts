@@ -8,6 +8,6 @@ import { Router } from "@angular/router";
 export class AppComponent {
   title = 'app';
   constructor(private router: Router) {
-    this.router.navigate(['empleados'])
+    this.router.navigate(['login'])
   }
 }

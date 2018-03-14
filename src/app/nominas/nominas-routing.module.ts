@@ -5,12 +5,11 @@ import { EmpleadosComponent }   from './components/empleados/empleados.component
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/empleados', pathMatch: 'full' },
   { path: 'empleados', component: EmpleadosComponent },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forChild(routes) ],
   exports: [ RouterModule ]
 })
 export class NominasRoutingModule {}
