@@ -15,7 +15,6 @@ export class UsuarioService {
       let options = new RequestOptions({ headers: headers });
       this.http.post(services.ws_seguridad_login, credenciales, options).subscribe((data) => {
         if (data.json()) {
-          console.log(data.json())
           window.localStorage.setItem('auth_key', data.json().token);
           resolve(true)
         }
