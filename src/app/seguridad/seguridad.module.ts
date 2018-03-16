@@ -6,7 +6,7 @@ import { UsuarioService } from './services/usuario.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule } from '@angular/material';
-
+import { DialogModule } from "../shared/dialog/dialog.module";
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +18,7 @@ import { MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule } fr
     MatFormFieldModule,
     MatCardModule,
     MatButtonModule,
+    DialogModule,
   ],
   declarations: [LoginComponent],
   providers: [UsuarioService]
