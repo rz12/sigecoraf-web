@@ -7,8 +7,11 @@ import { SeguridadModule } from './seguridad/seguridad.module';
 import { NominasModule } from './nominas/nominas.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
+import { HomeModule } from "./home/home.module";
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { HttpClientModule } from '@angular/common/http';
+import { ParametrizacionService } from './master/services/parametrizacion.service';
+import { SeguridadService } from './seguridad/services/seguridad.service';
 
 @NgModule({
   declarations: [
@@ -20,9 +23,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NominasModule,
     RouterModule,
     AppRoutingModule,
+    HomeModule,
     BrowserAnimationsModule,
+    NgIdleKeepaliveModule.forRoot(),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ParametrizacionService, SeguridadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,40 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav [opened]="isOpen" [mode]="mode" [ngClass]="estilo">
+    <mat-card class="sidebar-head">
+      <img md-card-image src="/assets/img/malecon.png">
+    </mat-card>
+    <mat-list>
+      <mat-list-item>
+        <h3 mat-line>Bienvenido(a): </h3>
+        <span>{{usuario.username}} {{parametrizacionService.parametrizaciones}}</span>
+      </mat-list-item>
+    </mat-list>
+    <mat-divider></mat-divider>
+
+    <button mat-raised-button [matMenuTriggerFor]="menu">
+      Empleados
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voicemail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+
+    <mat-card-content>
+
+    </mat-card-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
