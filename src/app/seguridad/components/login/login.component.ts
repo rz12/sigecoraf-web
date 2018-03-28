@@ -1,8 +1,10 @@
-import { Component, OnInit, Inject, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, Inject, ViewContainerRef, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UsuarioService } from "../../services/usuario.service";
 import { DialogService } from "../../../shared/dialog/services/dialog.service";
+import { DashboardComponent } from "../../../dashboard/dashboard.component";
+import { SeguridadService } from "../../services/seguridad.service";
 
 @Component({
   selector: "app-login",
@@ -12,7 +14,8 @@ import { DialogService } from "../../../shared/dialog/services/dialog.service";
 export class LoginComponent implements OnInit {
   user = { username: "", password: "" };
   loginForm: any;
-  constructor(private usuarioService: UsuarioService, @Inject(FormBuilder) fb: FormBuilder, private dialogService: DialogService,
+  @ViewChild(DashboardComponent) dashboardComponent: DashboardComponent;
+  constructor(private seguridadService: SeguridadService, @Inject(FormBuilder) fb: FormBuilder, private dialogService: DialogService,
     private viewContainerRef: ViewContainerRef, private router: Router) {
     this.loginForm = fb.group({
       user: fb.group({
@@ -26,7 +29,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.user.username = this.loginForm.value.user.username;
     this.user.password = this.loginForm.value.user.password;
-    this.usuarioService.autenticate(this.user).then(res => {
+    this.seguridadService.autenticate(this.user).then(res => {
       if (res == true) {
         this.router.navigate(['home'])
       } else {

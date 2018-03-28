@@ -12,10 +12,12 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { HttpClientModule } from '@angular/common/http';
 import { ParametrizacionService } from './master/services/parametrizacion.service';
 import { SeguridadService } from './seguridad/services/seguridad.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatToolbarModule } from '@angular/material';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,7 @@ import { SeguridadService } from './seguridad/services/seguridad.service';
     HomeModule,
     BrowserAnimationsModule,
     NgIdleKeepaliveModule.forRoot(),
-    HttpClientModule
+    HttpClientModule, MatToolbarModule
   ],
   providers: [ParametrizacionService, SeguridadService],
   bootstrap: [AppComponent]
