@@ -13,7 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ParametrizacionService } from './master/services/parametrizacion.service';
 import { SeguridadService } from './seguridad/services/seguridad.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MatToolbarModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatSidenavModule } from '@angular/material';
+import { MenuService } from './seguridad/services/menu.service';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,11 @@ import { MatToolbarModule } from '@angular/material';
     HomeModule,
     BrowserAnimationsModule,
     NgIdleKeepaliveModule.forRoot(),
-    HttpClientModule, MatToolbarModule
+    HttpClientModule, MatToolbarModule,
+    MatCardModule,
+    MatSidenavModule
   ],
-  providers: [ParametrizacionService, SeguridadService],
+  providers: [ParametrizacionService, SeguridadService, MenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

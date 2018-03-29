@@ -3,14 +3,18 @@ export var credentials = {
 }
 export var services = {
     /*
-     * URLS relacionadas al modulo decSEGURIDAD
+     * URLS relacionadas al modulo de SEGURIDAD
      * Autenticación
      * Usuario
      * Funcionalidad Group
      */
     ws_seguridad_login: credentials.host + "/api/v1/seguridad/api-token-auth/",
     ws_seguridad_user_by_token: credentials.host + "/api/v1/seguridad/usuarios/get_usuario_by_token",
+    ws_seguridad_menus: credentials.host + '/api/v1/seguridad/menus',
 
+    /**
+     * RUTAS DEL API REST DE LA APP MASTER
+     */
     ws_master_parametrizaciones: credentials.host + '/api/v1/master/parametrizaciones'
 }
 export var enums = {

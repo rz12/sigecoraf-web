@@ -52,7 +52,6 @@ export class InicioComponent {
   }
 
   getUsuarioByToken(token) {
-    let data: {}
     this.usuarioService.getUsuarioPorToken(token).subscribe(response => this.usuario = response.json())
   }
   public cargarParametros(token) {

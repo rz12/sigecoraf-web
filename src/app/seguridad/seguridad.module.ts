@@ -6,7 +6,7 @@ import { UsuarioService } from './services/usuario.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule } from '@angular/material';
-import { DialogModule } from "../shared/dialog/dialog.module";
+import { DialogModule } from "../shared/components/dialog/dialog.module";
 import { DashboardComponent } from '../dashboard/dashboard.component';
 @NgModule({
   imports: [
