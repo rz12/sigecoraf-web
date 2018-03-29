@@ -1,0 +1,6 @@
+<mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <nav>
+    <a routerLink="/empleados">Empleados</a>
+  </nav>
+  <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
+</mat-toolbar>
