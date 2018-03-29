@@ -33,7 +33,6 @@ export class SeguridadService {
     });
   }
   public sessionTimeout(parametros: any[]) {
-    console.log(parametros)
     if (parametros != null) {
       parametros.forEach(param => {
         param.detalles.forEach(detalle => {
@@ -48,23 +47,27 @@ export class SeguridadService {
       });
       this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
       this.idle.onTimeout.subscribe(() => {
-        this.router.navigate(['login'])
         localStorage.clear()
         this.loggedIn.next(false);
+        this.router.navigate(['login'])
       });
       this.keepalive.onPing.subscribe(() => this.lastPing = new Date());
       this.reset();
     }
   }
   public logout() {
-    this.router.navigate(['login'])
     this.loggedIn.next(false);
     localStorage.clear()
+    this.router.navigate(['login'])
+
   }
   reset() {
     this.idle.watch();
   }
   get isLoggedIn() {
     return this.loggedIn.asObservable();
+  } T
+  public setLoggedIn(newValue: boolean): void {
+    this.loggedIn.next(newValue);
   }
 }

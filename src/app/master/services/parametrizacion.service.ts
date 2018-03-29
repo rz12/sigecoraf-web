@@ -10,6 +10,7 @@ import "rxjs/Rx";
 export class ParametrizacionService {
   constructor(private http: HttpClient) { }
   private parametros: IParametrizacion
+
   getParametrizaciones(token): Observable<IParametrizacion> {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
