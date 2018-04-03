@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewContainerRef, ViewChild } from "@angular
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UsuarioService } from "../../services/usuario.service";
-import { DialogService } from "../../../shared/components/dialog/services/dialog.service";
+import { DialogService } from "../../../shared/dialog/services/dialog.service";
 import { DashboardComponent } from "../../../dashboard/dashboard.component";
 import { SeguridadService } from "../../services/seguridad.service";
 

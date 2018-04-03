@@ -21,11 +21,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn$ = this.seguridadService.isLoggedIn;
+    this.cargarMenus(token);
     if (this.isLoggedIn$.subscribe(res => res == false)) {
       var token = localStorage.getItem(enums.SISTEMA_AUTHKEY);
       if (token != null) {
         this.seguridadService.setLoggedIn(true);
-        this.cargarMenus(token);
       }
     }
   }

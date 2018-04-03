@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
 
   <nav *ngFor="let menu of menus">
-    <a [routerLink]="[menu.formulario]">{{menu.nombre}}</a>
+    <button mat-button [routerLink]="[menu.formulario]">{{menu.nombre}}</button>
   </nav>
   <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
 </mat-toolbar>
