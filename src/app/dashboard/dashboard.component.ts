@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { enums } from '../credentials';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
 import { Menu } from "../seguridad/models/menu";
@@ -6,6 +6,7 @@ import { MenuService } from "../seguridad/services/menu.service";
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 import { MatSidenav } from '@angular/material';
+import { SideNavService } from '../shared/services/side-nav.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,8 +16,8 @@ import { MatSidenav } from '@angular/material';
 export class DashboardComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   public menus: Menu[]
-  @ViewChild('sidenav') public sidenav: MatSidenav;
-  constructor(private seguridadService: SeguridadService, private menuService: MenuService) {
+  sideNav: Boolean;
+  constructor(private seguridadService: SeguridadService, private menuService: MenuService, private sidenavService: SideNavService) {
   }
 
   ngOnInit() {
@@ -34,5 +35,9 @@ export class DashboardComponent implements OnInit {
   }
   public cargarMenus(token) {
     this.menuService.getMenus(token).subscribe(res => this.menus = res.data)
+  }
+  setSideNavState() {
+    this.sideNav = !this.sideNav;
+    this.sidenavService.setSideNavState(this.sideNav);
   }
 }

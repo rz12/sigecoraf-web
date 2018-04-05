@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { enums } from "./credentials";
 import { SeguridadService } from './seguridad/services/seguridad.service';
-
+import { SideNavService } from "./shared/services/side-nav.service";
 
 declare const $: any;
 @Component({
@@ -10,14 +10,19 @@ declare const $: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
-  constructor(private router: Router, private seguridadService: SeguridadService) {
+  sidenavState: any = false;
+  constructor(private router: Router, private seguridadService: SeguridadService, private sidenavService: SideNavService) {
     var token = localStorage.getItem(enums.SISTEMA_AUTHKEY);
     if (token != null) {
       this.router.navigate(['home'])
     } else {
       this.router.navigate(['login'])
     }
+  }
+
+  ngOnInit() {
+    this.sidenavState = this.sidenavService.getSideNavState();
   }
 }

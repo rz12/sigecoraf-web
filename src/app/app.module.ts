@@ -13,9 +13,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ParametrizacionService } from './master/services/parametrizacion.service';
 import { SeguridadService } from './seguridad/services/seguridad.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MatToolbarModule, MatCardModule, MatSidenavModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { MenuService } from './seguridad/services/menu.service';
-
+import { SideNavService } from "./shared/services/side-nav.service";
 @NgModule({
   declarations: [
     AppComponent, DashboardComponent
@@ -31,9 +31,10 @@ import { MenuService } from './seguridad/services/menu.service';
     NgIdleKeepaliveModule.forRoot(),
     HttpClientModule, MatToolbarModule,
     MatCardModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatIconModule
   ],
-  providers: [ParametrizacionService, SeguridadService, MenuService],
+  providers: [ParametrizacionService, SeguridadService, MenuService, SideNavService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

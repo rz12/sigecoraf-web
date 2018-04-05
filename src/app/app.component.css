@@ -1,6 +1,6 @@
 .example-container {
   width: 100%;
-  height: 500px;
+  height: 800px;
   border: 1px solid rgba(111, 111, 111, 0.50);
 }
 
@@ -17,4 +17,30 @@
 
 .demo-panel {
   margin: 10px;
+}
+
+.sidebar-body .sidebar-nav li a .caret {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+
+.sidebar-body .sidebar-nav md-icon {
+  display: inline-block;
+  min-width: 40px;
+  width: 40px;
+  text-align: left;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.sidebar-body .sidebar-nav .dropdown-menu {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }

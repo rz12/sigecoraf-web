@@ -1,27 +1,27 @@
-<div>
-  <app-dashboard></app-dashboard>
-  <mat-card fullscreen>
-    <mat-card-header>
-      <mat-card-title>
-        <h2>Sistema de Gestión Financiero Coorporativo</h2>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+<app-dashboard></app-dashboard>
+<mat-sidenav-container>
 
-      <mat-sidenav-container class="example-container">
-        <mat-sidenav #sidenav class="example-sidenav">
+  <mat-sidenav #sidenav opened="{{sidenavState | async }}">
+    <mat-card>
+      <mat-card-content>
+        <div class="sidebar-body">
 
-        </mat-sidenav>
+        </div>
 
-        <div class="example-sidenav-content">
+      </mat-card-content>
 
+    </mat-card>
+  </mat-sidenav>
+  <mat-sidenav-content>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="sidebar-body">
           <router-outlet>
           </router-outlet>
         </div>
-      </mat-sidenav-container>
-    </mat-card-content>
-    <mat-card-footer>
-      {{seguridadService.lastPing}}
-    </mat-card-footer>
-  </mat-card>
-</div>
+
+      </mat-card-content>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>
