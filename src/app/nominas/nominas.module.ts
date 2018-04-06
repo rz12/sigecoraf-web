@@ -11,15 +11,18 @@ import { ContratoDetailComponent } from './components/contrato-detail/contrato-d
 import { RolesPagoComponent } from './components/roles-pago/roles-pago.component';
 import { RolPagoDetailComponent } from './components/rol-pago-detail/rol-pago-detail.component';
 import { CargoService } from './services/cargo.service';
+import { SeguridadService } from '../seguridad/services/seguridad.service';
+import { MatTableModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     NominasRoutingModule,
+    MatTableModule
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent,
     ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent],
-  providers: [CargoService]
+  providers: [CargoService, SeguridadService]
 })
 export class NominasModule { }

@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   public menus: Menu[]
   sideNav: Boolean;
-  
+
   constructor(private seguridadService: SeguridadService, private menuService: MenuService,
     private usuarioService: UsuarioService, private sidenavService: SideNavService) {
   }
@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
     this.cargarMenus(token);
 
     if (this.isLoggedIn$.subscribe(res => res == false)) {
-      var token = localStorage.getItem(enums.SISTEMA_AUTHKEY);
+      var token = this.seguridadService.getToken()
       if (token != null) {
         this.seguridadService.setLoggedIn(true);
 
