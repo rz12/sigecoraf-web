@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CargoService } from '../../services/cargo.service';
+import { Cargo } from '../../models/cargo';
+import { SeguridadService } from '../../../seguridad/services/seguridad.service';
 
 @Component({
   selector: 'app-cargos',
@@ -7,11 +9,12 @@ import { CargoService } from '../../services/cargo.service';
   styleUrls: ['./cargos.component.css']
 })
 export class CargosComponent implements OnInit {
-
-  constructor(private cargoService: CargoService) { }
+  public cargosList: Cargo[]
+  constructor(private cargoService: CargoService, private seguridadService: SeguridadService) { }
 
   ngOnInit() {
-    this.cargoService.cargosList('aa').subscribe(data => console.log(data))
+    let token = this.seguridadService.getToken()
+    this.cargoService.cargosList(token.token).subscribe(data => console.log(data))
   }
 
 }

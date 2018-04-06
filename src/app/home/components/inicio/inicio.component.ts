@@ -30,29 +30,17 @@ export class InicioComponent {
   constructor(private router: Router, private usuarioService: UsuarioService, private media: ObservableMedia, private parametrizacionService: ParametrizacionService
     , private seguridadService: SeguridadService, private idle: Idle, private keepalive: Keepalive) {
 
-    let token = localStorage.getItem(enums.SISTEMA_AUTHKEY);
+    let token = this.seguridadService.getToken();
 
     this.usuario = new Usuario()
     if (this.seguridadService.isLoggedIn) {
       this.getUsuarioByToken(token);
       this.cargarParametros(token)
     }
-
-    this.watcher = media.subscribe((change: MediaChange) => {
-      let isMobile = (change.mqAlias == 'xs') || (change.mqAlias == 'sm');
-      this.isOpen = !isMobile;
-      if (isMobile) {
-        this.mode = 'over';
-        this.estilo = ''
-      } else {
-        this.mode = 'side';
-        this.estilo = 'width-20 sidebar-left';
-      }
-    });
   }
 
   getUsuarioByToken(token) {
-    this.usuarioService.getUsuarioPorToken(token)
+    this.usuarioService.getUsuarioPorToken(token.token)
   }
   public cargarParametros(token) {
     this.parametrizacionService.getParametrizaciones(token).subscribe(

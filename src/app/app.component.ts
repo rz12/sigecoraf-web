@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   title = 'app';
   sidenavState: any = false;
   constructor(private router: Router, private seguridadService: SeguridadService, private sidenavService: SideNavService) {
-    var token = localStorage.getItem(enums.SISTEMA_AUTHKEY);
+    var token = this.seguridadService.getToken();
     if (token != null) {
       this.router.navigate(['home'])
     } else {

@@ -7,11 +7,13 @@ import { Router } from "@angular/router";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Headers, RequestOptions, Http } from '@angular/http';
 import { services } from "../../credentials";
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class SeguridadService {
   public lastPing?: Date = null;
   private loggedIn = new BehaviorSubject<boolean>(false);
+  private token: any;
 
   constructor(private http: Http, private router: Router, private idle: Idle, private keepalive: Keepalive) { }
 
@@ -24,7 +26,7 @@ export class SeguridadService {
       let options = new RequestOptions({ headers: headers });
       this.http.post(services.ws_seguridad_login, credenciales, options).subscribe((data) => {
         if (data.json()) {
-          window.localStorage.setItem(enums.SISTEMA_AUTHKEY, data.json().token);
+          this.token = data.json();
           resolve(true)
           this.loggedIn.next(true);
         }
@@ -47,7 +49,7 @@ export class SeguridadService {
       });
       this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
       this.idle.onTimeout.subscribe(() => {
-        localStorage.clear()
+        this.token = null;
         this.loggedIn.next(false);
         this.router.navigate(['login'])
       });
@@ -57,7 +59,7 @@ export class SeguridadService {
   }
   public logout() {
     this.loggedIn.next(false);
-    localStorage.clear()
+    this.token = null;
     this.router.navigate(['login'])
 
   }
@@ -69,5 +71,8 @@ export class SeguridadService {
   }
   public setLoggedIn(newValue: boolean): void {
     this.loggedIn.next(newValue);
+  }
+  getToken() {
+    return this.token;
   }
 }
