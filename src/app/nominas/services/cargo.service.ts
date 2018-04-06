@@ -12,7 +12,7 @@ export class CargoService extends SharedService {
     super();
   }
 
-  getMenus(token): Observable<ICargo> {
+  cargosList(token): Observable<ICargo> {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
@@ -20,8 +20,7 @@ export class CargoService extends SharedService {
     let httpOptions = {
       headers: headers
     };
-    return this.http.get<ICargo>(services.ws_nominas_cargos, httpOptions).pipe(
-    )
+    return this.http.get<ICargo>(services.ws_nominas_cargos, httpOptions)
   }
   save() {
 
