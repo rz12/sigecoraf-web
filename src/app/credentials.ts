@@ -20,6 +20,7 @@ export var services = {
      * API REST NOMINAS
      */
     ws_nominas_cargos: credentials.host + '/api/v1/nominas/cargos',
+    ws_nominas_contratos: credentials.host + '/api/v1/nominas/contratos',
 }
 export var enums = {
     SISTEMA_AUTHKEY: "AUTH_KEY",

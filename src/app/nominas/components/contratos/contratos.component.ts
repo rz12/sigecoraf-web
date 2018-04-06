@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ContratoService } from '../../services/contrato.service';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-contratos',
@@ -8,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 export class ContratosComponent implements OnInit {
   public mensaje = 'mi primer proyecto'
 
-  constructor() { }
+  constructor(private contratoService: ContratoService) { }
 
   ngOnInit() {
+    this.contratoService.contratosList('aa').subscribe(data => console.log(data));
   }
 
 }
