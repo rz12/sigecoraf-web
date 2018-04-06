@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contratos.component.css']
 })
 export class ContratosComponent implements OnInit {
+  public mensaje = 'mi primer proyecto'
 
   constructor() { }
 
