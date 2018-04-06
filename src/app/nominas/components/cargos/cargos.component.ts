@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CargoService } from '../../services/cargo.service';
 
 @Component({
   selector: 'app-cargos',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CargosComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cargoService: CargoService) { }
 
   ngOnInit() {
+    this.cargoService.cargosList('aa').subscribe(data => console.log(data))
   }
 
 }

@@ -10,6 +10,7 @@ import { ContratosComponent } from './components/contratos/contratos.component';
 import { ContratoDetailComponent } from './components/contrato-detail/contrato-detail.component';
 import { RolesPagoComponent } from './components/roles-pago/roles-pago.component';
 import { RolPagoDetailComponent } from './components/rol-pago-detail/rol-pago-detail.component';
+import { CargoService } from './services/cargo.service';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { RolPagoDetailComponent } from './components/rol-pago-detail/rol-pago-de
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent,
-    ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent]
+    ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent],
+  providers: [CargoService]
 })
 export class NominasModule { }
