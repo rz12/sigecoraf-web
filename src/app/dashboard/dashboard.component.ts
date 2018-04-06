@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   public menus: Menu[]
   sideNav: Boolean;
-  usuario: Usuario
+  
   constructor(private seguridadService: SeguridadService, private menuService: MenuService,
     private usuarioService: UsuarioService, private sidenavService: SideNavService) {
   }
