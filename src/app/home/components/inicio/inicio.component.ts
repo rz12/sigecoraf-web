@@ -52,7 +52,7 @@ export class InicioComponent {
   }
 
   getUsuarioByToken(token) {
-    this.usuarioService.getUsuarioPorToken(token).subscribe(response => this.usuario = response.json())
+    this.usuarioService.getUsuarioPorToken(token)
   }
   public cargarParametros(token) {
     this.parametrizacionService.getParametrizaciones(token).subscribe(

@@ -3,9 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { services } from "../../credentials";
 import { IParametrizacion } from "../../master/dto/i-parametrizacion";
 import { Observable } from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import "rxjs/Rx";
 @Injectable()
 export class ParametrizacionService {
   constructor(private http: HttpClient) { }

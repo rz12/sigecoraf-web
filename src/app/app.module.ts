@@ -16,6 +16,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatToolbarModule, MatCardModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { MenuService } from './seguridad/services/menu.service';
 import { SideNavService } from "./shared/services/side-nav.service";
+import { UsuarioService } from './seguridad/services/usuario.service';
 @NgModule({
   declarations: [
     AppComponent, DashboardComponent
@@ -34,7 +35,7 @@ import { SideNavService } from "./shared/services/side-nav.service";
     MatSidenavModule,
     MatIconModule
   ],
-  providers: [ParametrizacionService, SeguridadService, MenuService, SideNavService],
+  providers: [ParametrizacionService, UsuarioService, SeguridadService, MenuService, SideNavService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,19 +1,25 @@
 <mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
 
   <nav *ngFor="let menu of menus">
-    <button mat-button [routerLink]="[menu.formulario]">
-      <i class="material-icons">{{menu.icono}}</i>
-      {{menu.nombre}}</button>
+    <div class="wrapper">
+      <button mat-button [routerLink]="[menu.formulario]">
+        <i class="material-icons">{{menu.icono}}</i>
+        <div>{{menu.nombre}}</div>
+      </button>
+    </div>
   </nav>
 
   <span class="spacer"></span>
-  <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">
+  <div class="wrapper">
+    <div *ngIf="usuarioService.usuario">Bienvenido: {{usuarioService.usuario.username}}</div>
+    <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">
 
-    <i class="material-icons ">power_settings_new</i>
-  </button>
-  <button md-icon-button (click)="setSideNavState()">
-    <mat-icon>
-      <i class="material-icons">dashboard</i>
-    </mat-icon>
-  </button>
+      <i class="material-icons ">power_settings_new</i>
+    </button>
+    <button md-icon-button (click)="setSideNavState()">
+      <mat-icon>
+        <i class="material-icons">dashboard</i>
+      </mat-icon>
+    </button>
+  </div>
 </mat-toolbar>

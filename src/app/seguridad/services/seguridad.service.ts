@@ -66,7 +66,7 @@ export class SeguridadService {
   }
   get isLoggedIn() {
     return this.loggedIn.asObservable();
-  } T
+  }
   public setLoggedIn(newValue: boolean): void {
     this.loggedIn.next(newValue);
   }

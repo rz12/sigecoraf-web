@@ -7,6 +7,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 import { MatSidenav } from '@angular/material';
 import { SideNavService } from '../shared/services/side-nav.service';
+import { UsuarioService } from '../seguridad/services/usuario.service';
+import { Usuario } from '../seguridad/models/usuario';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,19 +19,24 @@ export class DashboardComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   public menus: Menu[]
   sideNav: Boolean;
-  constructor(private seguridadService: SeguridadService, private menuService: MenuService, private sidenavService: SideNavService) {
+  usuario: Usuario
+  constructor(private seguridadService: SeguridadService, private menuService: MenuService,
+    private usuarioService: UsuarioService, private sidenavService: SideNavService) {
   }
 
   ngOnInit() {
     this.isLoggedIn$ = this.seguridadService.isLoggedIn;
     this.cargarMenus(token);
+
     if (this.isLoggedIn$.subscribe(res => res == false)) {
       var token = localStorage.getItem(enums.SISTEMA_AUTHKEY);
       if (token != null) {
         this.seguridadService.setLoggedIn(true);
+
       }
     }
   }
+
   onLogout() {
     this.seguridadService.logout();
   }
