@@ -27,6 +27,7 @@ export class SeguridadService {
       this.http.post(services.ws_seguridad_login, credenciales, options).subscribe((data) => {
         if (data.json()) {
           this.token = data.json();
+          localStorage.setItem(enums.SISTEMA_AUTHKEY, JSON.stringify(this.token))
           resolve(true)
           this.loggedIn.next(true);
         }
@@ -50,6 +51,7 @@ export class SeguridadService {
       this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
       this.idle.onTimeout.subscribe(() => {
         this.token = null;
+        localStorage.clear()
         this.loggedIn.next(false);
         this.router.navigate(['login'])
       });
@@ -60,6 +62,7 @@ export class SeguridadService {
   public logout() {
     this.loggedIn.next(false);
     this.token = null;
+    localStorage.clear()
     this.router.navigate(['login'])
 
   }
@@ -73,6 +76,9 @@ export class SeguridadService {
     this.loggedIn.next(newValue);
   }
   getToken() {
+    if (this.token == null) {
+      this.token = JSON.parse(localStorage.getItem(enums.SISTEMA_AUTHKEY))
+    }
     return this.token;
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { enums } from "./credentials";
-import { SeguridadService } from './seguridad/services/seguridad.service';
 import { SideNavService } from "./shared/services/side-nav.service";
 
 declare const $: any;
@@ -13,8 +12,8 @@ declare const $: any;
 export class AppComponent implements OnInit {
   title = 'app';
   sidenavState: any = false;
-  constructor(private router: Router, private seguridadService: SeguridadService, private sidenavService: SideNavService) {
-    var token = this.seguridadService.getToken();
+  constructor(private router: Router, private sidenavService: SideNavService) {
+    var token = localStorage.getItem(enums.SISTEMA_AUTHKEY)
     if (token != null) {
       this.router.navigate(['home'])
     } else {

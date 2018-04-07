@@ -13,19 +13,23 @@ import { RolPagoDetailComponent } from './components/rol-pago-detail/rol-pago-de
 import { CargoService } from './services/cargo.service';
 import { ContratoService } from './services/contrato.service';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { RolPago } from './models/rol-pago';
 import { RolPagoService } from './services/rol-pago.service';
+import { ToolBarAcctionComponent } from "../shared/components/tool-bar-action/tool-bar-action.component";
 
 @NgModule({
   imports: [
     CommonModule,
     NominasRoutingModule,
-    MatTableModule
+    MatTableModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent,
-    ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent],
-  providers: [CargoService,ContratoService,SeguridadService, RolPagoService]
+    ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent],
+  providers: [CargoService, ContratoService, SeguridadService, RolPagoService]
 })
 export class NominasModule { }
