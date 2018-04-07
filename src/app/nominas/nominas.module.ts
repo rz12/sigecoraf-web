@@ -14,6 +14,8 @@ import { CargoService } from './services/cargo.service';
 import { ContratoService } from './services/contrato.service';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
 import { MatTableModule } from '@angular/material';
+import { RolPago } from './models/rol-pago';
+import { RolPagoService } from './services/rol-pago.service';
 
 @NgModule({
   imports: [
@@ -24,6 +26,6 @@ import { MatTableModule } from '@angular/material';
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent,
     ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent],
-  providers: [CargoService,ContratoService,SeguridadService]
+  providers: [CargoService,ContratoService,SeguridadService, RolPagoService]
 })
 export class NominasModule { }

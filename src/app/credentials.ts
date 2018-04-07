@@ -21,6 +21,7 @@ export var services = {
      */
     ws_nominas_cargos: credentials.host + '/api/v1/nominas/cargos',
     ws_nominas_contratos: credentials.host + '/api/v1/nominas/contratos',
+    ws_nominas_rolPagos: credentials.host + '/api/v1/nominas/rolPagos',
 }
 export var enums = {
     SISTEMA_AUTHKEY: "AUTH_KEY",
