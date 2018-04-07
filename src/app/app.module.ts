@@ -36,7 +36,7 @@ import { UsuarioService } from './seguridad/services/usuario.service';
     MatSidenavModule,
     MatIconModule
   ],
-  providers: [ParametrizacionService, UsuarioService, SeguridadService, MenuService, SideNavService],
+  providers: [ParametrizacionService, UsuarioService, MenuService, SideNavService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

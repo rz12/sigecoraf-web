@@ -30,17 +30,19 @@ export class InicioComponent {
   constructor(private router: Router, private usuarioService: UsuarioService, private media: ObservableMedia, private parametrizacionService: ParametrizacionService
     , private seguridadService: SeguridadService, private idle: Idle, private keepalive: Keepalive) {
 
-    let token = this.seguridadService.getToken();
-
+    let token = this.seguridadService.getToken()
+    if (token == null) {
+      token = JSON.parse(localStorage.getItem(enums.SISTEMA_AUTHKEY));
+    }
     this.usuario = new Usuario()
     if (this.seguridadService.isLoggedIn) {
-      this.getUsuarioByToken(token);
-      this.cargarParametros(token)
+      this.getUsuarioByToken(token.token);
+      this.cargarParametros(token.token)
     }
   }
 
   getUsuarioByToken(token) {
-    this.usuarioService.getUsuarioPorToken(token.token)
+    this.usuarioService.getUsuarioPorToken(token)
   }
   public cargarParametros(token) {
     this.parametrizacionService.getParametrizaciones(token).subscribe(

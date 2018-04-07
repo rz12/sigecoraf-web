@@ -30,9 +30,11 @@ export class DashboardComponent implements OnInit {
 
     if (this.isLoggedIn$.subscribe(res => res == false)) {
       var token = this.seguridadService.getToken()
+      if (token == null) {
+        token = localStorage.getItem(enums.SISTEMA_AUTHKEY);
+      }
       if (token != null) {
         this.seguridadService.setLoggedIn(true);
-
       }
     }
   }
