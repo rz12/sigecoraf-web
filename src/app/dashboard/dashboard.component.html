@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
 
-  <nav *ngFor="let menu of menus">
+  <nav *ngFor="let menu of menuService.getMenus()">
     <div class="wrapper">
       <button [class.button-activate]="menu.activate" mat-button (click)="navigate(menu)">
         <i class="material-icons icon-menu" [class.icon-menu-active]="menu.activate">{{menu.icono}}</i>

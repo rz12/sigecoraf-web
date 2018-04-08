@@ -19,7 +19,6 @@ import { element } from 'protractor';
 })
 export class DashboardComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
-  public menus: Menu[]
   sideNav: Boolean;
   some = false
 
@@ -28,12 +27,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.menus = []
     this.isLoggedIn$ = this.seguridadService.isLoggedIn;
     if (!localStorage.getItem(enums.SISTEMA_MENUS)) {
       this.cargarMenus(token);
     } else {
-      this.menus = JSON.parse(localStorage.getItem(enums.SISTEMA_MENUS))
+      this.menuService.setMenus(JSON.parse(localStorage.getItem(enums.SISTEMA_MENUS)));
     }
 
     if (this.isLoggedIn$.subscribe(res => res == false)) {
@@ -54,37 +52,20 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(link);
   }
   public updateActivateMenus(menuEdit) {
-    this.menus.forEach(menu => {
+    this.menuService.getMenus().forEach(menu => {
       if (menu == menuEdit) {
         menu.activate = true;
       } else {
         menu.activate = false
       }
     });
-    localStorage.setItem(enums.SISTEMA_MENUS, JSON.stringify(this.menus))
+    localStorage.setItem(enums.SISTEMA_MENUS, JSON.stringify(this.menuService.getMenus()))
   }
   onLogout() {
     this.seguridadService.logout();
   }
   public cargarMenus(token) {
-    this.menuService.getMenus(token).subscribe(res => {
-      res.data.forEach(element => {
-        let menu = new Menu();
-        menu.codigo = element.codigo
-        menu.descripcion = element.descripcion
-        menu.empresa = element.empresa
-        menu.estado = element.estado
-        menu.formulario = element.formulario
-        menu.icono = element.icono
-        menu.nombre = element.nombre
-        if (Number(element.orden) == 1) {
-          menu.activate = true;
-        }
-        menu.orden = element.orden
-        this.menus.push(menu)
-      })
-      localStorage.setItem(enums.SISTEMA_MENUS, JSON.stringify(this.menus))
-    })
+    this.menuService.cargarMenus(token);
 
   }
   setSideNavState() {

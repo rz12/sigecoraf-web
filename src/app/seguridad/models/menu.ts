@@ -12,6 +12,5 @@ export class Menu {
     constructor() {
         this.activate = false
     }
-
 }
 

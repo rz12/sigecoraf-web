@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
         }
       });
     }
-
     if (token != null) {
       if (urlCurrent == null) {
         this.router.navigate(['home'])
