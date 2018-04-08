@@ -25,6 +25,7 @@ export var services = {
 }
 export var enums = {
     SISTEMA_AUTHKEY: "AUTH_KEY",
+    SISTEMA_MENUS: "SISTEMA_MENUS",
 
     SISTEMA_PARAM: "SISTEMA_PARAM",
     SISTEMA_DETALLE_PARAM_TIMEOUT: "SISTEMA_TIMEOUT",

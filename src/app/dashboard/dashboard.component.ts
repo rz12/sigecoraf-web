@@ -9,6 +9,8 @@ import { MatSidenav } from '@angular/material';
 import { SideNavService } from '../shared/services/side-nav.service';
 import { UsuarioService } from '../seguridad/services/usuario.service';
 import { Usuario } from '../seguridad/models/usuario';
+import { Router } from '@angular/router';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,14 +21,20 @@ export class DashboardComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   public menus: Menu[]
   sideNav: Boolean;
+  some = false
 
-  constructor(private seguridadService: SeguridadService, private menuService: MenuService,
+  constructor(private router: Router, private seguridadService: SeguridadService, private menuService: MenuService,
     private usuarioService: UsuarioService, private sidenavService: SideNavService) {
   }
 
   ngOnInit() {
+    this.menus = []
     this.isLoggedIn$ = this.seguridadService.isLoggedIn;
-    this.cargarMenus(token);
+    if (!localStorage.getItem(enums.SISTEMA_MENUS)) {
+      this.cargarMenus(token);
+    } else {
+      this.menus = JSON.parse(localStorage.getItem(enums.SISTEMA_MENUS))
+    }
 
     if (this.isLoggedIn$.subscribe(res => res == false)) {
       var token = this.seguridadService.getToken()
@@ -35,15 +43,49 @@ export class DashboardComponent implements OnInit {
       }
       if (token != null) {
         this.seguridadService.setLoggedIn(true);
+
       }
+
     }
   }
-
+  public navigate(menu) {
+    this.updateActivateMenus(menu)
+    let link = ['/' + menu.formulario];
+    this.router.navigate(link);
+  }
+  public updateActivateMenus(menuEdit) {
+    this.menus.forEach(menu => {
+      if (menu == menuEdit) {
+        menu.activate = true;
+      } else {
+        menu.activate = false
+      }
+    });
+    localStorage.setItem(enums.SISTEMA_MENUS, JSON.stringify(this.menus))
+  }
   onLogout() {
     this.seguridadService.logout();
   }
   public cargarMenus(token) {
-    this.menuService.getMenus(token).subscribe(res => this.menus = res.data)
+    this.menuService.getMenus(token).subscribe(res => {
+      res.data.forEach(element => {
+        let menu = new Menu();
+        menu.codigo = element.codigo
+        menu.descripcion = element.descripcion
+        menu.empresa = element.empresa
+        menu.estado = element.estado
+        menu.formulario = element.formulario
+        menu.icono = element.icono
+        menu.nombre = element.nombre
+        if (Number(element.orden) == 1) {
+          menu.activate = true;
+        }
+        menu.orden = element.orden
+        this.menus.push(menu)
+      })
+      localStorage.setItem(enums.SISTEMA_MENUS, JSON.stringify(this.menus))
+    })
+
   }
   setSideNavState() {
     this.sideNav = !this.sideNav;

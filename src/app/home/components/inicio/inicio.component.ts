@@ -31,10 +31,8 @@ export class InicioComponent {
     , private seguridadService: SeguridadService, private idle: Idle, private keepalive: Keepalive) {
 
     let token = this.seguridadService.getToken()
-    if (token == null) {
-      token = JSON.parse(localStorage.getItem(enums.SISTEMA_AUTHKEY));
-    }
     this.usuario = new Usuario()
+
     if (this.seguridadService.isLoggedIn) {
       this.getUsuarioByToken(token.token);
       this.cargarParametros(token.token)
