@@ -14,7 +14,7 @@
     <div *ngIf="usuarioService.usuario">Bienvenido: {{usuarioService.usuario.username}}</div>
     <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">
 
-      <i class="material-icons ">power_settings_new</i>
+      <i class="material-icons">power_settings_new</i>
     </button>
     <button md-icon-button (click)="setSideNavState()">
       <mat-icon>
