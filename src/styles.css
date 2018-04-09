@@ -50,6 +50,19 @@ button {
   margin: 2px
 }
 
+.button-activate {
+  background-color: #96b6db;
+  color: #eee
+}
+
+.icon-menu {
+  color: #888;
+}
+
+.icon-menu-active {
+  color: #eee;
+}
+
 /* everywhere else */
 
 * {

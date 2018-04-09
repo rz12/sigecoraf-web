@@ -10,6 +10,7 @@ import { SeguridadService } from './../../../seguridad/services/seguridad.servic
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
+import { MenuService } from '../../../seguridad/services/menu.service';
 
 
 declare const $: any;
@@ -28,13 +29,20 @@ export class InicioComponent {
   estilo = 'width-20 sidebar-left';
 
   constructor(private router: Router, private usuarioService: UsuarioService, private media: ObservableMedia, private parametrizacionService: ParametrizacionService
-    , private seguridadService: SeguridadService, private idle: Idle, private keepalive: Keepalive) {
+    , private seguridadService: SeguridadService, private menuService: MenuService, private idle: Idle, private keepalive: Keepalive) {
 
     let token = this.seguridadService.getToken()
-    if (token == null) {
-      token = JSON.parse(localStorage.getItem(enums.SISTEMA_AUTHKEY));
-    }
     this.usuario = new Usuario()
+    if (menuService.getMenus()) {
+      menuService.getMenus().forEach(menu => {
+        if (Number(menu.orden) == 1) {
+          menu.activate = true
+        } else {
+          menu.activate = false;
+        }
+      })
+
+    }
     if (this.seguridadService.isLoggedIn) {
       this.getUsuarioByToken(token.token);
       this.cargarParametros(token.token)

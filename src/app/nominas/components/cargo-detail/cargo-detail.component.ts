@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Cargo } from '../../models/cargo';
 
 @Component({
   selector: 'app-cargo-detail',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cargo-detail.component.css']
 })
 export class CargoDetailComponent implements OnInit {
-
-  constructor() { }
+  public cargo: Cargo;
+  constructor() {
+    this.cargo = new Cargo();
+  }
 
   ngOnInit() {
   }
