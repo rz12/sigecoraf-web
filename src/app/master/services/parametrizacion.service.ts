@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http } from "@angular/http";
 import { services } from "../../credentials";
-import { IParametrizacion } from "../../master/dto/i-parametrizacion";
 import { Observable } from 'rxjs/Observable';
+import { SharedService } from '../../shared/services/shared.service';
+import { Parametrizacion } from '../models/parametrizacion';
+import "rxjs/add/operator/map";
 @Injectable()
-export class ParametrizacionService {
-  constructor(private http: HttpClient) { }
-  private parametros: IParametrizacion
+export class ParametrizacionService extends SharedService {
+  constructor(private http: Http) {
+    super();
+  }
+  public parametros: Parametrizacion[];
 
-  getParametrizaciones(token): Observable<IParametrizacion> {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    headers.append("Authorization", token);
-    let httpOptions = {
-      headers: headers
-    };
-    return this.http.get<IParametrizacion>(services.ws_master_parametrizaciones, httpOptions)
-
+  getParametrizaciones(token) {
+    return this.http.get(services.ws_master_parametrizaciones, this.options(token, null, null)).map(res =>
+      res.json())
   }
 }

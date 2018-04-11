@@ -17,12 +17,14 @@ import { MatToolbarModule, MatCardModule, MatSidenavModule, MatIconModule } from
 import { MenuService } from './seguridad/services/menu.service';
 import { SideNavService } from "./shared/services/side-nav.service";
 import { UsuarioService } from './seguridad/services/usuario.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent, DashboardComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     SeguridadModule,
     NominasModule,
