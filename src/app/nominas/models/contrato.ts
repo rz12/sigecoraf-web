@@ -2,10 +2,10 @@ import { Cargo } from "./cargo";
 import { Empleado } from "./empleado";
 
 export class Contrato {
-    private fecha_incio: Date;
-    private fecha_fin: Date;
-    private estado: String;
-    private mensualizar_decimos: Boolean;
-    private empleado: Empleado;
-    private cargo: Cargo;
+    public fecha_incio: Date;
+    public fecha_fin: Date;
+    public estado: String;
+    public mensualizar_decimos: Boolean;
+    public empleado: Empleado;
+    public cargo: Cargo;
 }

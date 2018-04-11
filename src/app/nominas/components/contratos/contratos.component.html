@@ -2,21 +2,26 @@
     <mat-card-header>
     </mat-card-header>
     <mat-card-content>
-      <mat-table #table [dataSource]="dataSource">
-        <ng-container matColumnDef="empleado">
-          <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
-          <mat-cell *matCellDef="let contrato"> {{contrato.nombre}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="sueldo">
-          <mat-header-cell *matHeaderCellDef> Sueldo </mat-header-cell>
-          <mat-cell *matCellDef="let contrato"> {{contrato.sueldo}} </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-      <mat-card-actions>
-        <app-tool-bar-acction [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
-      </mat-card-actions>
+      <div *ngIf="!message">
+        <mat-table #table [dataSource]="dataSource">
+          <ng-container matColumnDef="empleado">
+            <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
+            <mat-cell *matCellDef="let contrato"> {{contrato.nombre}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="sueldo">
+            <mat-header-cell *matHeaderCellDef> Sueldo </mat-header-cell>
+            <mat-cell *matCellDef="let contrato"> {{contrato.sueldo}} </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-card-actions>
+          <app-tool-bar-acction [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+        </mat-card-actions>
+      </div>
+      <div *ngIf="message">
+        <h1>{{message}}</h1>
+      </div>
     </mat-card-content>
-    
+  
   </mat-card>

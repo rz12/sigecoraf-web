@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'contrato-detail/:id', component: ContratoDetailComponent },
   { path: 'cargos', component: CargosComponent },
   { path: 'cargo-detail/:id', component: CargoDetailComponent },
-  { path: 'rolesPago', component: RolesPagoComponent },
+  { path: 'roles-pago', component: RolesPagoComponent },
   { path: 'rolPago-detail/:id', component: RolPagoDetailComponent },
 ];
 

@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ContratoService } from '../../services/contrato.service';
 import { Contrato } from '../../models/contrato';
 import { MatTableDataSource } from '@angular/material';
-import { Subscriber } from 'rxjs';
-import { DataSource } from '@angular/cdk/table';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
+import { enums } from '../../../credentials';
 
 @Component({
   selector: 'app-contratos',
@@ -14,16 +13,22 @@ import { SeguridadService } from '../../../seguridad/services/seguridad.service'
 export class ContratosComponent implements OnInit {
   public contratoList: Contrato[]
   displayedColumns = [ 'empleado', 'sueldo']
-  DataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource();
   public urlEdit = "contrato-detail/0"
   public urlAdd = "contrato-detail/0"
-  public mensaje = 'mi primer proyecto'
-
+  public message: String;
   constructor(private contratoService: ContratoService, private seguridadService: SeguridadService) { }
 
   ngOnInit() {
-    let token = this.seguridadService.getToken()
-    this.contratoService.contratosList(token.token).subscribe(data => this.DataSource.data= this.contratoList= data.data);
-  }
+    let token = this.seguridadService.getToken();
+    this.contratoService.contratosList(token.token).subscribe(data => {    
+      if (data.json().status == enums.HTTP_200_OK) {
+      this.dataSource.data = this.contratoList = data.json().data
+    } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
+      this.message = data.json().message;
+    }
+  
+  });
+}
 
 }
