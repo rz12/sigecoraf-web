@@ -41,7 +41,6 @@ export class InicioComponent {
           menu.activate = false;
         }
       })
-
     }
     if (this.seguridadService.isLoggedIn) {
       this.getUsuarioByToken(token.token);
@@ -54,7 +53,10 @@ export class InicioComponent {
   }
   public cargarParametros(token) {
     this.parametrizacionService.getParametrizaciones(token).subscribe(
-      res => this.seguridadService.sessionTimeout(res.data));
+      res => {
+        this.seguridadService.sessionTimeout(res.data)
+        this.parametrizacionService.parametros = res.data;
+      });
   }
   reset() {
     this.idle.watch();

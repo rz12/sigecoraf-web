@@ -13,23 +13,35 @@ import { RolPagoDetailComponent } from './components/rol-pago-detail/rol-pago-de
 import { CargoService } from './services/cargo.service';
 import { ContratoService } from './services/contrato.service';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
-import { MatTableModule, MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
+import {
+  MatTableModule, MatCardModule, MatButtonModule, MatIconModule, MatFormField, MatFormFieldModule, MatInputModule,
+  MatCheckboxModule, MatSelectModule, MatPaginatorModule
+} from '@angular/material';
 import { RolPago } from './models/rol-pago';
 import { RolPagoService } from './services/rol-pago.service';
 import { ToolBarAcctionComponent } from "../shared/components/tool-bar-action/tool-bar-action.component";
+import { FormsModule } from '@angular/forms';
+import { EmpresaService } from '../master/services/empresa.service';
+import { SelectEmpresaComponent } from '../shared/components/select-empresa/select-empresa.component';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     NominasRoutingModule,
     MatTableModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatPaginatorModule
   ],
 
-  declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent,
+  declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
     ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent],
-  providers: [CargoService, ContratoService, SeguridadService, RolPagoService]
+  providers: [CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService]
 })
 export class NominasModule { }
