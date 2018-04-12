@@ -1,8 +1,8 @@
 export class DetalleParametrizacion {
-    private id: Number;
-    private codigo: String
-    private nombre: String
-    private descripcion: String
-    private valor: String
-    private estado: Boolean
+    public id: Number;
+    public codigo: String
+    public nombre: String
+    public descripcion: String
+    public valor: String
+    public estado: Boolean
 }

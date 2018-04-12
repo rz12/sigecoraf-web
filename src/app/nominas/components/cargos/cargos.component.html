@@ -1,9 +1,14 @@
 <mat-card>
   <mat-card-header>
+    <mat-card-title>
+      <h1>Cargos</h1>
+      <mat-divider></mat-divider>
+    </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div *ngIf="!message">
-
+      <app-search (onFilter)="search($event)"></app-search>
+      <mat-divider></mat-divider>
       <mat-table #table [dataSource]="dataSource">
         <ng-container matColumnDef="nombre">
           <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
@@ -24,7 +29,7 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
       <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
-        (page)="pageEvent=loadPagination($event)">
+        (page)="loadPagination($event)">
       </mat-paginator>
 
       <mat-card-actions>

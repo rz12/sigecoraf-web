@@ -1,0 +1,6 @@
+<mat-grid-list cols="2">
+  <mat-form-field>
+    <input matInput [(ngModel)]="filter" placeholder="Buscar" name="filter">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="buscar()">Buscar</button>
+</mat-grid-list>

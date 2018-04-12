@@ -54,8 +54,9 @@ export class InicioComponent {
   public cargarParametros(token) {
     this.parametrizacionService.getParametrizaciones(token).subscribe(
       res => {
-        this.seguridadService.sessionTimeout(res.data)
         this.parametrizacionService.parametros = res.data;
+        this.seguridadService.sessionTimeout(this.parametrizacionService.parametros)
+        localStorage.setItem(enums.SISTEMA_PARAM, JSON.stringify(this.parametrizacionService.parametros));
       });
   }
   reset() {

@@ -15,7 +15,7 @@ import { ContratoService } from './services/contrato.service';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
 import {
   MatTableModule, MatCardModule, MatButtonModule, MatIconModule, MatFormField, MatFormFieldModule, MatInputModule,
-  MatCheckboxModule, MatSelectModule, MatPaginatorModule
+  MatCheckboxModule, MatSelectModule, MatPaginatorModule, MatGridListModule, MatDividerModule
 } from '@angular/material';
 import { RolPago } from './models/rol-pago';
 import { RolPagoService } from './services/rol-pago.service';
@@ -23,6 +23,7 @@ import { ToolBarAcctionComponent } from "../shared/components/tool-bar-action/to
 import { FormsModule } from '@angular/forms';
 import { EmpresaService } from '../master/services/empresa.service';
 import { SelectEmpresaComponent } from '../shared/components/select-empresa/select-empresa.component';
+import { SearchComponent } from '../shared/components/search/search.component';
 
 @NgModule({
   imports: [
@@ -37,11 +38,13 @@ import { SelectEmpresaComponent } from '../shared/components/select-empresa/sele
     MatInputModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatGridListModule,
+    MatDividerModule,
     MatPaginatorModule
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
-    ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent],
+    ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent],
   providers: [CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService]
 })
 export class NominasModule { }

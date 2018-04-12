@@ -11,12 +11,12 @@ export class CargoService extends SharedService {
     super();
   }
 
-  cargosList(token, page, itemsPerPage) {
-    return this.http.get(services.ws_nominas_cargos, this.options(token, page, itemsPerPage))
+  cargosList(token, page, pageSize, filter) {
+    return this.http.get(services.ws_nominas_cargos, this.options(token, page, pageSize, filter))
   }
   save(token, data) {
     let body = JSON.stringify(data);
-    let options = this.options(token, null, null);
+    let options = this.options(token, null, null, null);
     if (!data.id) {
 
       return this.http.post(services.ws_nominas_cargos, body, options).map(res => res.json())
@@ -25,6 +25,6 @@ export class CargoService extends SharedService {
       res.json())
   }
   public getCargo(token, id) {
-    return this.http.get(services.ws_nominas_cargos.concat('/').concat(id), this.options(token, null, null))
+    return this.http.get(services.ws_nominas_cargos.concat('/').concat(id), this.options(token, null, null, null))
   }
 }
