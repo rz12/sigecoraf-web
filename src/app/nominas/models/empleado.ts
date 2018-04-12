@@ -5,5 +5,5 @@ export class Empleado extends Persona {
     fecha_fin: Date;
     fecha_ingreso_iess: Date;
     estado: Boolean;
-    empresa: Empresa;
+    empresa: Number;
 }

@@ -15,7 +15,7 @@ import { ContratoService } from './services/contrato.service';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
 import {
   MatTableModule, MatCardModule, MatButtonModule, MatIconModule, MatFormField, MatFormFieldModule, MatInputModule,
-  MatCheckboxModule, MatSelectModule, MatPaginatorModule, MatGridListModule, MatDividerModule
+  MatCheckboxModule, MatSelectModule, MatPaginatorModule, MatGridListModule, MatDividerModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
 import { RolPago } from './models/rol-pago';
 import { RolPagoService } from './services/rol-pago.service';
@@ -41,7 +41,9 @@ import { EmpleadoService } from './services/empleado.service';
     MatSelectModule,
     MatGridListModule,
     MatDividerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,

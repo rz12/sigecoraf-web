@@ -11,8 +11,8 @@ import { DialogService } from '../../../shared/dialog/services/dialog.service';
   styleUrls: ['./cargo-detail.component.css']
 })
 export class CargoDetailComponent implements OnInit {
-  @Input()
-  cargo: Cargo;
+
+  public cargo: Cargo;
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private cargoService: CargoService,
     private seguridadService: SeguridadService, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
     this.cargo = new Cargo();

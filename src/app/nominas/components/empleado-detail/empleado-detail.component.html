@@ -1,3 +1,53 @@
-<p>
-  empleado-detail works!
-</p>
+<mat-card>
+  <mat-card-header>
+  </mat-card-header>
+  <mat-card-content>
+    <form #cargoDetailForm="ngForm">
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Primer Nombre" [(ngModel)]="empleado.primer_nombre" name="primer_nombre" #primerNombre="ngModel">
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Segundo Nombre" [(ngModel)]="empleado.segundo_nombre" name="segundo_nombre" #segundoNombre="ngModel">
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Primer Apellido" [(ngModel)]="empleado.primer_apellido" name="primer_apellido" #primerApellido="ngModel">
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Segundo Apellido" [(ngModel)]="empleado.segundo_apellido" name="segundo_apellido" #segundoApellido="ngModel">
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field class="full-width">
+          <input matInput [value]="empleado.fecha_nacimiento" [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+      <div class="form-group">
+        <mat-checkbox [(ngModel)]="empleado.estado" name="estado" #estado="ngModel">Estado</mat-checkbox>
+      </div>
+      <div class="form-group">
+        <app-select-empresa [valor]="empleado.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
+      </div>
+    </form>
+    <mat-card-actions>
+      <div class="wrapper">
+        <button mat-raised-button color="primary" (click)='save()'>
+          <i class="material-icons">save</i>
+        </button>
+        <button mat-raised-button color="primary" (click)="cancel()">
+          <i class="material-icons">arrow_back</i>
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card-content>
+
+</mat-card>

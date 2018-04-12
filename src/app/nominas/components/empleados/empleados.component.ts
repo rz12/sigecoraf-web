@@ -17,8 +17,8 @@ export class EmpleadosComponent implements OnInit {
   dataSource = new MatTableDataSource();
   public urlEdit: String;
   public urlAdd = "empleado-detail/0"
-  public codigoAddCargo = "ADD_EMPLEADO";
-  public codigoEditCargo = "EDIT_EMPLEADO";
+  public codigoAdd = "ADD_EMPLEADO";
+  public codigoEdit = "EDIT_EMPLEADO";
   public message: String;
   public length: number;
   public pageSize: number = 1;
