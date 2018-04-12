@@ -20,8 +20,10 @@ export class CargoDetailComponent implements OnInit {
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];
-    let token = this.seguridadService.getToken()
-    this.getCargo(token, id)
+    if (id != 0) {
+      let token = this.seguridadService.getToken()
+      this.getCargo(token, id)
+    }
   }
   public onChangeComponente(value) {
     this.cargo.empresa = value;
