@@ -25,12 +25,25 @@ export var services = {
     ws_nominas_rolPagos: credentials.host + '/api/v1/nominas/roles-pago',
 }
 export var enums = {
+    /**
+     * Parametros
+     */
+    PARAM_SISTEMA: 'SISTEMA',
+    PARAM_SISTEMA_PAGINACION: 'SISTEMA_PAGINACION',
+
+    /**
+     * COMUN
+     */
     SISTEMA_AUTHKEY: "AUTH_KEY",
     SISTEMA_MENUS: "SISTEMA_MENUS",
-
     SISTEMA_PARAM: "SISTEMA_PARAM",
+    /**
+     * Detalles de Parametrizacion
+     */
     SISTEMA_DETALLE_PARAM_TIMEOUT: "SISTEMA_TIMEOUT",
     SISTEMA_DETALLE_PARAM_TIMEOUT_INTERVAL: "SISTEMA_TIMEOUT_INTERVAL",
+    DETALLE_PAGESIZE: "PAGE_SIZE",
+    DETALLE_PAGESIZE_OPTIONS: "PAGE_SIZE_OPTIONS",
     /**
      * HTTP STATUS
      */

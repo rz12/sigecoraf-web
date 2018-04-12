@@ -7,13 +7,15 @@ import { Parametrizacion } from '../models/parametrizacion';
 import "rxjs/add/operator/map";
 @Injectable()
 export class ParametrizacionService extends SharedService {
-  constructor(private http: Http) {
-    super();
-  }
   public parametros: Parametrizacion[];
 
+  constructor(private http: Http) {
+    super();
+    this.parametros = [];
+  }
+
   getParametrizaciones(token) {
-    return this.http.get(services.ws_master_parametrizaciones, this.options(token, null, null)).map(res =>
+    return this.http.get(services.ws_master_parametrizaciones, this.options(token, null, null, null)).map(res =>
       res.json())
   }
 }

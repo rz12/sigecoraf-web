@@ -12,7 +12,7 @@ export class SharedService {
       return of(result as T);
     };
   }
-  options(token, page, itemsPerPage) {
+  options(token, page, pageSize, filter) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
@@ -20,7 +20,8 @@ export class SharedService {
 
     let parametros: URLSearchParams = new URLSearchParams();
     parametros.set("PAGE", page);
-    parametros.set("ITEMS_PER_PAGE", itemsPerPage);
+    parametros.set("PAGE_SIZE", pageSize);
+    parametros.set("FILTER", filter);
     return new RequestOptions({ headers: headers, search: parametros });
 
   }
