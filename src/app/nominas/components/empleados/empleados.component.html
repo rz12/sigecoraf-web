@@ -1,2 +1,49 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>EMPLEADOS</h1>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="!message">
+      <app-search (onFilter)="search($event)"></app-search>
+      <mat-divider></mat-divider>
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="nombres">
+          <mat-header-cell *matHeaderCellDef> Nombres </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.primer_nombre}} {{empleado.segundo_nombre}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="apellidos">
+          <mat-header-cell *matHeaderCellDef> Apellidos </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.primer_apellido}} {{empleado.segundo_apellido}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fecha_inicio">
+          <mat-header-cell *matHeaderCellDef> Fecha de Inicio </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.fecha_inicio}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="seleccionar">
+          <mat-header-cell *matHeaderCellDef> Seleccionar </mat-header-cell>
+          <mat-cell *matCellDef="let empleado">
+            <mat-checkbox (change)="selectedRow(empleado,$event)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
+        (page)="loadPagination($event)">
+      </mat-paginator>
 
-<h1>{{saludo}}</h1>
+      <mat-card-actions>
+        <app-tool-bar-acction [codigoAdd]="codigoAddCargo" [codigoEditCargo]="codigoEditCargo" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+      </mat-card-actions>
+    </div>
+
+    <div *ngIf="message">
+      <h1>{{message}}</h1>
+    </div>
+  </mat-card-content>
+
+</mat-card>

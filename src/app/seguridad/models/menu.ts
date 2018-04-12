@@ -9,8 +9,10 @@ export class Menu {
     public estado: Boolean
     public empresa: Empresa
     public activate: Boolean
+    public submenus: Menu[]
     constructor() {
-        this.activate = false
+        this.activate = false;
+        this.submenus = [];
     }
 }
 
