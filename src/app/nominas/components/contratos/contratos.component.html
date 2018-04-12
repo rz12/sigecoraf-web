@@ -4,13 +4,20 @@
     <mat-card-content>
       <div *ngIf="!message">
         <mat-table #table [dataSource]="dataSource">
-          <ng-container matColumnDef="empleado">
-            <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
-            <mat-cell *matCellDef="let contrato"> {{contrato.nombre}} </mat-cell>
+          <ng-container matColumnDef="fecha_inicio">
+            <mat-header-cell *matHeaderCellDef> fecha_inicio </mat-header-cell>
+            <mat-cell *matCellDef="let contrato"> {{contrato.fecha_inicio}} </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="sueldo">
-            <mat-header-cell *matHeaderCellDef> Sueldo </mat-header-cell>
-            <mat-cell *matCellDef="let contrato"> {{contrato.sueldo}} </mat-cell>
+          <ng-container matColumnDef="fecha_fin">
+            <mat-header-cell *matHeaderCellDef> fecha_fin </mat-header-cell>
+            <mat-cell *matCellDef="let contrato"> {{contrato.fecha_fin}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef> estado </mat-header-cell>
+            <mat-cell *matCellDef="let contrato"> {{contrato.estado}} </mat-cell>
+          </ng-container>
+            <ng-container matColumnDef="mensualizar_decimos">
+            <mat-header-cell *matHeaderCellDef> mensualizar_decimos </mat-header-cell>             <mat-cell *matCellDef="let contrato"> {{contrato.mensualizar_decimos}} </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

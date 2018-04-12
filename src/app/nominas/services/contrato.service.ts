@@ -5,7 +5,6 @@ import { services } from "../../credentials";
 import { SharedService } from '../../shared/services/shared.service';
 import { catchError, map } from 'rxjs/operators';
 import { Http, Headers, RequestOptions } from "@angular/http";
-
 @Injectable()
 export class ContratoService extends SharedService {
 
@@ -13,12 +12,12 @@ export class ContratoService extends SharedService {
     super();
   }
 
-  contratoList(token, page, itemsPerPage) {
-    return this.http.get(services.ws_nominas_contratos, this.options(token, page, itemsPerPage))
+  contratosList(token, page, pageSize, filter) {
+    return this.http.get(services.ws_nominas_contratos, this.options(token, page, pageSize, filter))
   }
   save(token, data) {
     let body = JSON.stringify(data);
-    let options = this.options(token, null, null);
+    let options = this.options(token, null, null, null);
     if (!data.id) {
 
       return this.http.post(services.ws_nominas_contratos, body, options).map(res => res.json())
@@ -27,6 +26,6 @@ export class ContratoService extends SharedService {
       res.json())
   }
   public getContrato(token, id) {
-    return this.http.get(services.ws_nominas_contratos.concat('/').concat(id), this.options(token, null, null))
+    return this.http.get(services.ws_nominas_contratos.concat('/').concat(id), this.options(token, null, null, null))
   }
 }

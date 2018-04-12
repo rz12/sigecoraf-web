@@ -12,23 +12,23 @@ import { DialogService } from '../../../shared/dialog/services/dialog.service';
 })
 export class ContratoDetailComponent implements OnInit {
   @Input()
-  Contrato: Contrato;
+  contrato: Contrato;
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private ContratoService: ContratoService,
     private seguridadService: SeguridadService, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
-    this.Contrato = new Contrato();
+    this.contrato = new Contrato();
   }
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.params['id'];
-    let token = this.seguridadService.getToken()
-    this.getContrato(token, id)
+    if (id != 0) {
+      let token = this.seguridadService.getToken()
+      this.getContrato(token, id)
+    }
   }
-  public onChangeComponente(value) {
-    this.Contrato.empleado = value;
-  }
+
   public save() {
     let token = this.seguridadService.getToken()
-    let response = this.ContratoService.save(token, this.Contrato);
+    let response = this.ContratoService.save(token, this.contrato);
     response.subscribe(res => {
       this.dialogService.notificacion('', res.message, this.viewContainerRef)
     })
@@ -40,7 +40,7 @@ export class ContratoDetailComponent implements OnInit {
   }
   public getContrato(token, id) {
     this.ContratoService.getContrato(token, id).subscribe(res => {
-      this.Contrato = res.json().data;
+      this.contrato = res.json().data;
     });
   }
 }

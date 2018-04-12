@@ -2,20 +2,36 @@
     <mat-card-header>
     </mat-card-header>
     <mat-card-content>
-      <mat-table #table [dataSource]="dataSource">
-        <ng-container matColumnDef="nombre">
-          <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-          <mat-cell *matCellDef="let contrato"> {{contrato.nombre}} </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="apellido">
-          <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
-          <mat-cell *matCellDef="let contrato"> {{contrato.sueldo}} </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
+      <form #contratoDetailForm="ngForm">
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <input matInput type="date" placeholder="fecha_inicio" [(ngModel)]="contrato.fecha_inicio" name="fecha_inicio" #fecha_inicio="ngModel">
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <input matInput type="date" placeholder="fecha_fin" [(ngModel)]="contrato.fecha_fin" name="fecha_fin" #fecha_fin="ngModel">
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <imput matImput placeholder="estado" [(ngModel)]="contrato.estado" name="estado" #estado="ngModel"
+          </mat-form-field>
+          </div>
+        <div class="form-group">
+            <mat-checkbox [(ngModel)]="contrato.mensualizar_decimos" name="mensualizar_decimos" #mensualizar_decimos="ngModel">mensualizar_decimos</mat-checkbox>
+          </div>
+  
+      </form>
       <mat-card-actions>
-        <app-tool-bar-acction [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+        <div class="wrapper">
+          <button mat-raised-button color="primary" (click)='save()'>
+            <i class="material-icons">save</i>
+          </button>
+          <button mat-raised-button color="primary" (click)="cancel()">
+            <i class="material-icons">arrow_back</i>
+          </button>
+        </div>
       </mat-card-actions>
     </mat-card-content>
   
