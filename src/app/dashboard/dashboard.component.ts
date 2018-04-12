@@ -21,12 +21,14 @@ export class DashboardComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   sideNav: Boolean;
   some = false
+  public usuario: Usuario;
 
   constructor(private router: Router, private seguridadService: SeguridadService, private menuService: MenuService,
     private usuarioService: UsuarioService, private sidenavService: SideNavService) {
   }
 
   ngOnInit() {
+    this.usuario = this.usuarioService.getUsuario();
     this.isLoggedIn$ = this.seguridadService.isLoggedIn;
     if (!localStorage.getItem(enums.SISTEMA_MENUS)) {
       this.cargarMenus(token);
@@ -41,35 +43,24 @@ export class DashboardComponent implements OnInit {
       }
       if (token != null) {
         this.seguridadService.setLoggedIn(true);
-
       }
-
     }
   }
   public navigate(menu) {
-    this.updateActivateMenus(menu)
+    this.menuService.updateActivateMenus(menu, null)
     let link = ['/' + menu.formulario];
     this.router.navigate(link);
   }
-  public updateActivateMenus(menuEdit) {
-    this.menuService.getMenus().forEach(menu => {
-      if (menu == menuEdit) {
-        menu.activate = true;
-      } else {
-        menu.activate = false
-      }
-    });
-    localStorage.setItem(enums.SISTEMA_MENUS, JSON.stringify(this.menuService.getMenus()))
-  }
+
   onLogout() {
     this.seguridadService.logout();
   }
   public cargarMenus(token) {
     this.menuService.cargarMenus(token);
-
   }
   setSideNavState() {
     this.sideNav = !this.sideNav;
     this.sidenavService.setSideNavState(this.sideNav);
   }
+
 }

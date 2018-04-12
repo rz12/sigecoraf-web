@@ -25,7 +25,7 @@ export class CargoDetailComponent implements OnInit {
       this.getCargo(token, id)
     }
   }
-  public onChangeComponente(value) {
+  public onChangeEmpresa(value) {
     this.cargo.empresa = value;
   }
   public save() {

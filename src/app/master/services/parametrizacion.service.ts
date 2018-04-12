@@ -15,7 +15,7 @@ export class ParametrizacionService extends SharedService {
   }
 
   getParametrizaciones(token) {
-    return this.http.get(services.ws_master_parametrizaciones, this.options(token, null, null, null)).map(res =>
+    return this.http.get(services.ws_master_parametrizaciones, this.options(token, null, null, null, null)).map(res =>
       res.json())
   }
 }

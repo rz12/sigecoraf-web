@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { EmpresaService } from '../master/services/empresa.service';
 import { SelectEmpresaComponent } from '../shared/components/select-empresa/select-empresa.component';
 import { SearchComponent } from '../shared/components/search/search.component';
+import { EmpleadoService } from './services/empleado.service';
 
 @NgModule({
   imports: [
@@ -45,6 +46,6 @@ import { SearchComponent } from '../shared/components/search/search.component';
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
     ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent],
-  providers: [CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService]
+  providers: [CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, EmpleadoService]
 })
 export class NominasModule { }

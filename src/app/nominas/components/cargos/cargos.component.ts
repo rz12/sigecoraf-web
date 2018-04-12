@@ -18,6 +18,8 @@ export class CargosComponent implements OnInit {
   dataSource = new MatTableDataSource();
   public urlEdit: String;
   public urlAdd = "cargo-detail/0"
+  public codigoAddCargo = "ADD_CARGO";
+  public codigoEditCargo = "EDIT_CARGO";
   public message: String;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private cargoService: CargoService, private seguridadService: SeguridadService, private parametrizacionService: ParametrizacionService) { }

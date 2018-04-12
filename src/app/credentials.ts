@@ -11,6 +11,7 @@ export var services = {
     ws_seguridad_login: credentials.host + "/api/v1/seguridad/api-token-auth/",
     ws_seguridad_user_by_token: credentials.host + "/api/v1/seguridad/usuarios/get_usuario_by_token",
     ws_seguridad_menus: credentials.host + '/api/v1/seguridad/menus',
+    ws_seguridad_menus_haspermission: credentials.host + '/api/v1/seguridad/menus/has_permission',
 
     /**
      * RUTAS DEL API REST DE LA APP MASTER
@@ -23,6 +24,7 @@ export var services = {
     ws_nominas_cargos: credentials.host + '/api/v1/nominas/cargos',
     ws_nominas_contratos: credentials.host + '/api/v1/nominas/contratos',
     ws_nominas_rolPagos: credentials.host + '/api/v1/nominas/rolPagos',
+    ws_nominas_empleados: credentials.host + '/api/v1/nominas/empleados',
 }
 export var enums = {
     /**
@@ -37,6 +39,7 @@ export var enums = {
     SISTEMA_AUTHKEY: "AUTH_KEY",
     SISTEMA_MENUS: "SISTEMA_MENUS",
     SISTEMA_PARAM: "SISTEMA_PARAM",
+    SESSION_USUARIO: "SESSION_USUARIO",
     /**
      * Detalles de Parametrizacion
      */
@@ -52,5 +55,14 @@ export var enums = {
     HTTP_400_BAD_REQUEST: 400,
     HTTP_401_UNAUTHORIZED: 401,
     HTTP_500_INTERNAL_SERVER_ERROR: 500,
+    /**
+     * CODIGOS DE MENUS
+     */
+    MENU_CARGOS: "CARGOS",
+    MENU_EMPLEADOS: "EMPLEADOS",
+    MENU_CARGOS_ADD: "ADD_CARGO",
+    MENU_CARGOS_EDIT: "EDIT_CARGO",
+    MENU_EMPLEADOS_ADD: "ADD_EMPLEADO",
+    MENU_EMPLEADOS_EDIT: "EDIT_EMPLEADO",
 
 }
