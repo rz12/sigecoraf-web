@@ -36,7 +36,7 @@ export class ContratosComponent implements OnInit {
     this.getContratoPagination(token, Number(event.pageIndex) + 1, event.pageSize);
   }
   selectedRow(item, event) {
-    this.urlEdit = 'cargo-detail'
+    this.urlEdit = 'contrato-detail'
     this.urlEdit = this.urlEdit.concat('/').concat(item.id)
   }
   public getContratoPagination(token, pageIndex, pageSize) {
