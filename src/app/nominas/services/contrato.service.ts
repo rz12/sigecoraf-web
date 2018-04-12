@@ -13,17 +13,20 @@ export class ContratoService extends SharedService {
     super();
   }
 
-   contratosList(token) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    headers.append("Authorization", token);
-    let options = new RequestOptions({ headers: headers });
-    return this.http.get(services.ws_nominas_contratos, options)
+  contratoList(token, page, itemsPerPage) {
+    return this.http.get(services.ws_nominas_contratos, this.options(token, page, itemsPerPage))
   }
-  save() {
+  save(token, data) {
+    let body = JSON.stringify(data);
+    let options = this.options(token, null, null);
+    if (!data.id) {
 
+      return this.http.post(services.ws_nominas_contratos, body, options).map(res => res.json())
+    }
+    return this.http.put(services.ws_nominas_contratos.concat('/').concat(data.id), body, options).map(res =>
+      res.json())
   }
- 
-
+  public getContrato(token, id) {
+    return this.http.get(services.ws_nominas_contratos.concat('/').concat(id), this.options(token, null, null))
+  }
 }
