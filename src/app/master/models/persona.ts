@@ -8,8 +8,8 @@ export class Persona {
     segundo_nombre: String;
     numero_celular: String;
     fecha_nacimiento: Date;
-    tipo_documento_identificacion: Item;
-    genero: Item;
-    estado_civil: Item
+    tipo_documento_identificacion: Number;
+    genero: Number;
+    estado_civil: Number
     direcciones: Direccion[]
 }

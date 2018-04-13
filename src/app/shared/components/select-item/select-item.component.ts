@@ -1,5 +1,9 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import { Item } from "../../../master/models/item";
+import { CatalogoService } from "../../../master/services/catalogo.service";
+import { SeguridadService } from '../../../seguridad/services/seguridad.service';
+import { enums } from '../../../credentials';
+import { Item } from '../../../master/models/item';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-select-item',
@@ -8,19 +12,27 @@ import { Item } from "../../../master/models/item";
 })
 export class SelectItemComponent implements OnInit {
 
-  public empresaList: Item[];
+  public itemList: Item[];
   public message: String;
   @Input() valor: String;
+  @Input() codigo: String;
+  @Input() placeHolder: String;
   @Output() notificador = new EventEmitter();
   selectedValue: number;
-  constructor(private empresaService: EmpresaService, private seguridadService: SeguridadService) { }
+  public valueControl = new FormControl('', [Validators.required]);
+  constructor(private catalogoService: CatalogoService, private seguridadService: SeguridadService) { }
 
   ngOnInit() {
-    this.empresaList = [];
+    this.itemList = [];
     let token = this.seguridadService.getToken();
-    this.empresaService.empresaList(token.token).subscribe(data => {
+
+    this.catalogoService.catalogosListByCodigo(token.token, { "CODIGO": this.codigo }).subscribe(data => {
+
       if (data.json().status == enums.HTTP_200_OK) {
-        this.empresaList = data.json().data;
+        data.json().data.forEach(catalogo => {
+          this.itemList = (catalogo.items)
+        });
+
         this.selectItem(this.valor ? Number(this.valor) : null)
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
@@ -29,6 +41,6 @@ export class SelectItemComponent implements OnInit {
   }
   selectItem(newValue) {
     this.selectedValue = newValue;
-    th
-
+    this.notificador.emit(newValue);
   }
+}

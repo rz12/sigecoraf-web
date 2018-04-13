@@ -13,7 +13,7 @@ import { enums } from '../../../credentials';
 })
 export class EmpleadosComponent implements OnInit {
   empleadosList: Empleado[];
-  displayedColumns = ['nombres', 'apellidos', 'fecha_inicio', 'seleccionar'];
+  displayedColumns = ['nombres', 'apellidos', 'numero_identificacion', 'tipo_documento', 'celular', 'fecha_inicio', 'seleccionar'];
   dataSource = new MatTableDataSource();
   public urlEdit: String;
   public urlAdd = "empleado-detail/0"

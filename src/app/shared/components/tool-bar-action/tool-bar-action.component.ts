@@ -16,7 +16,7 @@ export class ToolBarAcctionComponent implements OnInit {
   @Input() urlEdit: String;
   @Input() urlAdd: String;
   @Input() codigoAdd: String;
-  @Input() codigoEditCargo: String;
+  @Input() codigoEdit: String;
   public hasPermissionAdd: Boolean;
   public hasPermissionEdit: Boolean;
   ngOnInit() {
@@ -39,7 +39,7 @@ export class ToolBarAcctionComponent implements OnInit {
         this.hasPermissionAdd = res.json().data
       }
     })
-    this.menuService.hasPermission(token.token, this.codigoEditCargo).subscribe(res => {
+    this.menuService.hasPermission(token.token, this.codigoEdit).subscribe(res => {
       if (res.json().status == enums.HTTP_200_OK) {
         this.hasPermissionEdit = res.json().data
       }

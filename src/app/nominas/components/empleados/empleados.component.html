@@ -18,6 +18,18 @@
           <mat-header-cell *matHeaderCellDef> Apellidos </mat-header-cell>
           <mat-cell *matCellDef="let empleado"> {{empleado.primer_apellido}} {{empleado.segundo_apellido}}</mat-cell>
         </ng-container>
+        <ng-container matColumnDef="numero_identificacion">
+          <mat-header-cell *matHeaderCellDef> Número de Identicación </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.numero_identificacion}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="tipo_documento">
+          <mat-header-cell *matHeaderCellDef> Tipo De Documento </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.tipo_documento_identificacion}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="celular">
+          <mat-header-cell *matHeaderCellDef> Número de Celular </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.numero_celular}}</mat-cell>
+        </ng-container>
         <ng-container matColumnDef="fecha_inicio">
           <mat-header-cell *matHeaderCellDef> Fecha de Inicio </mat-header-cell>
           <mat-cell *matCellDef="let empleado"> {{empleado.fecha_inicio}}</mat-cell>
@@ -35,9 +47,8 @@
       <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
         (page)="loadPagination($event)">
       </mat-paginator>
-
       <mat-card-actions>
-        <app-tool-bar-acction [codigoAdd]="codigoAddCargo" [codigoEditCargo]="codigoEditCargo" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+        <app-tool-bar-acction [codigoAdd]="codigoAdd" [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
       </mat-card-actions>
     </div>
 

@@ -12,7 +12,7 @@ export class SharedService {
       return of(result as T);
     };
   }
-  options(token, menuCodigo, page, pageSize, filter) {
+  options(token, menuCodigo, page, pageSize, filter, paramOptional = []) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
@@ -23,6 +23,11 @@ export class SharedService {
     parametros.set("PAGE_SIZE", pageSize);
     parametros.set("FILTER", filter);
     parametros.set("MENU", menuCodigo);
+    if (paramOptional) {
+      paramOptional.forEach(element => {
+        parametros.set(Object.keys(element)[0], element[Object.keys(element)[0]])
+      });
+    }
     return new RequestOptions({ headers: headers, search: parametros });
 
   }

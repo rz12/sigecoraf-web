@@ -1,46 +1,92 @@
-<mat-card>
-  <mat-card-header>
-  </mat-card-header>
-  <mat-card-content>
-    <form #cargoDetailForm="ngForm">
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Primer Nombre" [(ngModel)]="empleado.primer_nombre" name="primer_nombre" #primerNombre="ngModel">
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Segundo Nombre" [(ngModel)]="empleado.segundo_nombre" name="segundo_nombre" #segundoNombre="ngModel">
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Primer Apellido" [(ngModel)]="empleado.primer_apellido" name="primer_apellido" #primerApellido="ngModel">
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Segundo Apellido" [(ngModel)]="empleado.segundo_apellido" name="segundo_apellido" #segundoApellido="ngModel">
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input matInput [value]="empleado.fecha_nacimiento" [matDatepicker]="picker" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+<form (ngSubmit)="empleadoForm.valid && save()" #empleadoForm="ngForm">
+  <mat-card class="mat-card">
+    <mat-card-header>
+    </mat-card-header>
 
-      </div>
-      <div class="form-group">
-        <mat-checkbox [(ngModel)]="empleado.estado" name="estado" #estado="ngModel">Estado</mat-checkbox>
-      </div>
-      <div class="form-group">
-        <app-select-empresa [valor]="empleado.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
-      </div>
-    </form>
+    <mat-card-content>
+
+      <mat-tab-group>
+        <mat-tab label="Datos de Empleado">
+          <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+            <div class="flex-div" fxFlex="50">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Primer Nombre" required [(ngModel)]="empleado.primer_nombre" name="primer_nombre" #primerNombre="ngModel">
+                <div *ngIf="primerNombre.invalid && (primerNombre.dirty || primerNombre.touched)" class="alert alert-danger">
+                  <div *ngIf="primerNombre.errors.required">
+                    El Primer Nombre Es Requerido.
+                  </div>
+                </div>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Segundo Nombre" [(ngModel)]="empleado.segundo_nombre" name="segundo_nombre" #segundoNombre="ngModel">
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Primer Apellido" [(ngModel)]="empleado.primer_apellido" name="primer_apellido" #primerApellido="ngModel">
+                <div *ngIf="primerApellido.invalid && (primerApellido.dirty || primerApellido.touched)" class="alert alert-danger">
+                  <div *ngIf="primerApellido.errors.required">
+                    El Primer Nombre Es Requerido.
+                  </div>
+                </div>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Segundo Apellido" [(ngModel)]="empleado.segundo_apellido" name="segundo_apellido" #segundoApellido="ngModel">
+              </mat-form-field>
+              <app-select-item [codigo]="'TIPO_DOCUMENTO'" [placeHolder]="'Seleccione un Tipo de Documento de Identificación'" [valor]="empleado.tipo_documento_identificacion"
+                (notificador)="onChangeTipoDocumento($event)">
+              </app-select-item>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Número de Identificación" [(ngModel)]="empleado.numero_identificacion" name="numero_identificacion"
+                  #numeroIdentificacion="ngModel">
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput [value]="empleado.fecha_nacimiento" [matDatepicker]="pickerFechaNacimiento" placeholder="Fecha de Nacimiento">
+                <mat-datepicker-toggle matSuffix [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFechaNacimiento></mat-datepicker>
+                <div *ngIf="pickerFechaNacimiento.invalid && (pickerFechaNacimiento.dirty || pickerFechaNacimiento.touched)" class="alert alert-danger">
+                  <div *ngIf="pickerFechaNacimiento.errors.required">
+                    Fecha de Nacimiento Es Requerido.
+                  </div>
+                </div>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Celular" [(ngModel)]="empleado.numero_celular" name="numero_celular" #numeroCelular="ngModel">
+              </mat-form-field>
+              <app-select-item [codigo]="'ESTADO_CIVIL'" [placeHolder]="'Seleccione un Estado Civil'" [valor]="empleado.estado_civil" (notificador)="onChangeEstadoCivil($event)">
+              </app-select-item>
+              <app-select-item [codigo]="'GENERO'" [placeHolder]="'Seleccione Sexo'" [valor]="empleado.genero" (notificador)="onChangeGenero($event)">
+              </app-select-item>
+            </div>
+            <div class="flex-div" fxFlex="50">
+              <mat-form-field class="full-width">
+                <input matInput [value]="empleado.fecha_inicio" [matDatepicker]="picker1" placeholder="Fecha de Inicio">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput [value]="empleado.fecha_fin" [matDatepicker]="picker2" placeholder="Fecha de Finalización">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput [value]="empleado.fecha_ingreso_iess" [matDatepicker]="picker3" placeholder="Fecha de Ingreso al IEES">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field>
+              <app-select-empresa [valor]="empleado.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
+              <mat-checkbox [(ngModel)]="empleado.estado" name="estado" #estado="ngModel">Estado</mat-checkbox>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Direcciones">
+
+        </mat-tab>
+      </mat-tab-group>
+
+    </mat-card-content>
+
     <mat-card-actions>
       <div class="wrapper">
-        <button mat-raised-button color="primary" (click)='save()'>
+        <button mat-raised-button color="primary" type="submit">
           <i class="material-icons">save</i>
         </button>
         <button mat-raised-button color="primary" (click)="cancel()">
@@ -48,6 +94,5 @@
         </button>
       </div>
     </mat-card-actions>
-  </mat-card-content>
-
-</mat-card>
+  </mat-card>
+</form>

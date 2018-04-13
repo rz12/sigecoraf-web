@@ -6,4 +6,5 @@ export class Direccion {
     public referencia: String;
     public tipo_direccion: Number;
     public numero_telefono: String;
+    public persona: Number;
 }
