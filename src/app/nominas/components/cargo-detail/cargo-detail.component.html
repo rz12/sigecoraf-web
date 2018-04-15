@@ -2,40 +2,27 @@
   <mat-card-header>
   </mat-card-header>
   <mat-card-content>
-    <form #cargoDetailForm="ngForm">
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Nombre" [(ngModel)]="cargo.nombre" name="nombre" #nombre="ngModel">
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <input type="number" matInput placeholder="Sueldo" [(ngModel)]="cargo.sueldo" name="sueldo" #sueldo="ngModel">
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-checkbox [(ngModel)]="cargo.estado" name="estado" #estado="ngModel">Estado</mat-checkbox>
-      </div>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Nombre" [(ngModel)]="cargo.nombre" name="nombre" #nombre="ngModel">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input type="number" matInput placeholder="Sueldo" [(ngModel)]="cargo.sueldo" name="sueldo" #sueldo="ngModel">
+    </mat-form-field>
+    <mat-checkbox [(ngModel)]="cargo.estado" name="estado" #estado="ngModel">Estado</mat-checkbox>
+    <mat-form-field class="full-width">
+      <textarea matInput placeholder="Descripción" [(ngModel)]="cargo.descripcion" name="descripcion" #descripcion="ngModel"></textarea>
+    </mat-form-field>
+    <app-select-empresa [valor]="cargo.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
 
-      <div class="form-group">
-        <mat-form-field class="full-width">
-          <textarea matInput placeholder="Descripción" [(ngModel)]="cargo.descripcion" name="descripcion" #descripcion="ngModel"></textarea>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <app-select-empresa [valor]="cargo.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
-      </div>
-    </form>
-    <mat-card-actions>
-      <div class="wrapper">
-        <button mat-raised-button color="primary" (click)='save()'>
-          <i class="material-icons">save</i>
-        </button>
-        <button mat-raised-button color="primary" (click)="cancel()">
-          <i class="material-icons">arrow_back</i>
-        </button>
-      </div>
-    </mat-card-actions>
   </mat-card-content>
-
+  <mat-card-actions>
+    <div class="wrapper">
+      <button mat-raised-button color="primary" (click)='save()'>
+        <i class="material-icons">save</i>
+      </button>
+      <button mat-raised-button color="primary" (click)="cancel()">
+        <i class="material-icons">arrow_back</i>
+      </button>
+    </div>
+  </mat-card-actions>
 </mat-card>

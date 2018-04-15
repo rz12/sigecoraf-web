@@ -15,20 +15,24 @@ import { ContratoService } from './services/contrato.service';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
 import {
   MatTableModule, MatCardModule, MatButtonModule, MatIconModule, MatFormField, MatFormFieldModule, MatInputModule,
-  MatCheckboxModule, MatSelectModule, MatPaginatorModule, MatGridListModule, MatDividerModule
+  MatCheckboxModule, MatSelectModule, MatPaginatorModule, MatGridListModule, MatDividerModule, MatDatepickerModule, MatNativeDateModule, MatStepperModule, MatTabsModule
 } from '@angular/material';
 import { RolPago } from './models/rol-pago';
 import { RolPagoService } from './services/rol-pago.service';
 import { ToolBarAcctionComponent } from "../shared/components/tool-bar-action/tool-bar-action.component";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmpresaService } from '../master/services/empresa.service';
 import { SelectEmpresaComponent } from '../shared/components/select-empresa/select-empresa.component';
 import { SearchComponent } from '../shared/components/search/search.component';
 import { EmpleadoService } from './services/empleado.service';
+import { SelectItemComponent } from '../shared/components/select-item/select-item.component';
+import { CatalogoService } from '../master/services/catalogo.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     NominasRoutingModule,
     MatTableModule,
@@ -41,11 +45,17 @@ import { EmpleadoService } from './services/empleado.service';
     MatSelectModule,
     MatGridListModule,
     MatDividerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatStepperModule,
+    MatTabsModule,
+    FlexLayoutModule
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
-    ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent],
-  providers: [CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, EmpleadoService]
+    ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent,
+    SelectItemComponent],
+  providers: [CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService, EmpleadoService]
 })
 export class NominasModule { }

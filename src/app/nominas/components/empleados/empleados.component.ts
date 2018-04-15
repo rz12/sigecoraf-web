@@ -13,12 +13,12 @@ import { enums } from '../../../credentials';
 })
 export class EmpleadosComponent implements OnInit {
   empleadosList: Empleado[];
-  displayedColumns = ['nombres', 'apellidos', 'fecha_inicio', 'seleccionar'];
+  displayedColumns = ['nombres', 'apellidos', 'numero_identificacion', 'tipo_documento', 'celular', 'fecha_inicio', 'seleccionar'];
   dataSource = new MatTableDataSource();
   public urlEdit: String;
   public urlAdd = "empleado-detail/0"
-  public codigoAddCargo = "ADD_EMPLEADO";
-  public codigoEditCargo = "EDIT_EMPLEADO";
+  public codigoAdd = "ADD_EMPLEADO";
+  public codigoEdit = "EDIT_EMPLEADO";
   public message: String;
   public length: number;
   public pageSize: number = 1;

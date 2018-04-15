@@ -17,6 +17,8 @@ export var services = {
      * RUTAS DEL API REST DE LA APP MASTER
      */
     ws_master_parametrizaciones: credentials.host + '/api/v1/master/parametrizaciones',
+    ws_master_catalogos: credentials.host + '/api/v1/master/catalogos',
+    ws_master_catalogos_list_by_codigo: credentials.host + '/api/v1/master/catalogos/list_by_codigo',
     ws_master_empresas: credentials.host + '/api/v1/master/empresas',
     /**
      * API REST NOMINAS
