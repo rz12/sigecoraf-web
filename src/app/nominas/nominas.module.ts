@@ -20,7 +20,7 @@ import {
 import { RolPago } from './models/rol-pago';
 import { RolPagoService } from './services/rol-pago.service';
 import { ToolBarAcctionComponent } from "../shared/components/tool-bar-action/tool-bar-action.component";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EmpresaService } from '../master/services/empresa.service';
 import { SelectEmpresaComponent } from '../shared/components/select-empresa/select-empresa.component';
 import { SearchComponent } from '../shared/components/search/search.component';

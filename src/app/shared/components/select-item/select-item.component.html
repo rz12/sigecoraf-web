@@ -1,10 +1,10 @@
-<div *ngIf="!message">
+<div *ngIf="!message ">
   <mat-form-field class="full-width">
-    <mat-select placeholder="{{placeHolder}}" [formControl]="valueControl" required (ngModelChange)="selectItem($event)" [(ngModel)]="selectedValue">
+    <mat-select required placeholder="{{placeHolder}}" [formControl]="control" (ngModelChange)="selectItem($event)" [(ngModel)]="selectedValue">
       <mat-option *ngFor="let item of itemList" [value]="item.id">{{item.nombre}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-error *ngIf="valueControl.hasError('required')">Seleccione un Item</mat-error>
+
 </div>
 <div *ngIf="message">
   <h2>{{message}}</h2>

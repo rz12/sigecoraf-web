@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { EmpleadoService } from '../../../nominas/services/empleado.service';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
 import { EmpresaService } from "../../../master/services/empresa.service";
 import { enums } from '../../../credentials';
 import { Empresa } from '../../../master/models/empresa';
+import { Form } from '@angular/forms';
 
 @Component({
   selector: 'app-select-empresa',
@@ -15,8 +16,9 @@ export class SelectEmpresaComponent implements OnInit {
   public message: String;
   @Input() valor: String;
   @Output() notificador = new EventEmitter();
-  selectedValue: number;
-  constructor(private empresaService: EmpresaService, private seguridadService: SeguridadService) { }
+  selectedValue: Number;
+  @Input() control: Form;
+  constructor(private changeDetector: ChangeDetectorRef, private empresaService: EmpresaService, private seguridadService: SeguridadService) { }
 
   ngOnInit() {
     this.empresaList = [];
@@ -25,6 +27,7 @@ export class SelectEmpresaComponent implements OnInit {
       if (data.json().status == enums.HTTP_200_OK) {
         this.empresaList = data.json().data;
         this.selectItem(this.valor ? Number(this.valor) : null)
+        this.changeDetector.detectChanges();
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
       }
