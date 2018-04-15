@@ -1,9 +1,9 @@
 import { Empresa } from "../../master/models/empresa";
 
 export class EstructuraDetalleRolPago {
-    private nombre: String;
-    private descripcion: String;
-    private estado: Boolean;
-    private empresa: Empresa;
-    private operacion: Number;
+    public nombre: String;
+    public descripcion: String;
+    public estado: Boolean;
+    public empresa: Empresa;
+    public operacion: Number;
 }

@@ -1,6 +1,6 @@
 export class ConsolidadoRolPago {
-    private fecha_desde: Date;
-    private fecha_hasta: Date;
-    private observacion: String;
-    private estado: String;
+    public fecha_desde: Date;
+    public fecha_hasta: Date;
+    public observacion: String;
+    public estado: String;
 }

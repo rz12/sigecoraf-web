@@ -1,3 +1,25 @@
-<p>
-  contrato-detail works!
-</p>
+<mat-card>
+    <mat-card-header>
+    </mat-card-header>
+    <mat-card-content>
+          <mat-form-field class="full-width">
+            <input matInput type="date" placeholder="fecha_inicio" [(ngModel)]="contrato.fecha_inicio" name="fecha_inicio" #fechaInicio="ngModel">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput type="date" placeholder="fecha_fin" [(ngModel)]="contrato.fecha_fin" name="fecha_fin" #fechaFin="ngModel">
+          </mat-form-field>
+          <mat-checkbox [(ngModel)]="contrato.estado" name="estado" #estado="ngModel">estado</mat-checkbox>
+            <mat-checkbox [(ngModel)]="contrato.mensualizar_decimos" name="mensualizar_decimos" #mensualizarDecimos="ngModel">mensualizarDecimos</mat-checkbox>
+          </mat-card-content>
+      <mat-card-actions>
+        <div class="wrapper">
+          <button mat-raised-button color="primary" (click)='save()'>
+            <i class="material-icons">save</i>
+          </button>
+          <button mat-raised-button color="primary" (click)="cancel()">
+            <i class="material-icons">arrow_back</i>
+          </button>
+        </div>
+      </mat-card-actions>
+
+  </mat-card>
