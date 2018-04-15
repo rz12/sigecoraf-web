@@ -4,7 +4,7 @@
 export class Contrato {
     public fecha_inicio: Date;
     public fecha_fin: Date;
-    public estado: String;
+    public estado: Boolean;
     public mensualizar_decimos: Boolean;
     public empleado: Number;
     public cargo: Number;

@@ -18,6 +18,8 @@ export class ContratosComponent implements OnInit {
   dataSource = new MatTableDataSource();
   public urlEdit: String;
   public urlAdd = "contrato-detail/0"
+  public codigoAdd = "ADD_CONTRATO";
+  public codigoEdit = "EDIT_CONTRATO";
   public message: String;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private ContratoService: ContratoService, private seguridadService: SeguridadService, private parametrizacionService: ParametrizacionService) { }

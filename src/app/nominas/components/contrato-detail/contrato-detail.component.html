@@ -2,27 +2,15 @@
     <mat-card-header>
     </mat-card-header>
     <mat-card-content>
-      <form #contratoDetailForm="ngForm">
-        <div class="form-group">
           <mat-form-field class="full-width">
-            <input matInput type="date" placeholder="fecha_inicio" [(ngModel)]="contrato.fecha_inicio" name="fecha_inicio" #fecha_inicio="ngModel">
+            <input matInput type="date" placeholder="fecha_inicio" [(ngModel)]="contrato.fecha_inicio" name="fecha_inicio" #fechaInicio="ngModel">
           </mat-form-field>
-        </div>
-        <div class="form-group">
           <mat-form-field class="full-width">
-            <input matInput type="date" placeholder="fecha_fin" [(ngModel)]="contrato.fecha_fin" name="fecha_fin" #fecha_fin="ngModel">
+            <input matInput type="date" placeholder="fecha_fin" [(ngModel)]="contrato.fecha_fin" name="fecha_fin" #fechaFin="ngModel">
           </mat-form-field>
-        </div>
-        <div class="form-group">
-          <mat-form-field class="full-width">
-            <imput matImput placeholder="estado" [(ngModel)]="contrato.estado" name="estado" #estado="ngModel"
-          </mat-form-field>
-          </div>
-        <div class="form-group">
-            <mat-checkbox [(ngModel)]="contrato.mensualizar_decimos" name="mensualizar_decimos" #mensualizar_decimos="ngModel">mensualizar_decimos</mat-checkbox>
-          </div>
-  
-      </form>
+          <mat-checkbox [(ngModel)]="contrato.estado" name="estado" #estado="ngModel">estado</mat-checkbox>
+            <mat-checkbox [(ngModel)]="contrato.mensualizar_decimos" name="mensualizar_decimos" #mensualizarDecimos="ngModel">mensualizarDecimos</mat-checkbox>
+          </mat-card-content>
       <mat-card-actions>
         <div class="wrapper">
           <button mat-raised-button color="primary" (click)='save()'>
@@ -33,6 +21,5 @@
           </button>
         </div>
       </mat-card-actions>
-    </mat-card-content>
-  
+
   </mat-card>
