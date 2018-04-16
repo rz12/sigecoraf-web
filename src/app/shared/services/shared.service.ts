@@ -9,7 +9,6 @@ export class SharedService {
   constructor() { }
   public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
       return of(result as T);
     };
   }
@@ -30,7 +29,6 @@ export class SharedService {
       });
     }
     return new RequestOptions({ headers: headers, search: parametros });
-
   }
   public getIndexObject(data = [], object) {
     return data.findIndex(function (element) {

@@ -6,6 +6,7 @@ import { SeguridadService } from '../../../seguridad/services/seguridad.service'
 import { ParametrizacionService } from '../../../master/services/parametrizacion.service';
 import { enums } from '../../../credentials';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ItemService } from '../../../master/services/item.service';
 
 @Component({
   selector: 'app-empleados',
@@ -28,7 +29,7 @@ export class EmpleadosComponent implements OnInit {
   public filter: String;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private empleadoService: EmpleadoService, private seguridadService: SeguridadService,
-    private parametrizacionService: ParametrizacionService) { }
+    private parametrizacionService: ParametrizacionService, private itemService: ItemService) { }
   ngOnInit() {
     this.pageSizeOptions = []
     this.cargarDetallesPaginacion();
@@ -54,7 +55,13 @@ export class EmpleadosComponent implements OnInit {
   public getEmpleadosPagination(token, pageIndex, pageSize, filter) {
     this.empleadoService.empleadosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
-        this.dataSource.data = data.json().data
+        let empleados = data.json().data
+        empleados.forEach(element => {
+          this.itemService.getItem(token, element.tipo_documento_identificacion).subscribe(item => {
+            element.tipo_documento_identificacion_object = item.json().data;
+          })
+        });
+        this.dataSource.data = empleados;
         this.length = data.json().count;
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;

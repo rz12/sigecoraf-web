@@ -10,6 +10,20 @@
       <app-search (onFilter)="search($event)"></app-search>
       <mat-divider></mat-divider>
       <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="empleado">
+          <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
+          <mat-cell *matCellDef="let contrato">
+            <label *ngIf="contrato.empleadoObject">{{contrato.empleadoObject.primer_nombre}} {{contrato.empleadoObject.segundo_nombre}} {{contrato.empleadoObject.primer_apellido}}
+              {{contrato.empleadoObject.segundo_apellido}}
+            </label>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="cargo">
+          <mat-header-cell *matHeaderCellDef> Cargo </mat-header-cell>
+          <mat-cell *matCellDef="let contrato">
+            <label *ngIf="contrato.cargoObject">{{contrato.cargoObject.nombre}}</label>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="fecha_inicio">
           <mat-header-cell *matHeaderCellDef> fecha_inicio </mat-header-cell>
           <mat-cell *matCellDef="let contrato"> {{contrato.fecha_inicio}} </mat-cell>
@@ -42,9 +56,9 @@
       <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
         (page)="loadPagination($event)">
       </mat-paginator>
-
       <mat-card-actions>
-        <app-tool-bar-acction [codigoAdd]="codigoAdd" [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+        <app-tool-bar-acction (notificadorDelete)="delete($event)" [codigoAdd]="codigoAdd" [codigoDelete]="'DELETE_CONTRATO'" [codigoEdit]="codigoEdit"
+          [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
       </mat-card-actions>
     </div>
 

@@ -12,5 +12,6 @@ export class Persona {
     tipo_documento_identificacion: Number;
     genero: Number;
     estado_civil: Number
-    direcciones: Direccion[]
+    direcciones: Direccion[];
+    tipo_documento_identificacion_object: Item;
 }

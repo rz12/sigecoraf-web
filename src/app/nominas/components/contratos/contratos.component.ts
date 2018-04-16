@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ContratoService } from '../../services/contrato.service';
 import { Contrato } from '../../models/contrato';
 import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
@@ -7,6 +7,11 @@ import { ParametrizacionService } from '../../../master/services/parametrizacion
 import { Parametrizacion } from '../../../master/models/parametrizacion';
 import { enums } from '../../../credentials';
 import { SelectionModel } from '@angular/cdk/collections';
+import { CargoService } from '../../services/cargo.service';
+import { EmpleadoService } from '../../services/empleado.service';
+import { DireccionService } from '../../../master/services/direccion.service';
+import { DialogService } from '../../../shared/dialog/services/dialog.service';
+import { SharedService } from '../../../shared/services/shared.service';
 
 @Component({
   selector: 'app-contratos',
@@ -15,7 +20,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class ContratosComponent implements OnInit {
 
-  displayedColumns = ['fecha_inicio', 'fecha_fin', 'estado', 'mensualizar_decimos'];
+  displayedColumns = ['empleado', 'cargo', 'fecha_inicio', 'fecha_fin', 'estado', 'mensualizar_decimos', 'seleccionar'];
   dataSource = new MatTableDataSource();
   selection = new SelectionModel();
   public urlEdit: String;
@@ -23,8 +28,11 @@ export class ContratosComponent implements OnInit {
   public codigoAdd = "ADD_CONTRATO";
   public codigoEdit = "EDIT_CONTRATO";
   public message: String;
+  public contratoSeleccionado: Contrato;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private contratoService: ContratoService, private seguridadService: SeguridadService, private parametrizacionService: ParametrizacionService) { }
+  constructor(private contratoService: ContratoService, private seguridadService: SeguridadService,
+    private parametrizacionService: ParametrizacionService, private cargoService: CargoService, private sharedService: SharedService,
+    private viewContainerRef: ViewContainerRef, private dialogService: DialogService, private empleadoService: EmpleadoService) { }
   public length: number;
   public pageSize: number = 1;
   public pageIndex: number = 1;
@@ -36,21 +44,36 @@ export class ContratosComponent implements OnInit {
   }
   ngAfterViewInit() {
     let token = this.seguridadService.getToken()
-    this.getContratoPagination(token, this.pageIndex, this.pageSize, this.filter);
+    this.getContratosPagination(token, this.pageIndex, this.pageSize, this.filter);
 
   }
   public loadPagination(event) {
     let token = this.seguridadService.getToken()
-    this.getContratoPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
+    this.getContratosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
   selectedRow(item, event) {
-    this.urlEdit = 'contrato-detail'
-    this.urlEdit = this.urlEdit.concat('/').concat(item.id)
+    if (event.checked) {
+      this.urlEdit = 'contrato-detail';
+      this.urlEdit = this.urlEdit.concat('/').concat(item.id);
+      this.contratoSeleccionado = item;
+      this.selection.toggle(item)
+    } else {
+      this.urlEdit = null;
+    }
   }
-  public getContratoPagination(token, pageIndex, pageSize, filter) {
+  public getContratosPagination(token, pageIndex, pageSize, filter) {
     this.contratoService.contratosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
-        this.dataSource.data = data.json().data
+        let contratos = data.json().data
+        contratos.forEach(contrato => {
+          this.cargoService.getCargo(token, contrato.cargo).subscribe(cargo => {
+            contrato.cargoObject = cargo.json().data;
+          })
+          this.empleadoService.getEmpleado(token, contrato.empleado).subscribe(empleado => {
+            contrato.empleadoObject = empleado.json().data;
+          })
+        });
+        this.dataSource.data = contratos;
         this.length = data.json().count;
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
@@ -80,7 +103,7 @@ export class ContratosComponent implements OnInit {
   public search(event) {
     this.filter = event;
     let token = this.seguridadService.getToken()
-    this.getContratoPagination(token, this.pageIndex, this.pageSize, this.filter);
+    this.getContratosPagination(token, this.pageIndex, this.pageSize, this.filter);
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -91,5 +114,23 @@ export class ContratosComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+  delete(event) {
+    if (event && this.contratoSeleccionado) {
+      let token = this.seguridadService.getToken()
+      this.contratoService.delete(token, this.contratoSeleccionado).subscribe(res => {
+        let message = ""
+        if (res.status == enums.HTTP_200_OK) {
+          message = res.message;
+          const index = this.sharedService.getIndexObject(this.dataSource.data, this.contratoSeleccionado);
+          this.dataSource.data.splice(index, 1);
+          this.length = this.dataSource.data.length;
+          this.dataSource.paginator = this.paginator;
+        } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
+          message = 'Campos Obligatorios Vacíos.'
+        }
+        this.dialogService.notificacion('', message, this.viewContainerRef)
+      })
+    }
   }
 }

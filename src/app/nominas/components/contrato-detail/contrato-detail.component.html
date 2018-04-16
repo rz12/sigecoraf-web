@@ -11,12 +11,14 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
-        <input matInput required formControlName="fechaFin" [(ngModel)]="contrato.fecha_fin" [matDatepicker]="pickerFechaFin" placeholder="Fecha de Nacimiento">
+        <input matInput formControlName="fechaFin" [(ngModel)]="contrato.fecha_fin" [matDatepicker]="pickerFechaFin" placeholder="Fecha de Fin">
         <mat-datepicker-toggle matSuffix [for]="pickerFechaFin"></mat-datepicker-toggle>
         <mat-datepicker #pickerFechaFin></mat-datepicker>
       </mat-form-field>
-      <app-cargos-autcomplete [control]="contratoForm.controls.cargo" (notificador)="setCargo($event)"></app-cargos-autcomplete>
-      <app-empleados-autocomplete [control]="contratoForm.controls.empleado" (notificador)="setEmpleado($event)"></app-empleados-autocomplete>
+      <app-cargos-autcomplete [filter]="contrato.id &&contrato.cargoObject?contrato.cargoObject.nombre:''" [control]="contratoForm.controls.cargo"
+        (notificador)="setCargo($event)"></app-cargos-autcomplete>
+      <app-empleados-autocomplete [filter]="contrato.id &&contrato.empleadoObject?contrato.empleadoObject.primer_nombre+' '+contrato.empleadoObject.segundo_nombre+' '+contrato.empleadoObject.primer_apellido+' '+contrato.empleadoObject.segundo_apellido:''"
+        [control]="contratoForm.controls.empleado" (notificador)="setEmpleado($event)"></app-empleados-autocomplete>
       <section>
         <mat-checkbox [(ngModel)]="contrato.estado" formControlName="estado">estado</mat-checkbox>
       </section>

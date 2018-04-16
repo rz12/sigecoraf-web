@@ -26,7 +26,7 @@ export class CargosAutcompleteComponent implements OnInit {
   public pageSize: number = 1;
   public pageIndex: number = 1;
   public pageSizeOptions: number[]
-  public filter: String;
+  @Input() filter: String;
   public visible: Boolean = false;
   @Input() control: Form;
   constructor(private cargoService: CargoService, private seguridadService: SeguridadService,

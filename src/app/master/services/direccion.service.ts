@@ -30,6 +30,5 @@ export class DireccionService extends SharedService {
     if (data.id) {
       return this.http.delete(services.ws_master_direcciones.concat("/").concat(data.id), options).map(res => res.json())
     }
-
   }
 }

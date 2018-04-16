@@ -18,7 +18,6 @@ export class ContratoService extends SharedService {
     let body = JSON.stringify(data);
     let options = this.options(token, null, null, null, "");
     if (!data.id) {
-
       return this.http.post(services.ws_nominas_contratos, body, options).map(res => res.json())
     }
     return this.http.put(services.ws_nominas_contratos.concat('/').concat(data.id), body, options).map(res =>
@@ -26,5 +25,12 @@ export class ContratoService extends SharedService {
   }
   public getContrato(token, id) {
     return this.http.get(services.ws_nominas_contratos.concat('/').concat(id), this.options(token, null, null, null, ""))
+  }
+  delete(token, data) {
+    let body = JSON.stringify(data);
+    let options = this.options(token, null, null, null, "");
+    if (data.id) {
+      return this.http.delete(services.ws_nominas_contratos.concat("/").concat(data.id), options).map(res => res.json())
+    }
   }
 }
