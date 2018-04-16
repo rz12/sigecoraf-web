@@ -6,6 +6,7 @@ import { MatTableDataSource, MatPaginator, PageEvent } from '@angular/material';
 import { enums } from '../../../credentials';
 import { Parametrizacion } from '../../../master/models/parametrizacion';
 import { ParametrizacionService } from '../../../master/services/parametrizacion.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-cargos',
@@ -16,18 +17,21 @@ export class CargosComponent implements OnInit {
   public cargosList: Cargo[];
   displayedColumns = ['nombre', 'sueldo', 'seleccionar'];
   dataSource = new MatTableDataSource();
+  selection = new SelectionModel();
   public urlEdit: String;
   public urlAdd = "cargo-detail/0"
   public codigoAddCargo = "ADD_CARGO";
   public codigoEditCargo = "EDIT_CARGO";
   public message: String;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private cargoService: CargoService, private seguridadService: SeguridadService, private parametrizacionService: ParametrizacionService) { }
   public length: number;
   public pageSize: number = 1;
   public pageIndex: number = 1;
   public pageSizeOptions: number[]
   public filter: String;
+  constructor(private cargoService: CargoService, private seguridadService: SeguridadService,
+    private parametrizacionService: ParametrizacionService) { }
+
   ngOnInit() {
     this.pageSizeOptions = []
     this.cargarDetallesPaginacion();
@@ -42,8 +46,13 @@ export class CargosComponent implements OnInit {
     this.getCargosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
   selectedRow(item, event) {
-    this.urlEdit = 'cargo-detail'
-    this.urlEdit = this.urlEdit.concat('/').concat(item.id)
+    if (event.checked) {
+      this.urlEdit = 'cargo-detail'
+      this.urlEdit = this.urlEdit.concat('/').concat(item.id)
+      this.selection.toggle(item);
+    } else {
+      this.urlEdit = null;
+    }
   }
   public getCargosPagination(token, pageIndex, pageSize, filter) {
     this.cargoService.cargosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
@@ -79,5 +88,15 @@ export class CargosComponent implements OnInit {
     this.filter = event;
     let token = this.seguridadService.getToken()
     this.getCargosPagination(token, this.pageIndex, this.pageSize, this.filter);
+  }
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
 }

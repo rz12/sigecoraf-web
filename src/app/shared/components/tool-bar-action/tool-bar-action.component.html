@@ -1,8 +1,8 @@
 <div class="wrapper">
-  <button mat-raised-button *ngIf="hasPermissionAdd" color="primary" (click)='add()'>
+  <button mat-button *ngIf="hasPermissionAdd" color="primary" (click)='add()'>
     <i class="material-icons">add_box</i>
   </button>
-  <button mat-raised-button *ngIf="hasPermissionEdit" color="primary" (click)="edit()">
+  <button mat-button *ngIf="hasPermissionEdit" color="primary" (click)="edit()">
     <i class="material-icons ">edit</i>
   </button>
 </div>

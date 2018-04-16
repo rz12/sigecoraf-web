@@ -1,0 +1,61 @@
+<mat-card>
+  <mat-card-content>
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="pais">
+        <mat-header-cell *matHeaderCellDef> País </mat-header-cell>
+        <mat-cell *matCellDef="let direccion">
+          <label *ngIf="direccion.itemPais">{{direccion.itemPais.nombre}} </label>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="ciudad">
+        <mat-header-cell *matHeaderCellDef> Ciudad </mat-header-cell>
+        <mat-cell *matCellDef="let direccion"> {{direccion.ciudad}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="calle_principal">
+        <mat-header-cell *matHeaderCellDef> Calle Principal </mat-header-cell>
+        <mat-cell *matCellDef="let direccion"> {{direccion.calle_principal}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="referencia">
+        <mat-header-cell *matHeaderCellDef> Referencia </mat-header-cell>
+        <mat-cell *matCellDef="let direccion"> {{direccion.referencia}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tipo_direccion">
+        <mat-header-cell *matHeaderCellDef> Tipo de Dirección </mat-header-cell>
+        <mat-cell *matCellDef="let direccion">
+          <label *ngIf="direccion.itemTipoDireccion">{{direccion.itemTipoDireccion.nombre}} </label>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="telefono">
+        <mat-header-cell *matHeaderCellDef> Teléfono </mat-header-cell>
+        <mat-cell *matCellDef="let direccion"> {{direccion.numero_telefono}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="seleccionar">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedRow(row,$event )" [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
+      (page)="loadPagination($event)">
+    </mat-paginator>
+    <mat-card-actions>
+      <div class="wrapper">
+        <button mat-button color="primary" (click)="openDialog()">
+          <i class="material-icons ">edit</i>
+        </button>
+        <button mat-button color="primary" (click)="delete()">
+          <i class="material-icons ">delete</i>
+        </button>
+      </div>
+    </mat-card-actions>
+
+  </mat-card-content>
+
+</mat-card>

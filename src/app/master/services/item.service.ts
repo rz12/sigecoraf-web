@@ -8,6 +8,8 @@ export class ItemService extends SharedService {
   constructor(private http: Http) {
     super();
   }
-
+  public getItem(token, id) {
+    return this.http.get(services.ws_master_items.concat('/').concat(id), this.options(token, null, null, null, ""))
+  }
 
 }

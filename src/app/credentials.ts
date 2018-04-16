@@ -20,6 +20,8 @@ export var services = {
     ws_master_catalogos: credentials.host + '/api/v1/master/catalogos',
     ws_master_catalogos_list_by_codigo: credentials.host + '/api/v1/master/catalogos/list_by_codigo',
     ws_master_empresas: credentials.host + '/api/v1/master/empresas',
+    ws_master_direcciones: credentials.host + '/api/v1/master/direcciones',
+    ws_master_items: credentials.host + '/api/v1/master/items',
     /**
      * API REST NOMINAS
      */

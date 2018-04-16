@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { Headers, RequestOptions, URLSearchParams } from "@angular/http";
+import { element } from 'protractor';
 @Injectable()
 export class SharedService {
 
@@ -30,5 +31,10 @@ export class SharedService {
     }
     return new RequestOptions({ headers: headers, search: parametros });
 
+  }
+  public getIndexObject(data = [], object) {
+    return data.findIndex(function (element) {
+      return object.id == element.id;
+    });
   }
 }

@@ -18,7 +18,6 @@ export class EmpleadoDetailComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private empleadoService: EmpleadoService, private formBuilder: FormBuilder,
     private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
     this.empleado = new Empleado();
-
   }
 
   ngOnInit() {
@@ -67,6 +66,7 @@ export class EmpleadoDetailComponent implements OnInit {
     response.subscribe(res => {
       let message = ""
       if (res.status == enums.HTTP_200_OK) {
+        this.empleado = res.data;
         message = res.message;
       } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
         message = 'Campos Obligatorios Vacíos.'

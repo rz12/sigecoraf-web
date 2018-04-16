@@ -1,0 +1,32 @@
+<form [formGroup]="direccionForm">
+  <div mat-dialog-content>
+    <app-select-item [codigo]="'PAIS'" [control]="direccionForm.controls.pais" [placeHolder]="'Seleccione un Pais'" [valor]="data.direccion.pais">
+    </app-select-item>
+    <app-select-item [codigo]="'TIPO_DIRECCION'" [control]="direccionForm.controls.tipoDireccion" [placeHolder]="'Seleccione un TIpo'"
+      [valor]="data.direccion.tipo_direccion">
+    </app-select-item>
+    <mat-form-field class="full-width">
+      <input matInput required formControlName="ciudad" placeholder="Ciudad" [(ngModel)]="data.direccion.ciudad">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput required formControlName="callePrincipal" placeholder="Calle Principal" [(ngModel)]="data.direccion.calle_principal">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput formControlName="calleSecundaria" placeholder="Calle Secundaria" [(ngModel)]="data.direccion.calle_secundaria">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput formControlName="numeroTelefono" placeholder="Teléfono" [(ngModel)]="data.direccion.numero_telefono">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <textarea matInput formControlName="referencia" placeholder="Referencia" [(ngModel)]="data.direccion.referencia"></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="direccionForm.valid && save()" color="primary">
+      <i class="material-icons">save</i>
+    </button>
+    <button mat-button (click)="onNoClick()" color="primary">
+      <i class="material-icons">arrow_back</i>
+    </button>
+  </div>
+</form>

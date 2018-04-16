@@ -1,12 +1,10 @@
-<form [formGroup]="empleadoForm" (ngSubmit)="empleadoForm.valid && save()">
-  <mat-card class="mat-card">
-    <mat-card-header>
-    </mat-card-header>
-
-    <mat-card-content>
-
-      <mat-tab-group>
-        <mat-tab label="Datos de Empleado">
+<mat-card class="mat-card">
+  <mat-card-header>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Datos de Empleado">
+        <form [formGroup]="empleadoForm">
           <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
             <div class="flex-div" fxFlex="50">
               <div formGroupName="persona">
@@ -65,26 +63,26 @@
                 <app-select-empresa [control]="empleadoForm.controls.empleado.controls.empresa" [valor]="empleado.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
                 <mat-checkbox formControlName="estado" [(ngModel)]="empleado.estado" fechaIngresoIees="estado">Estado</mat-checkbox>
               </div>
-
             </div>
           </div>
-        </mat-tab>
-        <mat-tab label="Direcciones">
+          <div class="wrapper">
+            <button mat-button color="primary" (click)="empleadoForm.valid && save()">
+              <i class="material-icons">save</i>
+            </button>
+            <button mat-button color="primary" (click)="cancel()">
+              <i class="material-icons">arrow_back</i>
+            </button>
+          </div>
+        </form>
+      </mat-tab>
+      <mat-tab *ngIf="empleado.id" label="Direcciones">
+        <app-direcciones [empleado]="empleado"></app-direcciones>
+      </mat-tab>
+    </mat-tab-group>
 
-        </mat-tab>
-      </mat-tab-group>
+  </mat-card-content>
 
-    </mat-card-content>
+  <mat-card-actions>
 
-    <mat-card-actions>
-      <div class="wrapper">
-        <button mat-raised-button color="primary" type="submit">
-          <i class="material-icons">save</i>
-        </button>
-        <button mat-raised-button color="primary" (click)="cancel()">
-          <i class="material-icons">arrow_back</i>
-        </button>
-      </div>
-    </mat-card-actions>
-  </mat-card>
-</form>
+  </mat-card-actions>
+</mat-card>

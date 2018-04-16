@@ -5,6 +5,7 @@ import { EmpleadoService } from '../../services/empleado.service';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
 import { ParametrizacionService } from '../../../master/services/parametrizacion.service';
 import { enums } from '../../../credentials';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-empleados',
@@ -15,6 +16,7 @@ export class EmpleadosComponent implements OnInit {
   empleadosList: Empleado[];
   displayedColumns = ['nombres', 'apellidos', 'numero_identificacion', 'tipo_documento', 'celular', 'fecha_inicio', 'seleccionar'];
   dataSource = new MatTableDataSource();
+  selection = new SelectionModel();
   public urlEdit: String;
   public urlAdd = "empleado-detail/0"
   public codigoAdd = "ADD_EMPLEADO";
@@ -42,8 +44,13 @@ export class EmpleadosComponent implements OnInit {
     this.getEmpleadosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
   selectedRow(item, event) {
-    this.urlEdit = 'empleado-detail'
-    this.urlEdit = this.urlEdit.concat('/').concat(item.id)
+    if (event.checked) {
+      this.urlEdit = 'empleado-detail'
+      this.urlEdit = this.urlEdit.concat('/').concat(item.id)
+      this.selection.toggle(item);
+    } else {
+      this.urlEdit = null;
+    }
   }
   public getEmpleadosPagination(token, pageIndex, pageSize, filter) {
     this.empleadoService.empleadosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
@@ -80,5 +87,14 @@ export class EmpleadosComponent implements OnInit {
     let token = this.seguridadService.getToken()
     this.getEmpleadosPagination(token, this.pageIndex, this.pageSize, this.filter);
   }
-
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 }

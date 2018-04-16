@@ -28,6 +28,11 @@ import { EmpleadoService } from './services/empleado.service';
 import { SelectItemComponent } from '../shared/components/select-item/select-item.component';
 import { CatalogoService } from '../master/services/catalogo.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DireccionService } from '../master/services/direccion.service';
+import { DireccionesComponent } from '../master/components/direcciones/direcciones.component';
+import { DireccionDetailDialogComponent } from '../master/components/direccion-detail-dialog/direccion-detail-dialog.component';
+import { SharedService } from '../shared/services/shared.service';
+import { ItemService } from '../master/services/item.service';
 
 @NgModule({
   imports: [
@@ -55,7 +60,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
     ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent,
-    SelectItemComponent],
-  providers: [CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService, EmpleadoService]
+    SelectItemComponent, DireccionesComponent, DireccionDetailDialogComponent],
+  entryComponents: [DireccionesComponent, DireccionDetailDialogComponent],
+  providers: [SharedService, CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService,
+    EmpleadoService, DireccionService, ItemService]
 })
 export class NominasModule { }
