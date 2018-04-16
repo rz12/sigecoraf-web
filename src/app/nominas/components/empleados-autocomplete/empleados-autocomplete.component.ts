@@ -1,18 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { Empleado } from '../../models/empleado';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
 import { EmpleadoService } from '../../services/empleado.service';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
 import { ParametrizacionService } from '../../../master/services/parametrizacion.service';
 import { enums } from '../../../credentials';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Form } from '@angular/forms';
 
 @Component({
-  selector: 'app-empleados',
-  templateUrl: './empleados.component.html',
-  styleUrls: ['./empleados.component.css']
+  selector: 'app-empleados-autocomplete',
+  templateUrl: './empleados-autocomplete.component.html',
+  styleUrls: ['./empleados-autocomplete.component.css']
 })
-export class EmpleadosComponent implements OnInit {
+export class EmpleadosAutocompleteComponent implements OnInit {
+  @Output() notificador = new EventEmitter();
+  public empleadoSeleccionado: Empleado;
   displayedColumns = ['nombres', 'apellidos', 'numero_identificacion', 'tipo_documento', 'celular', 'fecha_inicio', 'seleccionar'];
   dataSource = new MatTableDataSource();
   selection = new SelectionModel();
@@ -26,6 +29,8 @@ export class EmpleadosComponent implements OnInit {
   public pageIndex: number = 1;
   public pageSizeOptions: number[]
   public filter: String;
+  public visible: Boolean = false;
+  @Input() control: Form;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private empleadoService: EmpleadoService, private seguridadService: SeguridadService,
     private parametrizacionService: ParametrizacionService) { }
@@ -33,22 +38,23 @@ export class EmpleadosComponent implements OnInit {
     this.pageSizeOptions = []
     this.cargarDetallesPaginacion();
   }
-  ngAfterViewInit() {
-    let token = this.seguridadService.getToken()
-    this.getEmpleadosPagination(token, this.pageIndex, this.pageSize, this.filter);
 
-  }
   public loadPagination(event) {
     let token = this.seguridadService.getToken()
     this.getEmpleadosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
   selectedRow(item, event) {
     if (event.checked) {
-      this.urlEdit = 'empleado-detail'
-      this.urlEdit = this.urlEdit.concat('/').concat(item.id)
+      this.empleadoSeleccionado = item
+      this.notificador.emit(this.empleadoSeleccionado)
       this.selection.toggle(item);
+      this.visible = false;
+      this.filter = this.empleadoSeleccionado.primer_nombre.concat(" " + this.empleadoSeleccionado.segundo_nombre).
+        concat(" " + this.empleadoSeleccionado.segundo_nombre)
+        .concat(" " + this.empleadoSeleccionado.primer_apellido).concat(" " + this.empleadoSeleccionado.segundo_apellido);
     } else {
-      this.urlEdit = null;
+      this.empleadoSeleccionado = new Empleado();
+      this.visible = true;
     }
   }
   public getEmpleadosPagination(token, pageIndex, pageSize, filter) {
@@ -81,10 +87,14 @@ export class EmpleadosComponent implements OnInit {
       })
     })
   }
-  public search(event) {
-    this.filter = event;
-    let token = this.seguridadService.getToken()
-    this.getEmpleadosPagination(token, this.pageIndex, this.pageSize, this.filter);
+  public search() {
+    if (this.filter != '') {
+      this.visible = true;
+      let token = this.seguridadService.getToken()
+      this.getEmpleadosPagination(token, this.pageIndex, this.pageSize, this.filter);
+    } else {
+      this.visible = false;
+    }
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -96,4 +106,5 @@ export class EmpleadosComponent implements OnInit {
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
+
 }

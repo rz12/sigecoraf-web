@@ -6,6 +6,7 @@ import { SeguridadService } from '../../../seguridad/services/seguridad.service'
 import { ParametrizacionService } from '../../../master/services/parametrizacion.service';
 import { Parametrizacion } from '../../../master/models/parametrizacion';
 import { enums } from '../../../credentials';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-contratos',
@@ -13,16 +14,17 @@ import { enums } from '../../../credentials';
   styleUrls: ['./contratos.component.css']
 })
 export class ContratosComponent implements OnInit {
-  public contratoList: Contrato[];
+
   displayedColumns = ['fecha_inicio', 'fecha_fin', 'estado', 'mensualizar_decimos'];
   dataSource = new MatTableDataSource();
+  selection = new SelectionModel();
   public urlEdit: String;
   public urlAdd = "contrato-detail/0"
   public codigoAdd = "ADD_CONTRATO";
   public codigoEdit = "EDIT_CONTRATO";
   public message: String;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private ContratoService: ContratoService, private seguridadService: SeguridadService, private parametrizacionService: ParametrizacionService) { }
+  constructor(private contratoService: ContratoService, private seguridadService: SeguridadService, private parametrizacionService: ParametrizacionService) { }
   public length: number;
   public pageSize: number = 1;
   public pageIndex: number = 1;
@@ -46,9 +48,9 @@ export class ContratosComponent implements OnInit {
     this.urlEdit = this.urlEdit.concat('/').concat(item.id)
   }
   public getContratoPagination(token, pageIndex, pageSize, filter) {
-    this.ContratoService.contratosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
+    this.contratoService.contratosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
-        this.dataSource.data = this.contratoList = data.json().data
+        this.dataSource.data = data.json().data
         this.length = data.json().count;
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
@@ -80,5 +82,14 @@ export class ContratosComponent implements OnInit {
     let token = this.seguridadService.getToken()
     this.getContratoPagination(token, this.pageIndex, this.pageSize, this.filter);
   }
-
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 }

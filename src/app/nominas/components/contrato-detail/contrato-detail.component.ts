@@ -4,6 +4,7 @@ import { ContratoService } from '../../services/contrato.service';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DialogService } from '../../../shared/dialog/services/dialog.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contrato-detail',
@@ -11,11 +12,20 @@ import { DialogService } from '../../../shared/dialog/services/dialog.service';
   styleUrls: ['./contrato-detail.component.css']
 })
 export class ContratoDetailComponent implements OnInit {
-  @Input()
-  contrato: Contrato;
+
+  public contrato: Contrato;
+  public contratoForm: any;
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private ContratoService: ContratoService,
-    private seguridadService: SeguridadService, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
+    private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
     this.contrato = new Contrato();
+    this.contratoForm = this.fb.group({
+      fechaInicio: ["", Validators.required],
+      fechaFin: ["",],
+      cargo: ["", Validators.required],
+      empleado: ["", Validators.required],
+      estado: ["",],
+      mensualizarDecimos: ["",],
+    })
   }
 
   ngOnInit() {
@@ -42,5 +52,11 @@ export class ContratoDetailComponent implements OnInit {
     this.ContratoService.getContrato(token, id).subscribe(res => {
       this.contrato = res.json().data;
     });
+  }
+  setCargo(event) {
+    this.contrato.cargo = event.id;
+  }
+  setEmpleado(event) {
+    this.contrato.empleado = event.id;
   }
 }

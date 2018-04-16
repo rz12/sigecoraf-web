@@ -4,10 +4,10 @@
     </mat-card-header>
     <mat-card-content>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Nombre" [(ngModel)]="cargo.nombre" formControlName="nombre">
+        <input matInput placeholder="Nombre" required [(ngModel)]="cargo.nombre" formControlName="nombre">
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input type="number" matInput placeholder="Sueldo" [(ngModel)]="cargo.sueldo" formControlName="sueldo">
+        <input type="number" matInput placeholder="Sueldo" required [(ngModel)]="cargo.sueldo" formControlName="sueldo">
       </mat-form-field>
       <mat-checkbox [(ngModel)]="cargo.estado" formControlName="estado">Estado</mat-checkbox>
       <mat-form-field class="full-width">

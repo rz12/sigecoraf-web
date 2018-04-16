@@ -1,53 +1,56 @@
 <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <h1>Contratos</h1>
-        <mat-divider></mat-divider>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngIf="!message">
-        <app-search (onFilter)="search($event)"></app-search>
-        <mat-divider></mat-divider>
-        <mat-table #table [dataSource]="dataSource">
-          <ng-container matColumnDef="fecha_inicio">
-            <mat-header-cell *matHeaderCellDef> fecha_inicio </mat-header-cell>
-            <mat-cell *matCellDef="let contrato"> {{contrato.fecha_inicio}} </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="fecha_fin">
-            <mat-header-cell *matHeaderCellDef> fecha_fin </mat-header-cell>
-            <mat-cell *matCellDef="let contrato"> {{contrato.fecha_fin}} </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="estado">
-            <mat-header-cell *matHeaderCellDef> estado </mat-header-cell>
-            <mat-cell *matCellDef="let contrato"> {{contrato.estado}} </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="mensualizar_decimos">
-            <mat-header-cell *matHeaderCellDef> mensualizar_decimos </mat-header-cell>
-            <mat-cell *matCellDef="let contrato"> {{contrato.mensualizar_decimos}} </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="seleccionar">
-            <mat-header-cell *matHeaderCellDef> Seleccionar </mat-header-cell>
-            <mat-cell *matCellDef="let contrato">
-              <mat-checkbox (change)="selectedRow(contrato,$event)">
-              </mat-checkbox>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
-          (page)="loadPagination($event)">
-        </mat-paginator>
-  
-        <mat-card-actions>
-          <app-tool-bar-acction [codigoAdd]="codigoAdd" [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
-        </mat-card-actions>
-      </div>
-  
-      <div *ngIf="message">
-        <h1>{{message}}</h1>
-      </div>
-    </mat-card-content>
-  
-  </mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Contratos</h1>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="!message">
+      <app-search (onFilter)="search($event)"></app-search>
+      <mat-divider></mat-divider>
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="fecha_inicio">
+          <mat-header-cell *matHeaderCellDef> fecha_inicio </mat-header-cell>
+          <mat-cell *matCellDef="let contrato"> {{contrato.fecha_inicio}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fecha_fin">
+          <mat-header-cell *matHeaderCellDef> fecha_fin </mat-header-cell>
+          <mat-cell *matCellDef="let contrato"> {{contrato.fecha_fin}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="estado">
+          <mat-header-cell *matHeaderCellDef> estado </mat-header-cell>
+          <mat-cell *matCellDef="let contrato"> {{contrato.estado}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="mensualizar_decimos">
+          <mat-header-cell *matHeaderCellDef> mensualizar_decimos </mat-header-cell>
+          <mat-cell *matCellDef="let contrato"> {{contrato.mensualizar_decimos}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="seleccionar">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedRow(row,$event )" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
+        (page)="loadPagination($event)">
+      </mat-paginator>
+
+      <mat-card-actions>
+        <app-tool-bar-acction [codigoAdd]="codigoAdd" [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+      </mat-card-actions>
+    </div>
+
+    <div *ngIf="message">
+      <h1>{{message}}</h1>
+    </div>
+  </mat-card-content>
+
+</mat-card>

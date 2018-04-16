@@ -1,58 +1,62 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Empleado } from '../../models/empleado';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
-import { EmpleadoService } from '../../services/empleado.service';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { FormControl, Form } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { Cargo } from "../../models/cargo";
+import { CargoService } from '../../services/cargo.service';
+import { map } from 'rxjs/operators/map';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
 import { ParametrizacionService } from '../../../master/services/parametrizacion.service';
 import { enums } from '../../../credentials';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-
 @Component({
-  selector: 'app-empleados',
-  templateUrl: './empleados.component.html',
-  styleUrls: ['./empleados.component.css']
+  selector: 'app-cargos-autcomplete',
+  templateUrl: './cargos-autcomplete.component.html',
+  styleUrls: ['./cargos-autcomplete.component.css']
 })
-export class EmpleadosComponent implements OnInit {
-  displayedColumns = ['nombres', 'apellidos', 'numero_identificacion', 'tipo_documento', 'celular', 'fecha_inicio', 'seleccionar'];
+export class CargosAutcompleteComponent implements OnInit {
+  @Output() notificador = new EventEmitter();
+  public cargoSeleccionado: Cargo;
+  displayedColumns = ['nombre', 'sueldo', 'seleccionar'];
   dataSource = new MatTableDataSource();
   selection = new SelectionModel();
-  public urlEdit: String;
-  public urlAdd = "empleado-detail/0"
-  public codigoAdd = "ADD_EMPLEADO";
-  public codigoEdit = "EDIT_EMPLEADO";
   public message: String;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public length: number;
   public pageSize: number = 1;
   public pageIndex: number = 1;
   public pageSizeOptions: number[]
   public filter: String;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private empleadoService: EmpleadoService, private seguridadService: SeguridadService,
+  public visible: Boolean = false;
+  @Input() control: Form;
+  constructor(private cargoService: CargoService, private seguridadService: SeguridadService,
     private parametrizacionService: ParametrizacionService) { }
+
   ngOnInit() {
     this.pageSizeOptions = []
     this.cargarDetallesPaginacion();
   }
-  ngAfterViewInit() {
-    let token = this.seguridadService.getToken()
-    this.getEmpleadosPagination(token, this.pageIndex, this.pageSize, this.filter);
 
-  }
   public loadPagination(event) {
     let token = this.seguridadService.getToken()
-    this.getEmpleadosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
+    this.getCargosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
   selectedRow(item, event) {
     if (event.checked) {
-      this.urlEdit = 'empleado-detail'
-      this.urlEdit = this.urlEdit.concat('/').concat(item.id)
+      this.cargoSeleccionado = item;
       this.selection.toggle(item);
+      this.filter = this.cargoSeleccionado.nombre;
+      this.notificador.emit(this.cargoSeleccionado)
+      this.visible = false;
     } else {
-      this.urlEdit = null;
+      this.cargoSeleccionado = new Cargo();
+      this.visible = true;
     }
   }
-  public getEmpleadosPagination(token, pageIndex, pageSize, filter) {
-    this.empleadoService.empleadosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
+
+
+  public getCargosPagination(token, pageIndex, pageSize, filter) {
+    this.cargoService.cargosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
         this.dataSource.data = data.json().data
         this.length = data.json().count;
@@ -81,10 +85,14 @@ export class EmpleadosComponent implements OnInit {
       })
     })
   }
-  public search(event) {
-    this.filter = event;
-    let token = this.seguridadService.getToken()
-    this.getEmpleadosPagination(token, this.pageIndex, this.pageSize, this.filter);
+  public search() {
+    if (this.filter != '') {
+      this.visible = true;
+      let token = this.seguridadService.getToken()
+      this.getCargosPagination(token, this.pageIndex, this.pageSize, this.filter);
+    } else {
+      this.visible = false;
+    }
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

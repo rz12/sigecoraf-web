@@ -100,6 +100,24 @@ button {
   padding: 20px
 }
 
+.section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.suggestions {
+  z-index: 500;
+  background: #fff;
+  border: 1px solid #80b6e1;
+  float: none;
+  width: 750px;
+  position: fixed;
+  overflow-y: scroll;
+  height: 350px;
+}
+
 /*
 Copyright 2017-2018 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that

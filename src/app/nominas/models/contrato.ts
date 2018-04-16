@@ -1,6 +1,3 @@
-//import { Cargo } from "./cargo";
-//import { Empleado } from "./empleado";
-
 export class Contrato {
     public fecha_inicio: Date;
     public fecha_fin: Date;

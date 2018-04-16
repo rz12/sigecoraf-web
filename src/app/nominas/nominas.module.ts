@@ -15,7 +15,7 @@ import { ContratoService } from './services/contrato.service';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
 import {
   MatTableModule, MatCardModule, MatButtonModule, MatIconModule, MatFormField, MatFormFieldModule, MatInputModule,
-  MatCheckboxModule, MatSelectModule, MatPaginatorModule, MatGridListModule, MatDividerModule, MatDatepickerModule, MatNativeDateModule, MatStepperModule, MatTabsModule
+  MatCheckboxModule, MatSelectModule, MatPaginatorModule, MatGridListModule, MatDividerModule, MatDatepickerModule, MatNativeDateModule, MatStepperModule, MatTabsModule, MatAutocompleteModule
 } from '@angular/material';
 import { RolPago } from './models/rol-pago';
 import { RolPagoService } from './services/rol-pago.service';
@@ -33,6 +33,8 @@ import { DireccionesComponent } from '../master/components/direcciones/direccion
 import { DireccionDetailDialogComponent } from '../master/components/direccion-detail-dialog/direccion-detail-dialog.component';
 import { SharedService } from '../shared/services/shared.service';
 import { ItemService } from '../master/services/item.service';
+import { CargosAutcompleteComponent } from './components/cargos-autcomplete/cargos-autcomplete.component';
+import { EmpleadosAutocompleteComponent } from './components/empleados-autocomplete/empleados-autocomplete.component';
 
 @NgModule({
   imports: [
@@ -55,12 +57,13 @@ import { ItemService } from '../master/services/item.service';
     MatNativeDateModule,
     MatStepperModule,
     MatTabsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatAutocompleteModule,
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
     ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent,
-    SelectItemComponent, DireccionesComponent, DireccionDetailDialogComponent],
+    SelectItemComponent, DireccionesComponent, DireccionDetailDialogComponent, CargosAutcompleteComponent, EmpleadosAutocompleteComponent],
   entryComponents: [DireccionesComponent, DireccionDetailDialogComponent],
   providers: [SharedService, CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService,
     EmpleadoService, DireccionService, ItemService]
