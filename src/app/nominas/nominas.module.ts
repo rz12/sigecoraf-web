@@ -35,6 +35,8 @@ import { SharedService } from '../shared/services/shared.service';
 import { ItemService } from '../master/services/item.service';
 import { CargosAutcompleteComponent } from './components/cargos-autcomplete/cargos-autcomplete.component';
 import { EmpleadosAutocompleteComponent } from './components/empleados-autocomplete/empleados-autocomplete.component';
+import { ConsolidadoRolPagoListComponent } from './components/consolidado-rol-pago-list/consolidado-rol-pago-list.component';
+import { ConsolidadoRolPagoDetailComponent } from './components/consolidado-rol-pago-detail/consolidado-rol-pago-detail.component';
 
 @NgModule({
   imports: [
@@ -64,7 +66,9 @@ import { EmpleadosAutocompleteComponent } from './components/empleados-autocompl
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
     ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent,
     SelectItemComponent, DireccionesComponent, DireccionDetailDialogComponent, CargosAutcompleteComponent,
-    EmpleadosAutocompleteComponent],
+    EmpleadosAutocompleteComponent,
+    ConsolidadoRolPagoListComponent,
+    ConsolidadoRolPagoDetailComponent],
   entryComponents: [DireccionesComponent, DireccionDetailDialogComponent],
   providers: [SharedService, CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService,
     EmpleadoService, DireccionService, ItemService]
