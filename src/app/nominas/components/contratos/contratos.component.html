@@ -25,20 +25,26 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="fecha_inicio">
-          <mat-header-cell *matHeaderCellDef> fecha_inicio </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> Fecha de Inicio </mat-header-cell>
           <mat-cell *matCellDef="let contrato"> {{contrato.fecha_inicio}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="fecha_fin">
-          <mat-header-cell *matHeaderCellDef> fecha_fin </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> Fecha de Fin </mat-header-cell>
           <mat-cell *matCellDef="let contrato"> {{contrato.fecha_fin}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="estado">
-          <mat-header-cell *matHeaderCellDef> estado </mat-header-cell>
-          <mat-cell *matCellDef="let contrato"> {{contrato.estado}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+          <mat-cell *matCellDef="let contrato">
+            <label *ngIf="contrato.estado">Activo</label>
+            <label *ngIf="!contrato.estado">Desactivo</label>
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="mensualizar_decimos">
-          <mat-header-cell *matHeaderCellDef> mensualizar_decimos </mat-header-cell>
-          <mat-cell *matCellDef="let contrato"> {{contrato.mensualizar_decimos}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef> Mensualizar Décimos </mat-header-cell>
+          <mat-cell *matCellDef="let contrato">
+            <label *ngIf="contrato.mensualizar_decimos">Si</label>
+            <label *ngIf="!contrato.mensualizar_decimos">No</label>
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="seleccionar">
           <mat-header-cell *matHeaderCellDef>

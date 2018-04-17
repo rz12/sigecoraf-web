@@ -61,7 +61,7 @@
                   <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
                 <app-select-empresa [control]="empleadoForm.controls.empleado.controls.empresa" [valor]="empleado.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
-                <mat-checkbox formControlName="estado" [(ngModel)]="empleado.estado" fechaIngresoIees="estado">Estado</mat-checkbox>
+                <mat-checkbox formControlName="estado" [(ngModel)]="empleado.estado" fechaIngresoIees="estado">Activo</mat-checkbox>
               </div>
             </div>
           </div>

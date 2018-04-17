@@ -20,10 +20,10 @@
       <app-empleados-autocomplete [filter]="contrato.id &&contrato.empleadoObject?contrato.empleadoObject.primer_nombre+' '+contrato.empleadoObject.segundo_nombre+' '+contrato.empleadoObject.primer_apellido+' '+contrato.empleadoObject.segundo_apellido:''"
         [control]="contratoForm.controls.empleado" (notificador)="setEmpleado($event)"></app-empleados-autocomplete>
       <section>
-        <mat-checkbox [(ngModel)]="contrato.estado" formControlName="estado">estado</mat-checkbox>
+        <mat-checkbox [(ngModel)]="contrato.estado" formControlName="estado">Activo</mat-checkbox>
       </section>
       <section>
-        <mat-checkbox [(ngModel)]="contrato.mensualizar_decimos" formControlName="estado">mensualizarDecimos</mat-checkbox>
+        <mat-checkbox [(ngModel)]="contrato.mensualizar_decimos" formControlName="estado">Mensualizar Décimos</mat-checkbox>
       </section>
     </mat-card-content>
     <mat-card-actions>

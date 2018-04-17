@@ -70,7 +70,6 @@ export class EmpleadoDetailComponent implements OnInit {
         let message = ""
         if (res.status == enums.HTTP_200_OK) {
           this.empleado = res.data;
-
           message = res.message;
         } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
           message = res.message
