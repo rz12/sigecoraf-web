@@ -6,6 +6,7 @@ import { SeguridadService } from '../../../seguridad/services/seguridad.service'
 import { DialogService } from '../../../shared/dialog/services/dialog.service';
 import { enums } from '../../../credentials';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ItemService } from '../../../master/services/item.service';
 
 @Component({
   selector: 'app-empleado-detail',
@@ -16,7 +17,8 @@ export class EmpleadoDetailComponent implements OnInit {
   empleadoForm: any;
   public empleado: Empleado;
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private empleadoService: EmpleadoService, private formBuilder: FormBuilder,
-    private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
+    private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef,
+    private dialogService: DialogService, private itemService: ItemService) {
     this.empleado = new Empleado();
   }
 
@@ -24,7 +26,7 @@ export class EmpleadoDetailComponent implements OnInit {
     let id = +this.activatedRoute.snapshot.params['id'];
     if (id != 0) {
       let token = this.seguridadService.getToken()
-      this.getCargo(token, id)
+      this.getEmpleado(token, id)
     }
     this.empleadoForm = this.fb.group({
       persona: this.fb.group({
@@ -62,25 +64,32 @@ export class EmpleadoDetailComponent implements OnInit {
   }
   public save() {
     let token = this.seguridadService.getToken()
-    let response = this.empleadoService.save(token, this.empleado);
-    response.subscribe(res => {
-      let message = ""
-      if (res.status == enums.HTTP_200_OK) {
-        this.empleado = res.data;
-        message = res.message;
-      } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
-        message = 'Campos Obligatorios Vacíos.'
-      }
-      this.dialogService.notificacion('', message, this.viewContainerRef)
+    this.itemService.getItem(token, this.empleado.tipo_documento_identificacion).subscribe(item => {
+      this.empleado.tipo_documento_identificacion_object = item.json().data;
+      this.empleadoService.save(token, this.empleado).subscribe(res => {
+        let message = ""
+        if (res.status == enums.HTTP_200_OK) {
+          this.empleado = res.data;
+
+          message = res.message;
+        } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
+          message = res.message
+        }
+        this.dialogService.notificacion('', message, this.viewContainerRef)
+      })
     })
+
   }
   public cancel() {
     let link = ['/' + 'empleados'];
     this.router.navigate(link);
   }
-  public getCargo(token, id) {
+  public getEmpleado(token, id) {
     this.empleadoService.getEmpleado(token, id).subscribe(res => {
       this.empleado = res.json().data;
+      this.itemService.getItem(token, this.empleado.tipo_documento_identificacion).subscribe(item => {
+        this.empleado.tipo_documento_identificacion_object = item.json().data;
+      })
     });
   }
 

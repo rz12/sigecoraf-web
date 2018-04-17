@@ -24,8 +24,8 @@ export class DireccionDetailDialogComponent implements OnInit {
       numeroTelefono: ["",]
     })
   }
-  onNoClick(): void {
-    this.dialogRef.close();
+  onNoClick() {
+    this.dialogRef.close(null);
   }
   save() {
     this.data.direccion.pais = this.direccionForm.controls.pais.value

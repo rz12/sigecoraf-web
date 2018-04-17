@@ -1,6 +1,6 @@
 <div *ngIf="!message">
   <mat-form-field class="full-width">
-    <input matInput [(ngModel)]="filter" [formControl]="control" (keyup)="search()" placeholder="Seleccionar Empleado">
+    <input matInput required [(ngModel)]="filter" [formControl]="control" (keyup)="search()" placeholder="Seleccionar Empleado">
   </mat-form-field>
   <div class="suggestions" *ngIf="visible">
     <mat-table #table [dataSource]="dataSource">

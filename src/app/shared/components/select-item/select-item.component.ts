@@ -27,17 +27,20 @@ export class SelectItemComponent implements OnInit {
   ngOnInit() {
     this.itemList = [];
     let token = this.seguridadService.getToken();
-    this.catalogoService.catalogosListByCodigo(token.token, { "CODIGO": this.codigo }).subscribe(data => {
-      if (data.json().status == enums.HTTP_200_OK) {
-        data.json().data.forEach(catalogo => {
-          this.itemList = (catalogo.items)
-        });
-        this.selectItem(this.valor ? this.valor : null)
-        this.changeDetector.detectChanges();
-      } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
-        this.message = data.json().message;
-      }
+    setTimeout(() => {
+      this.catalogoService.catalogosListByCodigo(token.token, { "CODIGO": this.codigo }).subscribe(data => {
+        if (data.json().status == enums.HTTP_200_OK) {
+          data.json().data.forEach(catalogo => {
+            this.itemList = (catalogo.items)
+          });
+          this.selectItem(this.valor)
+          this.changeDetector.detectChanges();
+        } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
+          this.message = data.json().message;
+        }
+      });
     });
+
   }
 
   selectItem(newValue) {

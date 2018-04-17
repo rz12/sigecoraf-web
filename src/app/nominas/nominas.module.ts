@@ -63,7 +63,8 @@ import { EmpleadosAutocompleteComponent } from './components/empleados-autocompl
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
     ContratosComponent, ContratoDetailComponent, RolesPagoComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent,
-    SelectItemComponent, DireccionesComponent, DireccionDetailDialogComponent, CargosAutcompleteComponent, EmpleadosAutocompleteComponent],
+    SelectItemComponent, DireccionesComponent, DireccionDetailDialogComponent, CargosAutcompleteComponent,
+    EmpleadosAutocompleteComponent],
   entryComponents: [DireccionesComponent, DireccionDetailDialogComponent],
   providers: [SharedService, CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService,
     EmpleadoService, DireccionService, ItemService]
