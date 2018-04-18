@@ -1,3 +1,51 @@
-<p>
-  consolidado-rol-pago-list works!
-</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Consolidado de Roles de Pago</h1>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="!message">
+      <app-search (onFilter)="search($event)"></app-search>
+      <mat-divider></mat-divider>
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="fecha_desde">
+          <mat-header-cell *matHeaderCellDef> Fecha Inicio </mat-header-cell>
+          <mat-cell *matCellDef="let consolidado"> {{consolidado.fecha_desde}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fecha_hasta">
+          <mat-header-cell *matHeaderCellDef> Fecha de Fin </mat-header-cell>
+          <mat-cell *matCellDef="let consolidado"> {{consolidado.fecha_hasta}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="observacion">
+          <mat-header-cell *matHeaderCellDef> Observación </mat-header-cell>
+          <mat-cell *matCellDef="let consolidado"> {{consolidado.observacion}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="seleccionar">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedRow(row,$event )" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
+        (page)="loadPagination($event)">
+      </mat-paginator>
+      <mat-card-actions>
+        <app-tool-bar-acction [codigoAdd]="codigoAdd" [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+      </mat-card-actions>
+    </div>
+
+    <div *ngIf="message">
+      <h1>{{message}}</h1>
+    </div>
+  </mat-card-content>
+
+</mat-card>

@@ -29,6 +29,7 @@ export var services = {
     ws_nominas_contratos: credentials.host + '/api/v1/nominas/contratos',
     ws_nominas_rolPagos: credentials.host + '/api/v1/nominas/roles-pago',
     ws_nominas_empleados: credentials.host + '/api/v1/nominas/empleados',
+    ws_nominas_consolido_rol_pago: credentials.host + '/api/v1/nominas/consolidado-rolpago-list',
 }
 export var enums = {
     /**
@@ -65,6 +66,7 @@ export var enums = {
     MENU_CARGOS: "CARGOS",
     MENU_EMPLEADOS: "EMPLEADOS",
     MENU_CONTRATOS: "CONTRATOS",
+    MENU_CONSOLIDADOS: "CONSOLIDADO_ROL_PAGO",
     MENU_CARGOS_ADD: "ADD_CARGO",
     MENU_CARGOS_EDIT: "EDIT_CARGO",
     MENU_EMPLEADOS_ADD: "ADD_EMPLEADO",
