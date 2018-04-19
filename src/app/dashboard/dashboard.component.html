@@ -1,25 +1,10 @@
-<mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
-
-  <nav *ngFor="let menu of menuService.getMenus()">
-    <div class="wrapper">
-      <button [class.button-activate]="menu.activate" mat-button (click)="navigate(menu)">
+<div *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <nav class="container" *ngFor="let menu of menuService.getMenus()">
+    <div class="button-wrapper">
+      <button [class.button-dashboard-activate]="menu.activate" mat-button class="button-dashboard" (click)="navigate(menu)">
         <i class="material-icons icon-menu" [class.icon-menu-active]="menu.activate">{{menu.icono}}</i>
         <div>{{menu.nombre}}</div>
       </button>
     </div>
   </nav>
-
-  <span class="spacer"></span>
-  <div class="wrapper">
-    <div *ngIf="usuario">Bienvenido: {{usuario.username}}</div>
-    <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">
-
-      <i class="material-icons">power_settings_new</i>
-    </button>
-    <button md-icon-button (click)="setSideNavState()">
-      <mat-icon>
-        <i class="material-icons">dashboard</i>
-      </mat-icon>
-    </button>
-  </div>
-</mat-toolbar>
+</div>

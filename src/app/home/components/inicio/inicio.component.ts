@@ -9,6 +9,7 @@ import { enums } from "./../../../credentials";
 import { SeguridadService } from './../../../seguridad/services/seguridad.service';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { Idle } from '@ng-idle/core';
+import { Observable } from 'rxjs/Observable';
 import { Keepalive } from '@ng-idle/keepalive';
 import { MenuService } from '../../../seguridad/services/menu.service';
 
@@ -23,7 +24,7 @@ declare const $: any;
 export class InicioComponent {
 
   private isOpen = true;
-  private usuario: Usuario;
+  isUsuario$: Observable<Usuario>;
   mode = 'side';
   private watcher: Subscription;
   estilo = 'width-20 sidebar-left';
@@ -32,7 +33,6 @@ export class InicioComponent {
     , private seguridadService: SeguridadService, private menuService: MenuService, private idle: Idle, private keepalive: Keepalive) {
 
     let token = this.seguridadService.getToken()
-    this.usuario = new Usuario()
     if (menuService.getMenus()) {
       menuService.getMenus().forEach(menu => {
         if (Number(menu.orden) == 1) {
@@ -42,15 +42,12 @@ export class InicioComponent {
         }
       })
     }
-    if (this.seguridadService.isLoggedIn) {
-      this.getUsuarioByToken(token.token);
+    if (this.seguridadService.isLoggedIn.subscribe(res => res = true)) {
       this.cargarParametros(token.token)
     }
   }
 
-  getUsuarioByToken(token) {
-    this.usuarioService.getUsuarioPorToken(token)
-  }
+
   public cargarParametros(token) {
     this.parametrizacionService.getParametrizaciones(token).subscribe(
       res => {

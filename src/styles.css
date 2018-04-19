@@ -47,7 +47,6 @@ button {
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
-  margin: 2px
 }
 
 .button-activate {
@@ -56,7 +55,7 @@ button {
 }
 
 .icon-menu {
-  color: #888;
+  color: #fff;
 }
 
 .icon-menu-active {
@@ -73,12 +72,7 @@ button {
   min-height: 500px;
   height: auto;
   line-height: 48px;
-  padding: 0;
-  padding-left: 16px;
-  padding-right: 56px;
-  text-decoration: none;
-  clear: both;
-  overflow: hidden;
+  padding: 20;
 }
 
 .spacer {
@@ -116,6 +110,23 @@ button {
   position: fixed;
   overflow-y: scroll;
   height: 350px;
+}
+
+.button-dashboard {
+  font-family: Arial;
+  background-color: #369;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  margin: 2px;
+}
+
+.button-dashboard-activate {
+  background-color: cornflowerblue;
+  color: #eee
 }
 
 /*

@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from "@angular/http";
 import { services, enums } from "../../credentials";
 import { Usuario } from '../models/usuario';
-
+import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class UsuarioService {
-  private usuario: Usuario;
+  private usuario = new BehaviorSubject<Usuario>(null);
   constructor(private http: Http) { }
 
   getUsuarioPorToken(token) {
@@ -14,17 +15,13 @@ export class UsuarioService {
     headers.append('Accept', 'application/json');
     headers.append("Authorization", token);
     let options = new RequestOptions({ headers: headers });
-    return this.http.get(services.ws_seguridad_user_by_token, options).subscribe(res => {
-      this.usuario = res.json();
-      localStorage.setItem(enums.SESSION_USUARIO, JSON.stringify(this.usuario));
-    })
+    return this.http.get(services.ws_seguridad_user_by_token, options)
   }
-  public getUsuario() {
 
-    if (this.usuario) {
-      return this.usuario;
-    }
-
-    return JSON.parse(localStorage.getItem(enums.SESSION_USUARIO));
+  getUsuario() {
+    return this.usuario.asObservable();
+  }
+  public setUsuario(newValue): void {
+    this.usuario.next(newValue);
   }
 }

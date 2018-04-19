@@ -5,6 +5,7 @@ import { UsuarioService } from "../../services/usuario.service";
 import { DialogService } from "../../../shared/dialog/services/dialog.service";
 import { DashboardComponent } from "../../../dashboard/dashboard.component";
 import { SeguridadService } from "../../services/seguridad.service";
+import { enums } from "../../../credentials";
 
 @Component({
   selector: "app-login",
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   user = { username: "", password: "" };
   loginForm: any;
   @ViewChild(DashboardComponent) dashboardComponent: DashboardComponent;
-  constructor(private seguridadService: SeguridadService, @Inject(FormBuilder) fb: FormBuilder, private dialogService: DialogService,
+  constructor(private usuarioService: UsuarioService, private seguridadService: SeguridadService, @Inject(FormBuilder) fb: FormBuilder, private dialogService: DialogService,
     private viewContainerRef: ViewContainerRef, private router: Router) {
     this.loginForm = fb.group({
       user: fb.group({
@@ -31,10 +32,12 @@ export class LoginComponent implements OnInit {
     this.user.password = this.loginForm.value.user.password;
     this.seguridadService.autenticate(this.user).then(res => {
       if (res == true) {
+        let token = this.seguridadService.getToken()
         this.router.navigate(['home'])
       } else {
         this.dialogService.notificacion('ERROR!', 'No puede iniciar sesión con las credenciales proporcionadas.', this.viewContainerRef)
       }
     });
   }
+
 }

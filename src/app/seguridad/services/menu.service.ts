@@ -37,7 +37,7 @@ export class MenuService extends SharedService {
 
   }
   public getMenus() {
-    if (this.menus) {
+    if (this.menus.length > 0) {
       return this.menus;
     }
     return JSON.parse(localStorage.getItem(enums.SISTEMA_MENUS))

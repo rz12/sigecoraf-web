@@ -1,19 +1,30 @@
-<app-dashboard></app-dashboard>
-<mat-sidenav-container>
+<mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <button md-icon-button (click)="setSideNavState()">
+    <mat-icon>
+      <i class="material-icons">dashboard</i>
+    </mat-icon>
+  </button>
+  Sistema de Gestión de Roles de Pago
+  <span class="spacer"></span>
+  <div class="wrapper">
+    <div *ngIf="usuario">Bienvenido: {{usuario.username}}</div>
+    <button mat-button (click)="onLogout()">
+      <i class="material-icons">power_settings_new</i>
+    </button>
 
+  </div>
+</mat-toolbar>
+<mat-sidenav-container>
   <mat-sidenav #sidenav opened="{{sidenavState | async }}">
     <mat-card>
       <mat-card-content>
         <div class="sidebar-body">
-
+          <app-dashboard></app-dashboard>
         </div>
-
       </mat-card-content>
-
     </mat-card>
   </mat-sidenav>
   <mat-sidenav-content>
-
     <mat-card>
       <mat-card-content>
         <div class="sidebar-body">
