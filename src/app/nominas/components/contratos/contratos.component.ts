@@ -133,4 +133,13 @@ export class ContratosComponent implements OnInit {
       })
     }
   }
+
+  public confirmDelete(event) {
+    this.dialogService.confirm('Eliminación', '¿Seguro desea Eliminar el Contrato?', this.viewContainerRef)
+      .subscribe(res => {
+        if (res == true) {
+          this.delete(event);
+        }
+      });
+  }
 }

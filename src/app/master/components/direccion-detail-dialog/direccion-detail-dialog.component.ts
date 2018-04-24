@@ -25,12 +25,15 @@ export class DireccionDetailDialogComponent implements OnInit {
     })
   }
   onNoClick() {
+    this.data.direccion = null;
     this.dialogRef.close(null);
   }
   save() {
-    this.data.direccion.pais = this.direccionForm.controls.pais.value
-    this.data.direccion.tipo_direccion = this.direccionForm.controls.tipoDireccion.value
-    this.dialogRef.close(this.data.direccion);
+    if (this.data.direccion) {
+      this.data.direccion.pais = this.direccionForm.controls.pais.value
+      this.data.direccion.tipo_direccion = this.direccionForm.controls.tipoDireccion.value
+      this.dialogRef.close(this.data.direccion);
+    }
   }
 
 }

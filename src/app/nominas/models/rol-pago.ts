@@ -2,8 +2,10 @@ import { ConsolidadoRolPago } from "./consolidado-rol-pago";
 import { Contrato } from "./contrato";
 
 export class RolPago {
-    public fecha_inicio: Date;
+    public id: Number;
+    public fecha: Date;
     public total: Number;
     public consolidado_rolpago: ConsolidadoRolPago;
-    public contrato: Contrato;
+    public contrato: number;
+    public contratoObject: Contrato;
 }

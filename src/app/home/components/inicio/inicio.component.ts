@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, NgZone, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { MediaChange, ObservableMedia } from "@angular/flex-layout";
+import { Component, OnInit } from '@angular/core';
+import { ObservableMedia } from "@angular/flex-layout";
 import { UsuarioService } from '../../../seguridad/services/usuario.service';
 import { Usuario } from '../../../seguridad/models/usuario';
-import { Subscription } from 'rxjs';
 import { ParametrizacionService } from '../../../master/services/parametrizacion.service';
 import { Parametrizacion } from '../../../master/models/parametrizacion';
 import { enums } from "./../../../credentials";
 import { SeguridadService } from './../../../seguridad/services/seguridad.service';
-import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { Idle } from '@ng-idle/core';
 import { Observable } from 'rxjs/Observable';
 import { Keepalive } from '@ng-idle/keepalive';
@@ -19,36 +18,35 @@ declare const $: any;
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css'],
-  encapsulation: ViewEncapsulation.None,
+
 })
 export class InicioComponent {
 
-  private isOpen = true;
   isUsuario$: Observable<Usuario>;
-  mode = 'side';
-  private watcher: Subscription;
-  estilo = 'width-20 sidebar-left';
+  usuario: Usuario;
 
-  constructor(private router: Router, private usuarioService: UsuarioService, private media: ObservableMedia, private parametrizacionService: ParametrizacionService
-    , private seguridadService: SeguridadService, private menuService: MenuService, private idle: Idle, private keepalive: Keepalive) {
+  constructor(private router: Router, private media: ObservableMedia, private parametrizacionService: ParametrizacionService
+    , private seguridadService: SeguridadService, private menuService: MenuService, private idle: Idle, private keepalive: Keepalive,
+    private usuarioService: UsuarioService) {
 
-    let token = this.seguridadService.getToken()
-    if (menuService.getMenus()) {
-      menuService.getMenus().forEach(menu => {
-        if (Number(menu.orden) == 1) {
-          menu.activate = true
-        } else {
-          menu.activate = false;
-        }
-      })
+    let token = this.seguridadService.getToken();
+    let urlCurrent = menuService.getMenuActual(token);
+    this.isUsuario$ = this.usuarioService.isUsuario;
+    this.isUsuario$.subscribe(res => {
+      if (res) {
+        this.usuario = res;
+      }
+    })
+    let parametros = JSON.parse(localStorage.getItem(enums.SISTEMA_PARAM))
+    if (!parametros) {
+      this.getParametros(token.token)
     }
-    if (this.seguridadService.isLoggedIn.subscribe(res => res = true)) {
-      this.cargarParametros(token.token)
-    }
+    let navigate = token ? (urlCurrent ? urlCurrent : "home") : "login";
+    this.router.navigate([navigate])
   }
 
 
-  public cargarParametros(token) {
+  public getParametros(token) {
     this.parametrizacionService.getParametrizaciones(token).subscribe(
       res => {
         this.parametrizacionService.parametros = res.data;
@@ -58,6 +56,9 @@ export class InicioComponent {
   }
   reset() {
     this.idle.watch();
+  }
+  public getMenus(token) {
+    this.menuService.cargarMenus(token);
   }
 
 }

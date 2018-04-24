@@ -1,1 +1,10 @@
-
+<div *ngIf="usuario">
+  <mat-card>
+    <mat-card-header>
+      <h1>Empresa: {{usuario.empresa.nombre}}</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <label>{{usuario.empresa.descripcion}}</label>
+    </mat-card-content>
+  </mat-card>
+</div>

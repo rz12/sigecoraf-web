@@ -7,15 +7,18 @@ import { SharedService } from '../../shared/services/shared.service';
 import "rxjs/add/operator/map";
 @Injectable()
 export class MenuService extends SharedService {
-  private menus: Menu[]
+  private menus: Menu[] = []
   constructor(private http: Http) {
     super();
-    this.menus = [];
   }
 
+  /**
+   * Permite obtener una lista de menus y almacenarlos en el storage del cliente.
+   * @param token 
+   */
   cargarMenus(token) {
-
     return this.http.get(services.ws_seguridad_menus, this.options(token, null, null, null, null)).subscribe(res => {
+      this.menus = []
       res.json().data.forEach(element => {
         let menu = new Menu();
         menu.codigo = element.codigo
@@ -36,8 +39,11 @@ export class MenuService extends SharedService {
     });
 
   }
+  /**
+   * Devolver una lista de menus.
+   */
   public getMenus() {
-    if (this.menus.length > 0) {
+    if (this.menus) {
       return this.menus;
     }
     return JSON.parse(localStorage.getItem(enums.SISTEMA_MENUS))
@@ -45,20 +51,25 @@ export class MenuService extends SharedService {
   public setMenus(menus) {
     this.menus = menus;
   }
+  /**
+   * 
+   * @param menuEdit 
+   * @param url 
+   */
   public updateActivateMenus(menuEdit, url) {
 
-    this.getMenus().forEach(menu => {
+    this.menus.forEach(menu => {
       if (menu == menuEdit) {
         menu.activate = true;
       } else {
         menu.activate = false
       }
     });
-    localStorage.setItem(enums.SISTEMA_MENUS, JSON.stringify(this.getMenus()))
+    localStorage.setItem(enums.SISTEMA_MENUS, JSON.stringify(this.menus))
   }
   public getMenuByFormulario(url) {
     let index = url.search("/")
-    let menu = Menu;
+    let menu: Menu;
     url = url.substring(0, index)
     this.getMenus().forEach(element => {
       if (element.formulario == url) {
@@ -66,6 +77,25 @@ export class MenuService extends SharedService {
       }
     });
     return menu;
+  }
+  /**
+   * Permite devolver el menu actual seleccionad por una session de usuario.
+   * @param token 
+   */
+  public getMenuActual(token) {
+    let urlCurrent = null;
+    let menusStorage = JSON.parse(localStorage.getItem(enums.SISTEMA_MENUS));
+    if (!menusStorage) {
+      this.cargarMenus(token.token);
+    } else {
+      menusStorage.forEach(element => {
+        if (element.activate) {
+          urlCurrent = element.formulario;
+        }
+      });
+      this.setMenus(menusStorage);
+    }
+    return urlCurrent;
   }
   public hasPermission(token, menuCodigo) {
     return this.http.get(services.ws_seguridad_menus_haspermission, this.options(token, menuCodigo, null, null, null))

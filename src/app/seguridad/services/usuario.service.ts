@@ -18,7 +18,7 @@ export class UsuarioService {
     return this.http.get(services.ws_seguridad_user_by_token, options)
   }
 
-  getUsuario() {
+  get isUsuario() {
     return this.usuario.asObservable();
   }
   public setUsuario(newValue): void {

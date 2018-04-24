@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<mat-dialog-content>{{ message }}</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-raised-button color="primary" (click)="dialogRef.close(true)">Aceptar</button>
+  <button type="button" mat-raised-button color="primary" (click)="dialogRef.close()">Cancelar</button>
+</mat-dialog-actions>

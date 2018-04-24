@@ -7,11 +7,10 @@
   Sistema de Gestión de Roles de Pago
   <span class="spacer"></span>
   <div class="wrapper">
-    <div *ngIf="usuario">Bienvenido: {{usuario.username}}</div>
+    <label *ngIf="usuario">Bienvenido: {{usuario.username}}</label>
     <button mat-button (click)="onLogout()">
       <i class="material-icons">power_settings_new</i>
     </button>
-
   </div>
 </mat-toolbar>
 <mat-sidenav-container>

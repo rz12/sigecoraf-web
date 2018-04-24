@@ -14,6 +14,7 @@ export class ContratoService extends SharedService {
   contratosList(token, page, pageSize, filter) {
     return this.http.get(services.ws_nominas_contratos, this.options(token, enums.MENU_CONTRATOS, page, pageSize, filter))
   }
+
   save(token, data) {
     let body = JSON.stringify(data);
     let options = this.options(token, null, null, null, "");
@@ -25,6 +26,9 @@ export class ContratoService extends SharedService {
   }
   public getContrato(token, id) {
     return this.http.get(services.ws_nominas_contratos.concat('/').concat(id), this.options(token, null, null, null, ""))
+  }
+  public getContratoEmpleado(token, id) {
+    return this.http.get(services.ws_nominas_contrato_empleado.concat('/').concat(id), this.options(token, null, null, null, ""))
   }
   delete(token, data) {
     let body = JSON.stringify(data);

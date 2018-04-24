@@ -4,10 +4,7 @@ import { SeguridadService } from '../seguridad/services/seguridad.service';
 import { Menu } from "../seguridad/models/menu";
 import { MenuService } from "../seguridad/services/menu.service";
 import { Observable } from 'rxjs/Observable';
-import { MatSidenav } from '@angular/material';
 import { SideNavService } from '../shared/services/side-nav.service';
-import { UsuarioService } from '../seguridad/services/usuario.service';
-import { Usuario } from '../seguridad/models/usuario';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,19 +14,17 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
-  constructor(private router: Router, private seguridadService: SeguridadService, private menuService: MenuService,
-    private usuarioService: UsuarioService) {
+  constructor(private router: Router, private seguridadService: SeguridadService, private menuService: MenuService) {
   }
 
   ngOnInit() {
     this.isLoggedIn$ = this.seguridadService.isLoggedIn;
+    let menus = JSON.parse(localStorage.getItem(enums.SISTEMA_MENUS));
+    if (menus) {
+      this.menuService.setMenus(menus);
+    }
     if (this.isLoggedIn$.subscribe(res => res == false)) {
       let token = this.seguridadService.getToken()
-      if (!localStorage.getItem(enums.SISTEMA_MENUS)) {
-        this.cargarMenus(token);
-      } else {
-        this.menuService.setMenus(JSON.parse(localStorage.getItem(enums.SISTEMA_MENUS)));
-      }
       if (token != null) {
         this.seguridadService.setLoggedIn(true);
       }
@@ -40,8 +35,4 @@ export class DashboardComponent implements OnInit {
     let link = ['/' + menu.formulario];
     this.router.navigate(link);
   }
-  public cargarMenus(token) {
-    this.menuService.cargarMenus(token);
-  }
-
 }

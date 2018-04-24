@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, Inject } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, Inject, ChangeDetectorRef } from '@angular/core';
 import { Empleado } from '../../models/empleado';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmpleadoService } from '../../services/empleado.service';
@@ -7,6 +7,7 @@ import { DialogService } from '../../../shared/dialog/services/dialog.service';
 import { enums } from '../../../credentials';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ItemService } from '../../../master/services/item.service';
+import { resolve } from 'path';
 
 @Component({
   selector: 'app-empleado-detail',
@@ -18,16 +19,19 @@ export class EmpleadoDetailComponent implements OnInit {
   public empleado: Empleado;
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private empleadoService: EmpleadoService, private formBuilder: FormBuilder,
     private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef,
-    private dialogService: DialogService, private itemService: ItemService) {
+    private dialogService: DialogService, private itemService: ItemService, private changeDetector: ChangeDetectorRef) {
     this.empleado = new Empleado();
   }
 
   ngOnInit() {
-    let id = +this.activatedRoute.snapshot.params['id'];
-    if (id != 0) {
-      let token = this.seguridadService.getToken()
-      this.getEmpleado(token, id)
-    }
+    this.activatedRoute.data
+      .subscribe((data: { empleado: Empleado }) => {
+        this.empleado = new Empleado();
+        this.empleado = data.empleado;
+        console.log(this.empleado, 'por aqui')
+        resolve();
+      });
+
     this.empleadoForm = this.fb.group({
       persona: this.fb.group({
         primerNombre: ["", Validators.required],
@@ -52,15 +56,19 @@ export class EmpleadoDetailComponent implements OnInit {
   }
   public onChangeEmpresa(value) {
     this.empleado.empresa = value;
+    this.changeDetector.detectChanges();
   }
   public onChangeTipoDocumento(value) {
     this.empleado.tipo_documento_identificacion = value;
+    this.changeDetector.detectChanges();
   }
   public onChangeGenero(value) {
     this.empleado.genero = value;
+    this.changeDetector.detectChanges();
   }
   public onChangeEstadoCivil(value) {
     this.empleado.estado_civil = value;
+    this.changeDetector.detectChanges();
   }
   public save() {
     let token = this.seguridadService.getToken()

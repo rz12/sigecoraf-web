@@ -63,8 +63,8 @@
         (page)="loadPagination($event)">
       </mat-paginator>
       <mat-card-actions>
-        <app-tool-bar-acction (notificadorDelete)="delete($event)" [codigoAdd]="codigoAdd" [codigoDelete]="'DELETE_CONTRATO'" [codigoEdit]="codigoEdit"
-          [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+        <app-tool-bar-acction (notificadorDelete)="confirmDelete($event)" [codigoAdd]="codigoAdd" [codigoDelete]="'DELETE_CONTRATO'"
+          [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
       </mat-card-actions>
     </div>
 

@@ -13,6 +13,7 @@ export class EmpleadoService extends SharedService {
         return this.http.get(services.ws_nominas_empleados, this.options(token, enums.MENU_EMPLEADOS, page, pageSize, filter))
     }
     save(token, data) {
+
         let body = JSON.stringify(data);
         let options = this.options(token, null, null, null, "");
         if (!data.id) {

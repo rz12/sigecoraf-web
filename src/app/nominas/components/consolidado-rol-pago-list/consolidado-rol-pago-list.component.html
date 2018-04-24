@@ -22,6 +22,13 @@
           <mat-header-cell *matHeaderCellDef> Observación </mat-header-cell>
           <mat-cell *matCellDef="let consolidado"> {{consolidado.observacion}}</mat-cell>
         </ng-container>
+        <ng-container matColumnDef="validado">
+          <mat-header-cell *matHeaderCellDef> Validado </mat-header-cell>
+          <mat-cell *matCellDef="let consolidado">
+            <label *ngIf="consolidado.validado">Si</label>
+            <label *ngIf="!consolidado.validado">No</label>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="seleccionar">
           <mat-header-cell *matHeaderCellDef>
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">

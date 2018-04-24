@@ -1,13 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from "@angular/router";
-import { enums } from "./credentials";
 import { SideNavService } from "./shared/services/side-nav.service";
-import { Menu } from './seguridad/models/menu';
 import { UsuarioService } from './seguridad/services/usuario.service';
 import { Usuario } from './seguridad/models/usuario';
 import { Observable } from 'rxjs/Observable';
 import { SeguridadService } from './seguridad/services/seguridad.service';
 import { MenuService } from './seguridad/services/menu.service';
+import { enums } from './credentials';
+import { Router } from '@angular/router';
 
 declare const $: any;
 @Component({
@@ -22,21 +21,16 @@ export class AppComponent implements OnInit {
   sideNav: Boolean;
   isUsuario$: Observable<Usuario>;
   isLoggedIn$: Observable<boolean>;
-  public isLoggedIn: Boolean;
   constructor(private router: Router, private seguridadService: SeguridadService, private sidenavService: SideNavService,
-    private changeDetector: ChangeDetectorRef, private usuarioService: UsuarioService, private menuService: MenuService) {
-
-  }
+    private changeDetector: ChangeDetectorRef, private usuarioService: UsuarioService, private menuService: MenuService) { }
 
   ngOnInit() {
     this.sidenavState = this.sidenavService.getSideNavState();
     this.isLoggedIn$ = this.seguridadService.isLoggedIn;
+    this.isUsuario$ = this.usuarioService.isUsuario;
     this.changeDetector.detectChanges();
     let token = this.seguridadService.getToken();
-    let menus = this.menuService.getMenus();
-    let urlCurrent = null
-
-    this.usuarioService.getUsuario().subscribe(res => {
+    this.isUsuario$.subscribe(res => {
       if (res) {
         this.usuario = res
       } else {
@@ -45,25 +39,9 @@ export class AppComponent implements OnInit {
         }
       }
     })
-    if (menus) {
-      menus.forEach(element => {
-        if (element.activate) {
-          urlCurrent = element.formulario;
-        }
-      });
-    }
-    this.navigate(token, urlCurrent);
-  }
-  public navigate(token, urlCurrent) {
-    if (token != null) {
-      if (urlCurrent == null) {
-        this.router.navigate(['home'])
-      } else {
-        this.router.navigate([urlCurrent])
-      }
-    } else {
-      this.router.navigate(['login'])
-    }
+    let urlCurrent = token ? this.menuService.getMenuActual(token.token) : null;
+    let navigate = token ? (urlCurrent ? urlCurrent : "home") : "login";
+    this.router.navigate([navigate])
   }
   setSideNavState() {
     this.sideNav = !this.sideNav;
@@ -78,4 +56,6 @@ export class AppComponent implements OnInit {
       this.usuario = res.json().data;
     });
   }
+
+
 }

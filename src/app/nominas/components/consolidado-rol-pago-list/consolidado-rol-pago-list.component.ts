@@ -14,13 +14,13 @@ import { enums } from '../../../credentials';
 })
 export class ConsolidadoRolPagoListComponent implements OnInit {
 
-  displayedColumns = ['fecha_desde', 'fecha_hasta', 'observacion', 'seleccionar'];
+  displayedColumns = ['fecha_desde', 'fecha_hasta', 'observacion', 'validado', 'seleccionar'];
   dataSource = new MatTableDataSource();
   selection = new SelectionModel();
   public urlEdit: String;
   public urlAdd = "consolidado-rolpago-detail/0"
-  public codigoAdd = "ADD_CONSOLIDADO_ROL_PAGO";
-  public codigoEdit = "EDIT_CONSOLIDADO_ROL_PAGO";
+  public codigoAdd = "ADD_CONSOLIDADO_ROLPAGO";
+  public codigoEdit = "EDIT_CONSOLIDADO_ROLPAGO";
   public message: String;
   public length: number;
   public pageSize: number = 1;

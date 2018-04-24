@@ -27,9 +27,10 @@ export var services = {
      */
     ws_nominas_cargos: credentials.host + '/api/v1/nominas/cargos',
     ws_nominas_contratos: credentials.host + '/api/v1/nominas/contratos',
-    ws_nominas_rolPagos: credentials.host + '/api/v1/nominas/roles-pago',
+    ws_nominas_contrato_empleado: credentials.host + '/api/v1/nominas/contrato-empleado',
+    ws_nominas_rolPagos: credentials.host + '/api/v1/nominas/rol-pago',
     ws_nominas_empleados: credentials.host + '/api/v1/nominas/empleados',
-    ws_nominas_consolido_rol_pago: credentials.host + '/api/v1/nominas/consolidado-rolpago-list',
+    ws_nominas_consolido_rol_pago: credentials.host + '/api/v1/nominas/consolidado-rolpago',
 }
 export var enums = {
     /**

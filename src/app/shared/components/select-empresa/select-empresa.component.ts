@@ -23,17 +23,17 @@ export class SelectEmpresaComponent implements OnInit {
   ngOnInit() {
     this.empresaList = [];
     let token = this.seguridadService.getToken();
-    setTimeout(() => {
-      this.empresaService.empresaList(token.token).subscribe(data => {
-        if (data.json().status == enums.HTTP_200_OK) {
-          this.empresaList = data.json().data;
-          this.selectItem(this.valor)
-          this.changeDetector.detectChanges();
-        } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
-          this.message = data.json().message;
-        }
-      });
+    // setTimeout(() => {
+    this.empresaService.empresaList(token.token).subscribe(data => {
+      if (data.json().status == enums.HTTP_200_OK) {
+        this.empresaList = data.json().data;
+        this.selectItem(this.valor)
+        this.changeDetector.detectChanges();
+      } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
+        this.message = data.json().message;
+      }
     });
+    //  });
   }
   selectItem(newValue) {
     this.selectedValue = newValue;

@@ -18,6 +18,7 @@ import { MenuService } from './seguridad/services/menu.service';
 import { SideNavService } from "./shared/services/side-nav.service";
 import { UsuarioService } from './seguridad/services/usuario.service';
 import { FormsModule } from '@angular/forms';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { FormsModule } from '@angular/forms';
     MatSidenavModule,
     MatIconModule
   ],
-  providers: [ParametrizacionService, UsuarioService, MenuService, SideNavService],
+  providers: [ParametrizacionService, UsuarioService, MenuService, SideNavService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

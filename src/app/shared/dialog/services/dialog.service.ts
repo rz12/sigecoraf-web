@@ -2,6 +2,7 @@ import { Injectable, ViewContainerRef } from '@angular/core';
 import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { DialogComponent } from '../componets/dialog/dialog.component';
+import { DialogConfirmComponent } from '../componets/dialog-confirm/dialog-confirm.component';
 @Injectable()
 export class DialogService {
 
@@ -22,5 +23,12 @@ export class DialogService {
     let config = new MatDialogConfig();
     config.viewContainerRef = viewContainerRef;
     config.disableClose = true;
+  }
+  public confirm(title: string, message: string, viewContainerRef: ViewContainerRef = null): Observable<boolean> {
+    let dialogConfig = this.getConfigDialog(viewContainerRef);
+    let dialogRef = this.getDialog(dialogConfig, DialogConfirmComponent);
+    dialogRef.componentInstance.title = title;
+    dialogRef.componentInstance.message = message;
+    return dialogRef.afterClosed();
   }
 }

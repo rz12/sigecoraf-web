@@ -1,4 +1,4 @@
-<div *ngIf="!message ">
+<div *ngIf="!message && itemList">
   <mat-form-field class="full-width">
     <mat-select required placeholder="{{placeHolder}}" [formControl]="control" (ngModelChange)="selectItem($event)" [(ngModel)]="selectedValue">
       <mat-option *ngFor="let item of itemList" [value]="item.id">{{item.nombre}}</mat-option>

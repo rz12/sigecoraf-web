@@ -8,14 +8,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Headers, RequestOptions, Http } from '@angular/http';
 import { services } from "../../credentials";
 import { Observable } from 'rxjs/Observable';
+import { UsuarioService } from './usuario.service';
 
 @Injectable()
 export class SeguridadService {
-  public lastPing?: Date = null;
   private loggedIn = new BehaviorSubject<boolean>(false);
   private token: any;
-
-  constructor(private http: Http, private router: Router, private idle: Idle, private keepalive: Keepalive) { }
+  public lastPing?: Date = null;
+  constructor(private http: Http, private router: Router, private usuarioService: UsuarioService, private idle: Idle, private keepalive: Keepalive) { }
 
 
   autenticate(usercreds) {
@@ -29,6 +29,9 @@ export class SeguridadService {
           this.token = data.json();
           localStorage.setItem(enums.SISTEMA_AUTHKEY, JSON.stringify(this.token))
           resolve(true)
+          this.usuarioService.getUsuarioPorToken(this.token.token).subscribe(usuario => {
+            this.usuarioService.setUsuario(usuario.json().data)
+          });
           this.loggedIn.next(true);
         }
       }, (err) => resolve(false)
