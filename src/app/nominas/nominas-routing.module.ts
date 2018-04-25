@@ -11,6 +11,7 @@ import { EmpleadoDetailComponent } from './components/empleado-detail/empleado-d
 import { ConsolidadoRolPagoListComponent } from './components/consolidado-rol-pago-list/consolidado-rol-pago-list.component';
 import { ConsolidadoRolPagoDetailComponent } from './components/consolidado-rol-pago-detail/consolidado-rol-pago-detail.component';
 import { EmpleadoResolveService } from './resolvers/empleado-resolve.service';
+import { CargoDetailResolveService } from './resolvers/cargo-detail-resolve.service';
 
 
 const routes: Routes = [
@@ -18,7 +19,7 @@ const routes: Routes = [
   { path: 'contratos', component: ContratosComponent },
   { path: 'contrato-detail/:id', component: ContratoDetailComponent },
   { path: 'cargos', component: CargosComponent },
-  { path: 'cargo-detail/:id', component: CargoDetailComponent },
+  { path: 'cargo-detail/:id', component: CargoDetailComponent, resolve: { cargoData: CargoDetailResolveService }, canActivate: [CargoDetailResolveService] },
   { path: 'rolPago-detail/:id', component: RolPagoDetailComponent },
   {
     path: 'empleado-detail/:id', component: EmpleadoDetailComponent, resolve: {

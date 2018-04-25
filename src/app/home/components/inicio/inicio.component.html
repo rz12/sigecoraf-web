@@ -1,10 +1,11 @@
-<div *ngIf="usuario">
+<div *ngIf="usuario && usuario.empresa">
   <mat-card>
     <mat-card-header>
       <h1>Empresa: {{usuario.empresa.nombre}}</h1>
     </mat-card-header>
     <mat-card-content>
-      <label>{{usuario.empresa.descripcion}}</label>
+      <div [innerHTML]="usuario.empresa.descripcion"></div>
+
     </mat-card-content>
   </mat-card>
 </div>

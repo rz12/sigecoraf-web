@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
 import { Cargo } from '../../models/cargo';
 import { CargoService } from '../../services/cargo.service';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
@@ -15,8 +15,10 @@ export class CargoDetailComponent implements OnInit {
 
   public cargo: Cargo;
   public cargoForm: any;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private cargoService: CargoService,
-    private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
+  public empresa: any;
+  constructor(private route: ActivatedRoute, private router: Router, private cargoService: CargoService,
+    private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef,
+    private dialogService: DialogService, private changeDetector: ChangeDetectorRef) {
     this.cargo = new Cargo();
     this.cargoForm = this.fb.group({
       nombre: ["", Validators.required],
@@ -28,14 +30,19 @@ export class CargoDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    let id = +this.activatedRoute.snapshot.params['id'];
+    let id = +this.route.snapshot.params.id;
     if (id != 0) {
-      let token = this.seguridadService.getToken()
-      this.getCargo(token, id)
+      this.route.data
+        .subscribe(res => {
+          this.cargo = res.cargoData.json().data;
+          this.empresa = res.cargoData.json().data.empresa;
+
+        });
     }
   }
   public onChangeEmpresa(value) {
     this.cargo.empresa = value;
+    this.changeDetector.detectChanges();
   }
   public save() {
     let token = this.seguridadService.getToken()

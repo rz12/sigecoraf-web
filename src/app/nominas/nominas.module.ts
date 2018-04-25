@@ -39,6 +39,7 @@ import { ConsolidadoRolPagoDetailComponent } from './components/consolidado-rol-
 import { ConsolidadoRolPagoService } from './services/consolidado-rol-pago.service';
 import { RolPagoListComponent } from './components/rol-pago-list/rol-pago-list.component';
 import { EmpleadoResolveService } from './resolvers/empleado-resolve.service';
+import { CargoDetailResolveService } from './resolvers/cargo-detail-resolve.service';
 
 @NgModule({
   imports: [
@@ -74,6 +75,6 @@ import { EmpleadoResolveService } from './resolvers/empleado-resolve.service';
     RolPagoListComponent],
   entryComponents: [DireccionesComponent, DireccionDetailDialogComponent],
   providers: [SharedService, CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService,
-    EmpleadoService, EmpleadoResolveService, DireccionService, ItemService, ConsolidadoRolPagoService]
+    EmpleadoService, EmpleadoResolveService, CargoDetailResolveService, DireccionService, ItemService, ConsolidadoRolPagoService]
 })
 export class NominasModule { }

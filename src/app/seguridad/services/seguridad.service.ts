@@ -28,10 +28,11 @@ export class SeguridadService {
         if (data.json()) {
           this.token = data.json();
           localStorage.setItem(enums.SISTEMA_AUTHKEY, JSON.stringify(this.token))
-          resolve(true)
+
           this.usuarioService.getUsuarioPorToken(this.token.token).subscribe(usuario => {
             this.usuarioService.setUsuario(usuario.json().data)
           });
+          resolve(true)
           this.loggedIn.next(true);
         }
       }, (err) => resolve(false)
