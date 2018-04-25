@@ -22,25 +22,20 @@ export class SelectItemComponent implements OnInit {
   public selectedValue: Number;
   @Input() control: Form;
 
-  constructor(private changeDetector: ChangeDetectorRef, private catalogoService: CatalogoService, private seguridadService: SeguridadService) {
+  constructor(private catalogoService: CatalogoService, private seguridadService: SeguridadService) {
   }
   ngOnInit() {
     this.itemList = [];
     let token = this.seguridadService.getToken();
-    //setTimeout(() => {
     this.catalogoService.catalogosListByCodigo(token.token, { "CODIGO": this.codigo }).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
         data.json().data.forEach(catalogo => {
           this.itemList = (catalogo.items)
         });
-        console.log(this.valor)
-        //this.changeDetector.detectChanges();
         this.selectItem(this.valor)
-        //this.changeDetector.detectChanges();
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
       }
-      // });
     });
 
   }

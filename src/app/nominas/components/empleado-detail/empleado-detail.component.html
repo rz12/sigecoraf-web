@@ -21,7 +21,7 @@
                   <input matInput placeholder="Segundo Apellido" formControlName="segundoApellido" [(ngModel)]="empleado.segundo_apellido">
                 </mat-form-field>
                 <app-select-item [codigo]="'TIPO_DOCUMENTO'" [control]="empleadoForm.controls.persona.controls.tipoDocumentoIdentificacion"
-                  [placeHolder]="'Seleccione un Tipo de Documento'" [valor]="empleado.tipo_documento_identificacion" (notificador)="onChangeTipoDocumento($event)">
+                  [placeHolder]="'Seleccione un Tipo de Documento'" [valor]="tipo" (notificador)="onChangeTipoDocumento($event)">
                 </app-select-item>
                 <mat-form-field class="full-width">
                   <input matInput required placeholder="Número de Identificación" [(ngModel)]="empleado.numero_identificacion" formControlName="numeroIdentificacion">
@@ -36,10 +36,10 @@
                   <input matInput placeholder="Celular" [(ngModel)]="empleado.numero_celular" formControlName="numeroCelular">
                 </mat-form-field>
                 <app-select-item [codigo]="'GENERO'" [control]="empleadoForm.controls.persona.controls.genero" [placeHolder]="'Seleccione un Genero'"
-                  [valor]="empleado.genero" (notificador)="onChangeGenero($event)">
+                  [valor]="genero" (notificador)="onChangeGenero($event)">
                 </app-select-item>
                 <app-select-item [codigo]="'ESTADO_CIVIL'" [control]="empleadoForm.controls.persona.controls.estadoCivil" [placeHolder]="'Seleccione un Estado Civil'"
-                  [valor]="empleado.estado_civil" (notificador)="onChangeEstadoCivil($event)">
+                  [valor]="estado" (notificador)="onChangeEstadoCivil($event)">
                 </app-select-item>
               </div>
             </div>
@@ -60,7 +60,7 @@
                   <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                   <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
-                <app-select-empresa [control]="empleadoForm.controls.empleado.controls.empresa" [valor]="empleado.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
+                <app-select-empresa [control]="empleadoForm.controls.empleado.controls.empresa" [valor]="empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
                 <mat-checkbox formControlName="estado" [(ngModel)]="empleado.estado" fechaIngresoIees="estado">Activo</mat-checkbox>
               </div>
             </div>

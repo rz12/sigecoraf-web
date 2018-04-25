@@ -8,6 +8,7 @@ import { enums } from '../../../credentials';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ItemService } from '../../../master/services/item.service';
 import { resolve } from 'path';
+import "rxjs/add/operator/map";
 
 @Component({
   selector: 'app-empleado-detail',
@@ -17,20 +18,31 @@ import { resolve } from 'path';
 export class EmpleadoDetailComponent implements OnInit {
   empleadoForm: any;
   public empleado: Empleado;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private empleadoService: EmpleadoService, private formBuilder: FormBuilder,
+  genero: any;
+  empresa: any;
+  estado: any;
+  tipo: any;
+  constructor(private route: ActivatedRoute, private router: Router, private empleadoService: EmpleadoService, private formBuilder: FormBuilder,
     private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef,
     private dialogService: DialogService, private itemService: ItemService, private changeDetector: ChangeDetectorRef) {
     this.empleado = new Empleado();
+    this.genero = 0
+    this.estado = 0
+    this.tipo = 0;
+    this.empresa = 0;
   }
 
   ngOnInit() {
-    this.activatedRoute.data
-      .subscribe((data: { empleado: Empleado }) => {
-        this.empleado = new Empleado();
-        this.empleado = data.empleado;
-        console.log(this.empleado, 'por aqui')
-        resolve();
-      });
+    if (this.route.snapshot.params.id != 0) {
+      this.route.data
+        .subscribe(res => {
+          this.empleado = res.empleadoData.json().data
+          this.genero = res.empleadoData.json().data.genero;
+          this.estado = res.empleadoData.json().data.estado_civil;
+          this.tipo = res.empleadoData.json().data.tipo_documento_identificacion;
+          this.empresa = res.empleadoData.json().data.empresa;
+        });
+    }
 
     this.empleadoForm = this.fb.group({
       persona: this.fb.group({

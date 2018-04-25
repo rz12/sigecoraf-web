@@ -22,8 +22,8 @@ const routes: Routes = [
   { path: 'rolPago-detail/:id', component: RolPagoDetailComponent },
   {
     path: 'empleado-detail/:id', component: EmpleadoDetailComponent, resolve: {
-      empleado: EmpleadoResolveService
-    }
+      empleadoData: EmpleadoResolveService
+    }, canActivate: [EmpleadoResolveService],
   },
   { path: 'consolidado-rolpago', component: ConsolidadoRolPagoListComponent },
   { path: 'consolidado-rolpago-detail/:id', component: ConsolidadoRolPagoDetailComponent },
