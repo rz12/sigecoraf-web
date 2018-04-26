@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Direccion } from '../../models/direccion';
@@ -11,7 +11,7 @@ import { Direccion } from '../../models/direccion';
 export class DireccionDetailDialogComponent implements OnInit {
 
   direccionForm: any;
-  constructor(private changeDetector: ChangeDetectorRef, private fb: FormBuilder, public dialogRef: MatDialogRef<DireccionDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private fb: FormBuilder, public dialogRef: MatDialogRef<DireccionDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.direccionForm = this.fb.group({

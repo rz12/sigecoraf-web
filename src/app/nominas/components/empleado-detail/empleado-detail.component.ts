@@ -20,15 +20,15 @@ export class EmpleadoDetailComponent implements OnInit {
   public empleado: Empleado;
   genero: any;
   empresa: any;
-  estado: any;
-  tipo: any;
+  estado_civil: any;
+  tipo_documento_identificacion: any;
   constructor(private route: ActivatedRoute, private router: Router, private empleadoService: EmpleadoService, private formBuilder: FormBuilder,
     private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef,
     private dialogService: DialogService, private itemService: ItemService, private changeDetector: ChangeDetectorRef) {
     this.empleado = new Empleado();
     this.genero = 0
-    this.estado = 0
-    this.tipo = 0;
+    this.estado_civil = 0
+    this.tipo_documento_identificacion = 0;
     this.empresa = 0;
   }
 
@@ -38,8 +38,8 @@ export class EmpleadoDetailComponent implements OnInit {
         .subscribe(res => {
           this.empleado = res.empleadoData.json().data
           this.genero = res.empleadoData.json().data.genero;
-          this.estado = res.empleadoData.json().data.estado_civil;
-          this.tipo = res.empleadoData.json().data.tipo_documento_identificacion;
+          this.estado_civil = res.empleadoData.json().data.estado_civil;
+          this.tipo_documento_identificacion = res.empleadoData.json().data.tipo_documento_identificacion;
           this.empresa = res.empleadoData.json().data.empresa;
         });
     }

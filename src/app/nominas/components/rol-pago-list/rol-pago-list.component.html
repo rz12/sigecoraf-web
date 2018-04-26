@@ -13,7 +13,7 @@
       <ng-container matColumnDef="fecha">
         <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
         <mat-cell *matCellDef="let rolPago">
-          {{rolPago.fecha}}
+          {{rolPago.fecha| date:'yyyy-MM-dd HH:mm:ss'}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="total">

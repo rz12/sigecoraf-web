@@ -46,7 +46,8 @@
         (page)="loadPagination($event)">
       </mat-paginator>
       <mat-card-actions>
-        <app-tool-bar-acction [codigoAdd]="codigoAdd" [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+        <app-tool-bar-acction (notificadorDelete)="confirmDelete($event)" [codigoAdd]="codigoAdd" [codigoDelete]="'DELETE_CONSOLIDADO_ROLPAGO'"
+          [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
       </mat-card-actions>
     </div>
 

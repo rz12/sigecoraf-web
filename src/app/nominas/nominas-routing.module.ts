@@ -12,6 +12,8 @@ import { ConsolidadoRolPagoListComponent } from './components/consolidado-rol-pa
 import { ConsolidadoRolPagoDetailComponent } from './components/consolidado-rol-pago-detail/consolidado-rol-pago-detail.component';
 import { EmpleadoResolveService } from './resolvers/empleado-resolve.service';
 import { CargoDetailResolveService } from './resolvers/cargo-detail-resolve.service';
+import { ConsolidadoRolPagoService } from './services/consolidado-rol-pago.service';
+import { ConsolidadoRolpagoDetailResolveService } from './resolvers/consolidado-rolpago-detail-resolve.service';
 
 
 const routes: Routes = [
@@ -19,15 +21,28 @@ const routes: Routes = [
   { path: 'contratos', component: ContratosComponent },
   { path: 'contrato-detail/:id', component: ContratoDetailComponent },
   { path: 'cargos', component: CargosComponent },
-  { path: 'cargo-detail/:id', component: CargoDetailComponent, resolve: { cargoData: CargoDetailResolveService }, canActivate: [CargoDetailResolveService] },
+  {
+    path: 'cargo-detail/:id',
+    component: CargoDetailComponent,
+    resolve: { cargoData: CargoDetailResolveService },
+    canActivate: [CargoDetailResolveService]
+  },
   { path: 'rolPago-detail/:id', component: RolPagoDetailComponent },
   {
-    path: 'empleado-detail/:id', component: EmpleadoDetailComponent, resolve: {
-      empleadoData: EmpleadoResolveService
-    }, canActivate: [EmpleadoResolveService],
+    path: 'empleado-detail/:id',
+    component: EmpleadoDetailComponent,
+    resolve: { empleadoData: EmpleadoResolveService },
+    canActivate: [EmpleadoResolveService],
   },
   { path: 'consolidado-rolpago', component: ConsolidadoRolPagoListComponent },
-  { path: 'consolidado-rolpago-detail/:id', component: ConsolidadoRolPagoDetailComponent },
+  {
+    path: 'consolidado-rolpago-detail/:id',
+    component: ConsolidadoRolPagoDetailComponent,
+    resolve: {
+      data: ConsolidadoRolpagoDetailResolveService
+    },
+    canActivate: [ConsolidadoRolpagoDetailResolveService]
+  },
 ];
 
 @NgModule({

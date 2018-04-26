@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
 import { RolPago } from '../../models/rol-pago';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
@@ -13,6 +13,9 @@ import { ContratoService } from '../../services/contrato.service';
 import { UsuarioService } from '../../../seguridad/services/usuario.service';
 import { EmpleadoService } from '../../services/empleado.service';
 import { Contrato } from '../../models/contrato';
+import { DatePipe } from '@angular/common';
+import { RolPagoDetailDialogComponent } from '../rol-pago-detail-dialog/rol-pago-detail-dialog.component';
+import { CargoService } from '../../services/cargo.service';
 
 @Component({
   selector: 'app-rol-pago-list',
@@ -34,7 +37,8 @@ export class RolPagoListComponent implements OnInit {
   public rolPago: RolPago;
   constructor(private dialogService: DialogService, public dialog: MatDialog, private seguridadService: SeguridadService,
     private viewContainerRef: ViewContainerRef, private rolPagoService: RolPagoService, private sharedService: SharedService,
-    private empleadoService: EmpleadoService, private contratoService: ContratoService, private usuarioService: UsuarioService) { }
+    private empleadoService: EmpleadoService, private changeDetector: ChangeDetectorRef, private contratoService: ContratoService,
+    private usuarioService: UsuarioService, private cargoService: CargoService) { }
 
   ngOnInit() {
     this.rolPago = new RolPago;
@@ -57,16 +61,22 @@ export class RolPagoListComponent implements OnInit {
     this.getRolPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
   public getRolPagination(token, pageIndex, pageSize, filter) {
-    this.rolPagoService.rolPagoList(this.consolidadoRolPago.id, token.token, pageIndex, pageSize, filter).subscribe(data => {
+
+    this.rolPagoService.rolPagoByConsolidadoList(this.consolidadoRolPago.id, token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
         let rolesPago = data.json().data;
-        rolesPago.forEach(rolPagoEl => {
-          this.contratoService.getContrato(token, rolPagoEl.contrato).subscribe(contratoEl => {
-            this.empleadoService.getEmpleado(token, contratoEl.json().data.empleado).subscribe(empleado => {
-              let contrato = <Contrato>contratoEl.json();
+        rolesPago.forEach(rolPago => {
+          this.contratoService.getContrato(token, rolPago.contrato).subscribe(contratoResponse => {
+            let contrato = contratoResponse.json().data;
+            this.empleadoService.getEmpleado(token, contratoResponse.json().data.empleado).subscribe(empleado => {
               contrato.empleadoObject = empleado.json().data;
-              rolPagoEl.contratoObject = contrato;
+              this.cargoService.getCargo(token, contratoResponse.json().data.cargo).subscribe(cargoResponse => {
+                contrato.cargoObject = cargoResponse.json().data;
+                rolPago.contratoObject = contrato;
+
+              })
             })
+
           })
         });
         this.dataSource.data = rolesPago;
@@ -79,18 +89,20 @@ export class RolPagoListComponent implements OnInit {
   public generarRolesPago() {
     let token = this.seguridadService.getToken();
     this.usuarioService.isUsuario.subscribe(res => {
-      this.rolPagoService.create_by_consolidado_rolpago(this.consolidadoRolPago.id, res.empresa.id, token).subscribe(data => {
-        data.data.forEach(rol => {
-          this.contratoService.getContrato(token, rol.contrato).subscribe(contratoEl => {
-            this.empleadoService.getEmpleado(token, contratoEl.json().data.empleado).subscribe(empleado => {
-              let contrato = <Contrato>contratoEl.json();
-              contrato.empleadoObject = empleado.json().data;
-              rol.contratoObject = contrato;
-              this.dataSource.data.push(rol)
+      this.rolPagoService.createByConsolidadoRolPago(this.consolidadoRolPago.id, res.empresa.id, token).subscribe(res => {
+        res.data.forEach(rolPagoResponse => {
+          this.contratoService.getContrato(token, rolPagoResponse.contrato).subscribe(contratoResponse => {
+            let contrato = contratoResponse.json().data;
+            this.empleadoService.getEmpleado(token, contratoResponse.json().data.empleado).subscribe(empleadoResponse => {
+              contrato.empleadoObject = empleadoResponse.json().data;
+              rolPagoResponse.contratoObject = contrato;
             })
           })
+          this.dataSource.data.push(rolPagoResponse)
+
         });
-        this.length = data.count;
+        this.length = res.count;
+        this.dataSource.paginator = this.paginator;
       })
     });
 
@@ -102,6 +114,18 @@ export class RolPagoListComponent implements OnInit {
           this.generarRolesPago();
         }
       });
+  }
+  openDialog() {
+    let token = this.seguridadService.getToken();
+    const dialogRef = this.dialog.open(RolPagoDetailDialogComponent, {
+      width: '500px',
+      data: { rolPago: this.rolPago }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    })
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -115,4 +139,5 @@ export class RolPagoListComponent implements OnInit {
         this.selection.select(row)
       });
   }
+
 }

@@ -13,16 +13,19 @@ export class RolPagoService extends SharedService {
     super();
   }
 
-  rolPagoList(consolidadoROlPago, token, page, pageSize, filter) {
+  rolPagoList(token, page, pageSize, filter) {
+    return this.http.get(services.ws_nominas_rolPagos, this.options(token, null, page, pageSize, filter))
+  }
+  rolPagoByConsolidadoList(consolidadoROlPago, token, page, pageSize, filter) {
     let opciones = []
     let opcion = { "CONSOLIDADO_ROLPAGO": consolidadoROlPago }
     opciones.push(opcion)
-    return this.http.get(services.ws_nominas_rolPagos, this.options(token, null, page, pageSize, filter, opciones))
+    return this.http.get(services.ws_nominas_rolpago_list_by_consolidado, this.options(token, null, page, pageSize, filter, opciones))
   }
   save() {
 
   }
-  create_by_consolidado_rolpago(consolidadoRolPago, empresa, token) {
+  createByConsolidadoRolPago(consolidadoRolPago, empresa, token) {
     let opciones = []
     let opcion = { "EMPRESA": empresa }
     let opcion1 = { "CONSOLIDADO_ROLPAGO": consolidadoRolPago }

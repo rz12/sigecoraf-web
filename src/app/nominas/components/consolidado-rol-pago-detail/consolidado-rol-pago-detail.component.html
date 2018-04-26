@@ -2,8 +2,9 @@
   <mat-card-header>
   </mat-card-header>
   <mat-card-content>
-    <mat-tab-group>
-      <mat-tab label="Consolidado de Rol de Pago">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+      <mat-step [stepControl]="consolidadoRolPagoForm">
+        <ng-template matStepLabel>Consolidado de Roles de Pago</ng-template>
         <form [formGroup]="consolidadoRolPagoForm" (ngSubmit)="consolidadoRolPagoForm.valid &&save()">
           <mat-form-field class="full-width">
             <input matInput required formControlName="fechaDesde" [(ngModel)]="consolidadoRolPago.fecha_desde" [matDatepicker]="pickerFechaDesde"
@@ -22,7 +23,7 @@
           </mat-form-field>
 
           <div class="wrapper">
-            <button mat-raised-button color="primary" type="submit">
+            <button mat-raised-button color="primary" matStepperNext type="submit">
               <i class="material-icons">save</i>
             </button>
             <button mat-raised-button color="primary" (click)="cancel()">
@@ -30,10 +31,11 @@
             </button>
           </div>
         </form>
-      </mat-tab>
-      <mat-tab *ngIf="consolidadoRolPago && consolidadoRolPago.id" label="Roles de Pago">
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Roles de Pago</ng-template>
         <app-rol-pago-list [consolidadoRolPago]="consolidadoRolPago"></app-rol-pago-list>
-      </mat-tab>
-    </mat-tab-group>
+      </mat-step>
+    </mat-horizontal-stepper>
   </mat-card-content>
 </mat-card>

@@ -14,7 +14,8 @@ import { DialogService } from '../../../shared/dialog/services/dialog.service';
 export class ConsolidadoRolPagoDetailComponent implements OnInit {
   public consolidadoRolPago: ConsolidadoRolPago;
   public consolidadoRolPagoForm: any;
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private consolidadoRolPagoService: ConsolidadoRolPagoService,
+  isLinear = true;
+  constructor(private route: ActivatedRoute, private router: Router, private consolidadoRolPagoService: ConsolidadoRolPagoService,
     private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
     this.consolidadoRolPago = new ConsolidadoRolPago();
     this.consolidadoRolPagoForm = this.fb.group({
@@ -26,10 +27,12 @@ export class ConsolidadoRolPagoDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    let id = +this.activatedRoute.snapshot.params['id'];
+    let id = this.route.snapshot.params.id;
     if (id != 0) {
-      let token = this.seguridadService.getToken()
-      this.getConsolidadoRolPago(token, id)
+      this.route.data
+        .subscribe(res => {
+          this.consolidadoRolPago = res.data.json().data;
+        });
     }
   }
 
@@ -37,6 +40,7 @@ export class ConsolidadoRolPagoDetailComponent implements OnInit {
     let token = this.seguridadService.getToken()
     let response = this.consolidadoRolPagoService.save(token, this.consolidadoRolPago);
     response.subscribe(res => {
+      this.consolidadoRolPago = res.data;
       this.dialogService.notificacion('', res.message, this.viewContainerRef)
     })
 

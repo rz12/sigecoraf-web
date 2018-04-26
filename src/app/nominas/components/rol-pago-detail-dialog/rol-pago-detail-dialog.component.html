@@ -1,0 +1,14 @@
+<form [formGroup]="rolPagoForm" (ngSubmit)="direccionForm.valid && save()">
+  <div mat-dialog-content>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          {{data.rolPago.contratoObject.empleadoObject.primer_nombre}} {{data.rolPago.contratoObject.empleadoObject.segundo_nombre}}
+          {{data.rolPago.contratoObject.empleadoObject.primer_apellido}} {{data.rolPago.contratoObject.empleadoObject.segundo_apellido}}
+        </mat-card-title>
+        <mat-card-subtitle>{{data.rolPago.contratoObject.cargoObject.sueldo}} </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+
+  </div>
+</form>
