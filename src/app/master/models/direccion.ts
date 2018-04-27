@@ -10,6 +10,4 @@ export class Direccion {
     public tipo_direccion: Number;
     public numero_telefono: String;
     public persona: Number;
-    public itemPais: Item;
-    public tipoDireccionItem: Item;
 }

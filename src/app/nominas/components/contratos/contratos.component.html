@@ -13,15 +13,15 @@
         <ng-container matColumnDef="empleado">
           <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
           <mat-cell *matCellDef="let contrato">
-            <label *ngIf="contrato.empleadoObject">{{contrato.empleadoObject.primer_nombre}} {{contrato.empleadoObject.segundo_nombre}} {{contrato.empleadoObject.primer_apellido}}
-              {{contrato.empleadoObject.segundo_apellido}}
+            <label *ngIf="contrato.empleado">{{contrato.empleado.primer_nombre}} {{contrato.empleado.segundo_nombre}} {{contrato.empleado.primer_apellido}}
+              {{contrato.empleado.segundo_apellido}}
             </label>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="cargo">
           <mat-header-cell *matHeaderCellDef> Cargo </mat-header-cell>
           <mat-cell *matCellDef="let contrato">
-            <label *ngIf="contrato.cargoObject">{{contrato.cargoObject.nombre}}</label>
+            <label *ngIf="contrato.cargo">{{contrato.cargo.nombre}}</label>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="fecha_inicio">

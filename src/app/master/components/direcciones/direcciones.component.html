@@ -4,7 +4,7 @@
       <ng-container matColumnDef="pais">
         <mat-header-cell *matHeaderCellDef> País </mat-header-cell>
         <mat-cell *matCellDef="let direccion">
-          <label *ngIf="direccion.itemPais">{{direccion.itemPais.nombre}} </label>
+          <label *ngIf="direccion.pais">{{direccion.pais.nombre}} </label>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="ciudad">
@@ -22,7 +22,7 @@
       <ng-container matColumnDef="tipo_direccion">
         <mat-header-cell *matHeaderCellDef> Tipo de Dirección </mat-header-cell>
         <mat-cell *matCellDef="let direccion">
-          <label *ngIf="direccion.itemTipoDireccion">{{direccion.itemTipoDireccion.nombre}} </label>
+          <label *ngIf="direccion.tipo_direccion">{{direccion.tipo_direccion.nombre}} </label>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="telefono">

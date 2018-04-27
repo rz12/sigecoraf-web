@@ -54,21 +54,19 @@ export class ContratoDetailComponent implements OnInit {
   public getContrato(token, id) {
     this.contratoService.getContrato(token, id).subscribe(res => {
       this.contrato = res.json().data;
-      this.cargoService.getCargo(token, this.contrato.cargo).subscribe(cargo => {
-        this.contrato.cargoObject = cargo.json().data;
-      })
-
-      this.empleadoService.getEmpleado(token, this.contrato.empleado).subscribe(empleado => {
-        this.contrato.empleadoObject = empleado.json().data;
-        this.changeDetector.detectChanges();
-      })
 
     });
   }
   setCargo(event) {
-    this.contrato.cargo = event.id;
+    this.changeDetector.detectChanges();
+
+    this.contrato.cargo = event;
+    this.changeDetector.detectChanges();
   }
   setEmpleado(event) {
-    this.contrato.empleado = event.id;
+    this.changeDetector.detectChanges();
+
+    this.contrato.empleado = event;
+    this.changeDetector.detectChanges();
   }
 }

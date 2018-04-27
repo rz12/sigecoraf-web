@@ -29,8 +29,7 @@ export class DireccionesComponent implements OnInit {
   public message: String;
   public direccion: Direccion;
   constructor(private dialogService: DialogService, public dialog: MatDialog, private seguridadService: SeguridadService,
-    private viewContainerRef: ViewContainerRef, private direccionService: DireccionService, private sharedService: SharedService,
-    private itemService: ItemService) { }
+    private viewContainerRef: ViewContainerRef, private direccionService: DireccionService, private sharedService: SharedService) { }
 
   ngOnInit() {
     this.direccion = new Direccion();
@@ -55,17 +54,7 @@ export class DireccionesComponent implements OnInit {
   public getCargosPagination(token, pageIndex, pageSize, filter) {
     this.direccionService.direccionesLisByPersona(this.empleado.id, token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
-        let direcciones = data.json().data;
-        direcciones.forEach(element => {
-          this.itemService.getItem(token, element.pais).subscribe(res => {
-            element.itemPais = res.json().data;
-          })
-          this.itemService.getItem(token, element.tipo_direccion).subscribe(res => {
-            element.itemTipoDireccion = res.json().data;
-
-          })
-        });
-        this.dataSource.data = direcciones;
+        this.dataSource.data = data.json().data;
         this.length = data.json().count;
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
@@ -74,6 +63,7 @@ export class DireccionesComponent implements OnInit {
   }
   openDialog() {
     let token = this.seguridadService.getToken();
+    console.log(this.direccion)
     const dialogRef = this.dialog.open(DireccionDetailDialogComponent, {
       width: '500px',
       data: { direccion: this.direccion }
@@ -87,12 +77,6 @@ export class DireccionesComponent implements OnInit {
           let message = ""
           if (res.status == enums.HTTP_200_OK) {
             message = res.message;
-            this.itemService.getItem(token, res.data.pais).subscribe(item => {
-              res.data.itemPais = item.json().data;
-            })
-            this.itemService.getItem(token, res.data.tipo_direccion).subscribe(item => {
-              res.data.itemTipoDireccion = item.json().data;
-            })
             const index = this.sharedService.getIndexObject(this.dataSource.data, res.data);
             if (index == -1) {
               this.dataSource.data.push(res.data)

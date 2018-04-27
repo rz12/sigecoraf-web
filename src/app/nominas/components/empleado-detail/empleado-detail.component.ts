@@ -24,7 +24,7 @@ export class EmpleadoDetailComponent implements OnInit {
   tipo_documento_identificacion: any;
   constructor(private route: ActivatedRoute, private router: Router, private empleadoService: EmpleadoService, private formBuilder: FormBuilder,
     private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef,
-    private dialogService: DialogService, private itemService: ItemService, private changeDetector: ChangeDetectorRef) {
+    private dialogService: DialogService, private itemService: ItemService) {
     this.empleado = new Empleado();
     this.genero = 0
     this.estado_civil = 0
@@ -68,36 +68,28 @@ export class EmpleadoDetailComponent implements OnInit {
   }
   public onChangeEmpresa(value) {
     this.empleado.empresa = value;
-    this.changeDetector.detectChanges();
   }
   public onChangeTipoDocumento(value) {
     this.empleado.tipo_documento_identificacion = value;
-    this.changeDetector.detectChanges();
   }
   public onChangeGenero(value) {
     this.empleado.genero = value;
-    this.changeDetector.detectChanges();
   }
   public onChangeEstadoCivil(value) {
     this.empleado.estado_civil = value;
-    this.changeDetector.detectChanges();
   }
   public save() {
     let token = this.seguridadService.getToken()
-    this.itemService.getItem(token, this.empleado.tipo_documento_identificacion).subscribe(item => {
-      this.empleado.tipo_documento_identificacion_object = item.json().data;
-      this.empleadoService.save(token, this.empleado).subscribe(res => {
-        let message = ""
-        if (res.status == enums.HTTP_200_OK) {
-          this.empleado = res.data;
-          message = res.message;
-        } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
-          message = res.message
-        }
-        this.dialogService.notificacion('', message, this.viewContainerRef)
-      })
+    this.empleadoService.save(token, this.empleado).subscribe(res => {
+      let message = ""
+      if (res.status == enums.HTTP_200_OK) {
+        this.empleado = res.data;
+        message = res.message;
+      } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
+        message = res.message
+      }
+      this.dialogService.notificacion('', message, this.viewContainerRef)
     })
-
   }
   public cancel() {
     let link = ['/' + 'empleados'];
@@ -106,9 +98,6 @@ export class EmpleadoDetailComponent implements OnInit {
   public getEmpleado(token, id) {
     this.empleadoService.getEmpleado(token, id).subscribe(res => {
       this.empleado = res.json().data;
-      this.itemService.getItem(token, this.empleado.tipo_documento_identificacion).subscribe(item => {
-        this.empleado.tipo_documento_identificacion_object = item.json().data;
-      })
     });
   }
 

@@ -25,7 +25,7 @@
         <ng-container matColumnDef="tipo_documento">
           <mat-header-cell *matHeaderCellDef> Tipo De Documento </mat-header-cell>
           <mat-cell *matCellDef="let empleado">
-            <label *ngIf="empleado.tipo_documento_identificacion_object">{{empleado.tipo_documento_identificacion_object.nombre}}</label>
+            <label *ngIf="empleado.tipo_documento_identificacion">{{empleado.tipo_documento_identificacion.nombre}}</label>
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="celular">

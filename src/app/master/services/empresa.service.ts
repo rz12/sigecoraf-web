@@ -11,4 +11,7 @@ export class EmpresaService extends SharedService {
   public empresaList(token) {
     return this.http.get(services.ws_master_empresas, this.options(token, null, null, null, null));
   }
+  public getEmpresa(id) {
+    return this.http.get(services.ws_master_empresas.concat('/').concat(id), this.options(null, null, null, null, ""))
+  }
 }

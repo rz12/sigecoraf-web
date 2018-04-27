@@ -7,8 +7,6 @@ import { ParametrizacionService } from '../../../master/services/parametrizacion
 import { Parametrizacion } from '../../../master/models/parametrizacion';
 import { enums } from '../../../credentials';
 import { SelectionModel } from '@angular/cdk/collections';
-import { CargoService } from '../../services/cargo.service';
-import { EmpleadoService } from '../../services/empleado.service';
 import { DireccionService } from '../../../master/services/direccion.service';
 import { DialogService } from '../../../shared/dialog/services/dialog.service';
 import { SharedService } from '../../../shared/services/shared.service';
@@ -31,8 +29,8 @@ export class ContratosComponent implements OnInit {
   public contratoSeleccionado: Contrato;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private contratoService: ContratoService, private seguridadService: SeguridadService,
-    private parametrizacionService: ParametrizacionService, private cargoService: CargoService, private sharedService: SharedService,
-    private viewContainerRef: ViewContainerRef, private dialogService: DialogService, private empleadoService: EmpleadoService) { }
+    private parametrizacionService: ParametrizacionService, private sharedService: SharedService,
+    private viewContainerRef: ViewContainerRef, private dialogService: DialogService) { }
   public length: number;
   public pageSize: number = 1;
   public pageIndex: number = 1;
@@ -64,16 +62,8 @@ export class ContratosComponent implements OnInit {
   public getContratosPagination(token, pageIndex, pageSize, filter) {
     this.contratoService.contratosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
-        let contratos = data.json().data
-        contratos.forEach(contrato => {
-          this.cargoService.getCargo(token, contrato.cargo).subscribe(cargo => {
-            contrato.cargoObject = cargo.json().data;
-          })
-          this.empleadoService.getEmpleado(token, contrato.empleado).subscribe(empleado => {
-            contrato.empleadoObject = empleado.json().data;
-          })
-        });
-        this.dataSource.data = contratos;
+        console.log(data.json().data)
+        this.dataSource.data = data.json().data;
         this.length = data.json().count;
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;

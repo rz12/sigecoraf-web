@@ -30,10 +30,13 @@ export class DireccionDetailDialogComponent implements OnInit {
   }
   save() {
     if (this.data.direccion) {
-      this.data.direccion.pais = this.direccionForm.controls.pais.value
-      this.data.direccion.tipo_direccion = this.direccionForm.controls.tipoDireccion.value
       this.dialogRef.close(this.data.direccion);
     }
   }
-
+  public onChangePais(value) {
+    this.data.direccion.pais = value;
+  }
+  public onChangeTipoDireccion(value) {
+    this.data.direccion.tipo_direccion = value;
+  }
 }

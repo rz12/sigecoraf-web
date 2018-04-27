@@ -4,6 +4,7 @@ import { SeguridadService } from '../../../seguridad/services/seguridad.service'
 import { enums } from '../../../credentials';
 import { Item } from '../../../master/models/item';
 import { Form } from '@angular/forms';
+import { ItemService } from '../../../master/services/item.service';
 
 @Component({
   selector: 'app-select-item',
@@ -15,14 +16,15 @@ export class SelectItemComponent implements OnInit {
 
   public itemList: Item[];
   public message: String;
-  @Input() valor: String;
+  @Input() valor: Item;
   @Input() codigo: String;
   @Input() placeHolder: String;
   @Output() notificador = new EventEmitter();
-  public selectedValue: Number;
+  public selectedValue: any;
   @Input() control: Form;
 
-  constructor(private catalogoService: CatalogoService, private seguridadService: SeguridadService) {
+  constructor(private catalogoService: CatalogoService, private itemService: ItemService,
+    private changeDetector: ChangeDetectorRef, private seguridadService: SeguridadService) {
   }
   ngOnInit() {
     this.itemList = [];
@@ -32,7 +34,7 @@ export class SelectItemComponent implements OnInit {
         data.json().data.forEach(catalogo => {
           this.itemList = (catalogo.items)
         });
-        this.selectItem(this.valor)
+        this.selectItem(this.valor ? this.valor.id : null)
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
       }
@@ -41,8 +43,12 @@ export class SelectItemComponent implements OnInit {
   }
 
   selectItem(newValue) {
-    this.selectedValue = newValue;
-    this.notificador.emit(newValue);
+    if (newValue) {
+      this.selectedValue = newValue;
+      this.changeDetector.detectChanges();
+      this.itemService.getItem(this.seguridadService.getToken(), newValue).subscribe(res => {
+        this.notificador.emit(res.json().data);
+      })
+    }
   }
-
 }

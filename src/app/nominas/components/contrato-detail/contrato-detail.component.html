@@ -15,9 +15,9 @@
         <mat-datepicker-toggle matSuffix [for]="pickerFechaFin"></mat-datepicker-toggle>
         <mat-datepicker #pickerFechaFin></mat-datepicker>
       </mat-form-field>
-      <app-cargos-autcomplete [filter]="contrato.id &&contrato.cargoObject?contrato.cargoObject.nombre:''" [control]="contratoForm.controls.cargo"
+      <app-cargos-autcomplete [filter]="contrato.id && contrato.cargo?contrato.cargo.nombre:''" [control]="contratoForm.controls.cargo"
         (notificador)="setCargo($event)"></app-cargos-autcomplete>
-      <app-empleados-autocomplete [filter]="contrato.id &&contrato.empleadoObject?contrato.empleadoObject.primer_nombre+' '+contrato.empleadoObject.segundo_nombre+' '+contrato.empleadoObject.primer_apellido+' '+contrato.empleadoObject.segundo_apellido:''"
+      <app-empleados-autocomplete [filter]="contrato.id &&contrato.empleado?contrato.empleado.primer_nombre+' '+contrato.empleado.segundo_nombre+' '+contrato.empleado.primer_apellido+' '+contrato.empleado.segundo_apellido:''"
         [control]="contratoForm.controls.empleado" (notificador)="setEmpleado($event)"></app-empleados-autocomplete>
       <section>
         <mat-checkbox [(ngModel)]="contrato.estado" formControlName="estado">Activo</mat-checkbox>

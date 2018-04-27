@@ -21,7 +21,7 @@
                   <input matInput placeholder="Segundo Apellido" formControlName="segundoApellido" [(ngModel)]="empleado.segundo_apellido">
                 </mat-form-field>
                 <app-select-item [codigo]="'TIPO_DOCUMENTO'" [control]="empleadoForm.controls.persona.controls.tipoDocumentoIdentificacion"
-                  [placeHolder]="'Seleccione un Tipo de Documento'" [valor]="tipo" (notificador)="onChangeTipoDocumento($event)">
+                  [placeHolder]="'Seleccione un Tipo de Documento'" [valor]="tipo_documento_identificacion" (notificador)="onChangeTipoDocumento($event)">
                 </app-select-item>
                 <mat-form-field class="full-width">
                   <input matInput required placeholder="Número de Identificación" [(ngModel)]="empleado.numero_identificacion" formControlName="numeroIdentificacion">
@@ -39,7 +39,7 @@
                   [valor]="genero" (notificador)="onChangeGenero($event)">
                 </app-select-item>
                 <app-select-item [codigo]="'ESTADO_CIVIL'" [control]="empleadoForm.controls.persona.controls.estadoCivil" [placeHolder]="'Seleccione un Estado Civil'"
-                  [valor]="estado" (notificador)="onChangeEstadoCivil($event)">
+                  [valor]="estado_civil" (notificador)="onChangeEstadoCivil($event)">
                 </app-select-item>
               </div>
             </div>

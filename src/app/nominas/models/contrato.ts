@@ -8,6 +8,4 @@ export class Contrato {
     public mensualizar_decimos: Boolean;
     public empleado: Number;
     public cargo: Number;
-    public cargoObject: Cargo;
-    public empleadoObject: Empleado;
 }

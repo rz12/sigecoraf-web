@@ -1,10 +1,11 @@
 <form [formGroup]="direccionForm" (ngSubmit)="direccionForm.valid && save()">
   <div mat-dialog-content>
     <div *ngIf="data.direccion">
-      <app-select-item [codigo]="'PAIS'" [control]="direccionForm.controls.pais" [placeHolder]="'Seleccione un Pais'" [valor]="data.direccion.pais">
+      <app-select-item [codigo]="'PAIS'" (notificador)="onChangePais($event)" [control]="direccionForm.controls.pais" [placeHolder]="'Seleccione un Pais'"
+        [valor]="data.direccion.pais">
       </app-select-item>
       <app-select-item [codigo]="'TIPO_DIRECCION'" [control]="direccionForm.controls.tipoDireccion" [placeHolder]="'Seleccione un TIpo'"
-        [valor]="data.direccion.tipo_direccion">
+        (notificador)="onChangeTipoDireccion($event)" [valor]="data.direccion.tipo_direccion">
       </app-select-item>
       <mat-form-field class="full-width">
         <input matInput required formControlName="ciudad" placeholder="Ciudad" [(ngModel)]="data.direccion.ciudad">
