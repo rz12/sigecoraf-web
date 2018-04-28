@@ -67,11 +67,11 @@ export class CargosAutcompleteComponent implements OnInit {
   }
   public cargarDetallesPaginacion() {
     let parametros = [];
-    if (!this.parametrizacionService.parametros) {
-      parametros = this.parametrizacionService.parametros;
-    } else {
-      parametros = JSON.parse(localStorage.getItem(enums.SISTEMA_PARAM))
-    }
+    // if (!this.parametrizacionService.parametros) {
+    // parametros = this.parametrizacionService.parametros;
+    // } else {
+    //parametros = JSON.parse(localStorage.getItem(enums.SISTEMA_PARAM))
+    //}
     parametros.filter(param => param.codigo == enums.PARAM_SISTEMA_PAGINACION).forEach(res => {
       res.detalles.forEach(detalle => {
         if (detalle.codigo == enums.DETALLE_PAGESIZE) {

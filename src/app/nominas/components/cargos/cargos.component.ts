@@ -7,6 +7,8 @@ import { enums } from '../../../credentials';
 import { Parametrizacion } from '../../../master/models/parametrizacion';
 import { ParametrizacionService } from '../../../master/services/parametrizacion.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import { PaginationService } from '../../../shared/services/pagination.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cargos',
@@ -25,21 +27,15 @@ export class CargosComponent implements OnInit {
   public message: String;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public length: number;
-  public pageSize: number = 1;
-  public pageIndex: number = 1;
-  public pageSizeOptions: number[]
   public filter: String;
-  constructor(private cargoService: CargoService, private seguridadService: SeguridadService,
+  constructor(private route: ActivatedRoute, private paginationService: PaginationService, private cargoService: CargoService, private seguridadService: SeguridadService,
     private parametrizacionService: ParametrizacionService) { }
 
   ngOnInit() {
-    this.pageSizeOptions = []
-    this.cargarDetallesPaginacion();
-  }
-  ngAfterViewInit() {
-    let token = this.seguridadService.getToken()
-    this.getCargosPagination(token, this.pageIndex, this.pageSize, this.filter);
-
+    this.route.data.subscribe(res => {
+      this.dataSource.data = res.data.json().data
+      this.length = res.data.json().count
+    })
   }
   public loadPagination(event) {
     let token = this.seguridadService.getToken()
@@ -64,30 +60,11 @@ export class CargosComponent implements OnInit {
       }
     });
   }
-  public cargarDetallesPaginacion() {
-    let parametros = [];
-    if (!this.parametrizacionService.parametros) {
-      parametros = this.parametrizacionService.parametros;
-    } else {
-      parametros = JSON.parse(localStorage.getItem(enums.SISTEMA_PARAM))
-    }
-    parametros.filter(param => param.codigo == enums.PARAM_SISTEMA_PAGINACION).forEach(res => {
-      res.detalles.forEach(detalle => {
-        if (detalle.codigo == enums.DETALLE_PAGESIZE) {
-          this.pageSize = Number(detalle.valor);
-        }
-        if (detalle.codigo == enums.DETALLE_PAGESIZE_OPTIONS) {
-          detalle.valor.split(",").forEach(element => {
-            this.pageSizeOptions.push(Number(element));
-          });
-        }
-      })
-    })
-  }
+
   public search(event) {
     this.filter = event;
     let token = this.seguridadService.getToken()
-    this.getCargosPagination(token, this.pageIndex, this.pageSize, this.filter);
+    this.getCargosPagination(token, 1, this.paginationService.pageSize, this.filter);
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

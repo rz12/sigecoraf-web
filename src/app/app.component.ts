@@ -7,6 +7,9 @@ import { SeguridadService } from './seguridad/services/seguridad.service';
 import { MenuService } from './seguridad/services/menu.service';
 import { enums } from './credentials';
 import { Router } from '@angular/router';
+import { PaginationService } from './shared/services/pagination.service';
+import { ParametrizacionService } from './master/services/parametrizacion.service';
+import { ConsolidadoRolPagoDetailComponent } from './nominas/components/consolidado-rol-pago-detail/consolidado-rol-pago-detail.component';
 
 declare const $: any;
 @Component({
@@ -22,7 +25,7 @@ export class AppComponent implements OnInit {
   isUsuario$: Observable<Usuario>;
   isLoggedIn$: Observable<boolean>;
   constructor(private router: Router, private seguridadService: SeguridadService, private sidenavService: SideNavService,
-    private changeDetector: ChangeDetectorRef, private usuarioService: UsuarioService, private menuService: MenuService) { }
+    private changeDetector: ChangeDetectorRef, private usuarioService: UsuarioService, private menuService: MenuService, private parametrizacionService: ParametrizacionService) { }
 
   ngOnInit() {
     this.sidenavState = this.sidenavService.getSideNavState();
@@ -36,6 +39,7 @@ export class AppComponent implements OnInit {
       } else {
         if (token != null) {
           this.getUsuarioByToken(token.token);
+          this.getParametros(token);
         }
       }
     })
@@ -56,6 +60,13 @@ export class AppComponent implements OnInit {
       this.usuario = res.json().data;
     });
   }
-
+  public getParametros(token) {
+    this.parametrizacionService.getParametrizaciones(token).subscribe(
+      res => {
+        this.parametrizacionService.setParametros(res.data);
+        localStorage.setItem(enums.SISTEMA_PARAM, JSON.stringify(res.data))
+        this.seguridadService.sessionTimeout(res.data)
+      });
+  }
 
 }

@@ -27,7 +27,7 @@ export class SelectEmpresaComponent implements OnInit {
     this.empresaService.empresaList(token.token).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
         this.empresaList = data.json().data;
-        this.selectItem(this.valor.id)
+        this.selectItem(this.valor ? this.valor.id : 0)
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
       }

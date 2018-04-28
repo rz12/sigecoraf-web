@@ -14,13 +14,25 @@ import { EmpleadoResolveService } from './resolvers/empleado-resolve.service';
 import { CargoDetailResolveService } from './resolvers/cargo-detail-resolve.service';
 import { ConsolidadoRolPagoService } from './services/consolidado-rol-pago.service';
 import { ConsolidadoRolpagoDetailResolveService } from './resolvers/consolidado-rolpago-detail-resolve.service';
+import { CargoListResolveService } from './resolvers/cargo-list-resolve.service';
+import { EmpleadoListResolveService } from './resolvers/empleado-list-resolve.service';
 
 
 const routes: Routes = [
-  { path: 'empleados', component: EmpleadosComponent },
+  {
+    path: 'empleados',
+    component: EmpleadosComponent,
+    resolve: { data: EmpleadoListResolveService },
+    canActivate: [EmpleadoListResolveService]
+  },
   { path: 'contratos', component: ContratosComponent },
   { path: 'contrato-detail/:id', component: ContratoDetailComponent },
-  { path: 'cargos', component: CargosComponent },
+  {
+    path: 'cargos',
+    component: CargosComponent,
+    resolve: { data: CargoListResolveService },
+    canActivate: [CargoListResolveService]
+  },
   {
     path: 'cargo-detail/:id',
     component: CargoDetailComponent,

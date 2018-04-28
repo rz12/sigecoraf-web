@@ -68,24 +68,7 @@ export class EmpleadosAutocompleteComponent implements OnInit {
     });
   }
   public cargarDetallesPaginacion() {
-    let parametros = [];
-    if (!this.parametrizacionService.parametros) {
-      parametros = this.parametrizacionService.parametros;
-    } else {
-      parametros = JSON.parse(localStorage.getItem(enums.SISTEMA_PARAM))
-    }
-    parametros.filter(param => param.codigo == enums.PARAM_SISTEMA_PAGINACION).forEach(res => {
-      res.detalles.forEach(detalle => {
-        if (detalle.codigo == enums.DETALLE_PAGESIZE) {
-          this.pageSize = Number(detalle.valor);
-        }
-        if (detalle.codigo == enums.DETALLE_PAGESIZE_OPTIONS) {
-          detalle.valor.split(",").forEach(element => {
-            this.pageSizeOptions.push(Number(element));
-          });
-        }
-      })
-    })
+
   }
   public search() {
     if (this.filter != '') {

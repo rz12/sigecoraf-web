@@ -31,8 +31,8 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
       </mat-table>
-      <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="true"
-        (page)="loadPagination($event)">
+      <mat-paginator #paginator [length]="length" [pageSize]="paginationService.pageSize" [pageSizeOptions]="paginationService.pageSizeOptions"
+        [showFirstLastButtons]="true" (page)="loadPagination($event)">
       </mat-paginator>
 
       <mat-card-actions>

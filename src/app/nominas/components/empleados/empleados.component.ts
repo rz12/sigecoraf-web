@@ -7,6 +7,8 @@ import { ParametrizacionService } from '../../../master/services/parametrizacion
 import { enums } from '../../../credentials';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ItemService } from '../../../master/services/item.service';
+import { PaginationService } from '../../../shared/services/pagination.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-empleados',
@@ -23,22 +25,18 @@ export class EmpleadosComponent implements OnInit {
   public codigoEdit = "EDIT_EMPLEADO";
   public message: String;
   public length: number;
-  public pageSize: number = 1;
-  public pageIndex: number = 1;
-  public pageSizeOptions: number[]
   public filter: String;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private empleadoService: EmpleadoService, private seguridadService: SeguridadService,
-    private parametrizacionService: ParametrizacionService, private itemService: ItemService) { }
-  ngOnInit() {
-    this.pageSizeOptions = []
-    this.cargarDetallesPaginacion();
-  }
-  ngAfterViewInit() {
-    let token = this.seguridadService.getToken()
-    this.getEmpleadosPagination(token, this.pageIndex, this.pageSize, this.filter);
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(private empleadoService: EmpleadoService, private seguridadService: SeguridadService, private paginationService: PaginationService,
+    private parametrizacionService: ParametrizacionService, private itemService: ItemService, private route: ActivatedRoute) { }
+  ngOnInit() {
+    this.route.data.subscribe(res => {
+      this.dataSource.data = res.data.json().data
+      this.length = res.data.json().count
+    })
   }
+
   public loadPagination(event) {
     let token = this.seguridadService.getToken()
     this.getEmpleadosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
@@ -55,37 +53,18 @@ export class EmpleadosComponent implements OnInit {
   public getEmpleadosPagination(token, pageIndex, pageSize, filter) {
     this.empleadoService.empleadosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
-        this.dataSource.data =  data.json().data;
+        this.dataSource.data = data.json().data;
         this.length = data.json().count;
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
       }
     });
   }
-  public cargarDetallesPaginacion() {
-    let parametros = [];
-    if (!this.parametrizacionService.parametros) {
-      parametros = this.parametrizacionService.parametros;
-    } else {
-      parametros = JSON.parse(localStorage.getItem(enums.SISTEMA_PARAM))
-    }
-    parametros.filter(param => param.codigo == enums.PARAM_SISTEMA_PAGINACION).forEach(res => {
-      res.detalles.forEach(detalle => {
-        if (detalle.codigo == enums.DETALLE_PAGESIZE) {
-          this.pageSize = Number(detalle.valor);
-        }
-        if (detalle.codigo == enums.DETALLE_PAGESIZE_OPTIONS) {
-          detalle.valor.split(",").forEach(element => {
-            this.pageSizeOptions.push(Number(element));
-          });
-        }
-      })
-    })
-  }
+
   public search(event) {
     this.filter = event;
     let token = this.seguridadService.getToken()
-    this.getEmpleadosPagination(token, this.pageIndex, this.pageSize, this.filter);
+    this.getEmpleadosPagination(token, 1, this.paginationService.pageSize, this.filter);
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

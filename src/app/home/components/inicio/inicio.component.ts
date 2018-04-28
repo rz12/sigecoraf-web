@@ -25,9 +25,8 @@ export class InicioComponent {
   isUsuario$: Observable<Usuario>;
   usuario: Usuario;
 
-  constructor(private router: Router, private media: ObservableMedia, private parametrizacionService: ParametrizacionService
-    , private seguridadService: SeguridadService, private menuService: MenuService, private idle: Idle, private keepalive: Keepalive,
-    private usuarioService: UsuarioService) {
+  constructor(private router: Router, private media: ObservableMedia, private seguridadService: SeguridadService,
+    private menuService: MenuService, private usuarioService: UsuarioService) {
 
     let token = this.seguridadService.getToken();
     let urlCurrent = menuService.getMenuActual(token);
@@ -37,26 +36,10 @@ export class InicioComponent {
         this.usuario = res;
       }
     })
-    let parametros = JSON.parse(localStorage.getItem(enums.SISTEMA_PARAM))
-    if (!parametros) {
-      this.getParametros(token.token)
-    }
     let navigate = token ? (urlCurrent ? urlCurrent : "home") : "login";
     this.router.navigate([navigate])
   }
 
-
-  public getParametros(token) {
-    this.parametrizacionService.getParametrizaciones(token).subscribe(
-      res => {
-        this.parametrizacionService.parametros = res.data;
-        this.seguridadService.sessionTimeout(this.parametrizacionService.parametros)
-        localStorage.setItem(enums.SISTEMA_PARAM, JSON.stringify(this.parametrizacionService.parametros));
-      });
-  }
-  reset() {
-    this.idle.watch();
-  }
   public getMenus(token) {
     this.menuService.cargarMenus(token);
   }
