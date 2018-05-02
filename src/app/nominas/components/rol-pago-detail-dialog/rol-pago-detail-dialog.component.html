@@ -3,11 +3,13 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          {{data.rolPago.contratoObject.empleadoObject.primer_nombre}} {{data.rolPago.contratoObject.empleadoObject.segundo_nombre}}
-          {{data.rolPago.contratoObject.empleadoObject.primer_apellido}} {{data.rolPago.contratoObject.empleadoObject.segundo_apellido}}
+          {{data.rolPago.contrato.empleado.primer_nombre}} {{data.rolPago.contrato.empleado.segundo_nombre}} {{data.rolPago.contrato.empleado.primer_apellido}}
+          {{data.rolPago.contrato.empleado.segundo_apellido}}
         </mat-card-title>
-        <mat-card-subtitle>{{data.rolPago.contratoObject.cargoObject.sueldo}} </mat-card-subtitle>
+        <mat-card-subtitle>{{data.rolPago.contrato.cargo.sueldo}} </mat-card-subtitle>
       </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
     </mat-card>
 
   </div>

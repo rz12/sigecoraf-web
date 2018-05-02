@@ -4,10 +4,12 @@ import { ContratoService } from '../../services/contrato.service';
 import { SeguridadService } from '../../../seguridad/services/seguridad.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DialogService } from '../../../shared/dialog/services/dialog.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CargoService } from '../../services/cargo.service';
 import { EmpleadoService } from '../../services/empleado.service';
-
+import * as _moment from 'moment';
+import *  as _rollupMoment from 'moment';
+const moment = _rollupMoment || _moment;
 @Component({
   selector: 'app-contrato-detail',
   templateUrl: './contrato-detail.component.html',
@@ -17,13 +19,14 @@ export class ContratoDetailComponent implements OnInit {
 
   public contrato: Contrato;
   public contratoForm: any;
-  constructor(private changeDetector: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private router: Router, private contratoService: ContratoService,
+  constructor(private changeDetector: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private contratoService: ContratoService,
     private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef,
     private dialogService: DialogService, private cargoService: CargoService, private empleadoService: EmpleadoService) {
     this.contrato = new Contrato();
+
     this.contratoForm = this.fb.group({
-      fechaInicio: ["", Validators.required],
-      fechaFin: ["",],
+      fechaInicio: new FormControl(moment, Validators.required),
+      fechaFin: new FormControl(moment, Validators.required),
       cargo: ["", Validators.required],
       empleado: ["", Validators.required],
       estado: ["",],
@@ -32,10 +35,13 @@ export class ContratoDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    let id = +this.activatedRoute.snapshot.params['id'];
+    let id = +this.route.snapshot.params.id;
     if (id != 0) {
-      let token = this.seguridadService.getToken()
-      this.getContrato(token, id)
+      this.route.data
+        .subscribe(res => {
+          this.contrato = res.data.json().data;
+          this.changeDetector.detectChanges();
+        });
     }
   }
 
@@ -51,22 +57,11 @@ export class ContratoDetailComponent implements OnInit {
     let link = ['/' + 'contratos'];
     this.router.navigate(link);
   }
-  public getContrato(token, id) {
-    this.contratoService.getContrato(token, id).subscribe(res => {
-      this.contrato = res.json().data;
 
-    });
-  }
   setCargo(event) {
-    this.changeDetector.detectChanges();
-
     this.contrato.cargo = event;
-    this.changeDetector.detectChanges();
   }
   setEmpleado(event) {
-    this.changeDetector.detectChanges();
-
     this.contrato.empleado = event;
-    this.changeDetector.detectChanges();
   }
 }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { IRolPago } from '../dto/i-rol-pago';
 import { Observable } from 'rxjs/Observable';
 import { services } from "../../credentials";
 import { SharedService } from '../../shared/services/shared.service';

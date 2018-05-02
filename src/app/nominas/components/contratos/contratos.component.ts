@@ -10,6 +10,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { DireccionService } from '../../../master/services/direccion.service';
 import { DialogService } from '../../../shared/dialog/services/dialog.service';
 import { SharedService } from '../../../shared/services/shared.service';
+import { ActivatedRoute } from '@angular/router';
+import { PaginationService } from '../../../shared/services/pagination.service';
 
 @Component({
   selector: 'app-contratos',
@@ -28,23 +30,19 @@ export class ContratosComponent implements OnInit {
   public message: String;
   public contratoSeleccionado: Contrato;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private contratoService: ContratoService, private seguridadService: SeguridadService,
-    private parametrizacionService: ParametrizacionService, private sharedService: SharedService,
+  constructor(private route: ActivatedRoute, private contratoService: ContratoService, private seguridadService: SeguridadService,
+    private parametrizacionService: ParametrizacionService, private sharedService: SharedService, private paginationService: PaginationService,
     private viewContainerRef: ViewContainerRef, private dialogService: DialogService) { }
   public length: number;
-  public pageSize: number = 1;
-  public pageIndex: number = 1;
-  public pageSizeOptions: number[]
   public filter: String;
   ngOnInit() {
-    this.pageSizeOptions = []
-    this.cargarDetallesPaginacion();
-  }
-  ngAfterViewInit() {
-    let token = this.seguridadService.getToken()
-    this.getContratosPagination(token, this.pageIndex, this.pageSize, this.filter);
+    this.route.data.subscribe(res => {
+      this.dataSource.data = res.data.json().data
+      this.length = res.data.json().count
+    })
 
   }
+
   public loadPagination(event) {
     let token = this.seguridadService.getToken()
     this.getContratosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
@@ -62,7 +60,6 @@ export class ContratosComponent implements OnInit {
   public getContratosPagination(token, pageIndex, pageSize, filter) {
     this.contratoService.contratosList(token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
-        console.log(data.json().data)
         this.dataSource.data = data.json().data;
         this.length = data.json().count;
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
@@ -70,13 +67,11 @@ export class ContratosComponent implements OnInit {
       }
     });
   }
-  public cargarDetallesPaginacion() {
 
-  }
   public search(event) {
     this.filter = event;
     let token = this.seguridadService.getToken()
-    this.getContratosPagination(token, this.pageIndex, this.pageSize, this.filter);
+    this.getContratosPagination(token, 1, this.paginationService.pageSize, this.filter);
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

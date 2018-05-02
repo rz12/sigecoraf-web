@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
       } else {
         if (token != null) {
           this.getUsuarioByToken(token.token);
-          this.getParametros(token);
         }
       }
     })
@@ -59,14 +58,6 @@ export class AppComponent implements OnInit {
       this.usuarioService.setUsuario(res.json().data)
       this.usuario = res.json().data;
     });
-  }
-  public getParametros(token) {
-    this.parametrizacionService.getParametrizaciones(token).subscribe(
-      res => {
-        this.parametrizacionService.setParametros(res.data);
-        localStorage.setItem(enums.SISTEMA_PARAM, JSON.stringify(res.data))
-        this.seguridadService.sessionTimeout(res.data)
-      });
   }
 
 }

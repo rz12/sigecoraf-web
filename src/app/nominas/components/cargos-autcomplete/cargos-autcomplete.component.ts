@@ -9,6 +9,7 @@ import { ParametrizacionService } from '../../../master/services/parametrizacion
 import { enums } from '../../../credentials';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { PaginationService } from '../../../shared/services/pagination.service';
 @Component({
   selector: 'app-cargos-autcomplete',
   templateUrl: './cargos-autcomplete.component.html',
@@ -23,18 +24,14 @@ export class CargosAutcompleteComponent implements OnInit {
   public message: String;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public length: number;
-  public pageSize: number = 1;
-  public pageIndex: number = 1;
-  public pageSizeOptions: number[]
   @Input() filter: String;
   public visible: Boolean = false;
   @Input() control: Form;
   constructor(private cargoService: CargoService, private seguridadService: SeguridadService,
-    private parametrizacionService: ParametrizacionService) { }
+    private paginationService: PaginationService) { }
 
   ngOnInit() {
-    this.pageSizeOptions = []
-    this.cargarDetallesPaginacion();
+
   }
 
   public loadPagination(event) {
@@ -65,31 +62,12 @@ export class CargosAutcompleteComponent implements OnInit {
       }
     });
   }
-  public cargarDetallesPaginacion() {
-    let parametros = [];
-    // if (!this.parametrizacionService.parametros) {
-    // parametros = this.parametrizacionService.parametros;
-    // } else {
-    //parametros = JSON.parse(localStorage.getItem(enums.SISTEMA_PARAM))
-    //}
-    parametros.filter(param => param.codigo == enums.PARAM_SISTEMA_PAGINACION).forEach(res => {
-      res.detalles.forEach(detalle => {
-        if (detalle.codigo == enums.DETALLE_PAGESIZE) {
-          this.pageSize = Number(detalle.valor);
-        }
-        if (detalle.codigo == enums.DETALLE_PAGESIZE_OPTIONS) {
-          detalle.valor.split(",").forEach(element => {
-            this.pageSizeOptions.push(Number(element));
-          });
-        }
-      })
-    })
-  }
+
   public search() {
     if (this.filter != '') {
       this.visible = true;
       let token = this.seguridadService.getToken()
-      this.getCargosPagination(token, this.pageIndex, this.pageSize, this.filter);
+      this.getCargosPagination(token, 1, this.paginationService.pageSize, this.filter);
     } else {
       this.visible = false;
     }

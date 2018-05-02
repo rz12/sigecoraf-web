@@ -9,11 +9,14 @@ import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ItemService } from '../../../master/services/item.service';
 import { resolve } from 'path';
 import "rxjs/add/operator/map";
+import * as _moment from 'moment';
+import *  as _rollupMoment from 'moment';
+const moment = _rollupMoment || _moment;
 
 @Component({
   selector: 'app-empleado-detail',
   templateUrl: './empleado-detail.component.html',
-  styleUrls: ['./empleado-detail.component.css']
+  styleUrls: ['./empleado-detail.component.css'],
 })
 export class EmpleadoDetailComponent implements OnInit {
   empleadoForm: any;
@@ -53,7 +56,7 @@ export class EmpleadoDetailComponent implements OnInit {
         numeroIdentificacion: ["", Validators.required],
         tipoDocumentoIdentificacion: ["", Validators.required],
         numeroCelular: ["",],
-        fechaNacimiento: ["", Validators.required],
+        fechaNacimiento: new FormControl(moment, Validators.required),
         estadoCivil: ["", Validators.required],
         genero: ["", Validators.required],
       }),

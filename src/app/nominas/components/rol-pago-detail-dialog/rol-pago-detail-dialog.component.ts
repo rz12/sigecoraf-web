@@ -14,7 +14,6 @@ export class RolPagoDetailDialogComponent implements OnInit {
   public data: any) { }
 
   ngOnInit() {
-    console.log(this.data);
     this.rolPagoForm = this.fb.group({
 
     })

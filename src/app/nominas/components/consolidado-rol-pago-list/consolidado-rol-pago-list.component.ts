@@ -8,6 +8,8 @@ import { ItemService } from '../../../master/services/item.service';
 import { enums } from '../../../credentials';
 import { SharedService } from '../../../shared/services/shared.service';
 import { DialogService } from '../../../shared/dialog/services/dialog.service';
+import { PaginationService } from '../../../shared/services/pagination.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-consolidado-rol-pago-list',
@@ -26,23 +28,18 @@ export class ConsolidadoRolPagoListComponent implements OnInit {
   public codigoEdit = "EDIT_CONSOLIDADO_ROLPAGO";
   public message: String;
   public length: number;
-  public pageSize: number = 1;
-  public pageIndex: number = 1;
-  public pageSizeOptions: number[]
   public filter: String;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private consolidadoRolPagoService: ConsolidadoRolPagoService, private seguridadService: SeguridadService,
-    private parametrizacionService: ParametrizacionService, private itemService: ItemService,
+    private paginationService: PaginationService, private itemService: ItemService, private route: ActivatedRoute,
     private sharedService: SharedService, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) { }
   ngOnInit() {
-    this.pageSizeOptions = []
-    this.cargarDetallesPaginacion();
+    this.route.data.subscribe(res => {
+      this.dataSource.data = res.data.json().data
+      this.length = res.data.json().count
+    })
   }
-  ngAfterViewInit() {
-    let token = this.seguridadService.getToken()
-    this.getConsolidadosPagination(token, this.pageIndex, this.pageSize, this.filter);
 
-  }
   public loadPagination(event) {
     let token = this.seguridadService.getToken()
     this.getConsolidadosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
@@ -76,7 +73,7 @@ export class ConsolidadoRolPagoListComponent implements OnInit {
   public search(event) {
     this.filter = event;
     let token = this.seguridadService.getToken()
-    this.getConsolidadosPagination(token, this.pageIndex, this.pageSize, this.filter);
+    this.getConsolidadosPagination(token, 1, this.paginationService.pageSize, this.filter);
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

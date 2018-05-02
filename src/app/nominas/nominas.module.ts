@@ -45,6 +45,10 @@ import { RolPagoDetailDialogComponent } from './components/rol-pago-detail-dialo
 import { PaginationService } from '../shared/services/pagination.service';
 import { CargoListResolveService } from './resolvers/cargo-list-resolve.service';
 import { EmpleadoListResolveService } from './resolvers/empleado-list-resolve.service';
+import { ContratoListResolveService } from './resolvers/contrato-list-resolve.service';
+import { ContratoDetailResolveService } from './resolvers/contrato-detail-resolve.service';
+import { ConsolidadoRolPagoListResolveService } from './resolvers/consolidado-rol-pago-list-resolve.service';
+import { DetalleRolPagoListComponent } from './components/detalle-rol-pago-list/detalle-rol-pago-list.component';
 
 @NgModule({
   imports: [
@@ -78,10 +82,12 @@ import { EmpleadoListResolveService } from './resolvers/empleado-list-resolve.se
     ConsolidadoRolPagoListComponent,
     ConsolidadoRolPagoDetailComponent,
     RolPagoListComponent,
-    RolPagoDetailDialogComponent],
+    RolPagoDetailDialogComponent,
+    DetalleRolPagoListComponent],
   entryComponents: [DireccionesComponent, DireccionDetailDialogComponent, RolPagoListComponent, RolPagoDetailDialogComponent],
   providers: [SharedService, CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService,
     EmpleadoService, EmpleadoResolveService, CargoDetailResolveService, DireccionService, ItemService, ConsolidadoRolPagoService,
-    ConsolidadoRolpagoDetailResolveService, CargoListResolveService, PaginationService, EmpleadoListResolveService]
+    ConsolidadoRolpagoDetailResolveService, CargoListResolveService, PaginationService, EmpleadoListResolveService,
+    ContratoDetailResolveService, ContratoListResolveService, ConsolidadoRolPagoListResolveService]
 })
 export class NominasModule { }

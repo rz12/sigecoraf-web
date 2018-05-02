@@ -5,8 +5,8 @@
       <ng-container matColumnDef="contrato">
         <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
         <mat-cell *matCellDef="let rolPago">
-          <label *ngIf="rolPago.contratoObject">{{rolPago.contratoObject.empleadoObject.primer_nombre}} {{rolPago.contratoObject.empleadoObject.segundo_nombre}}
-            {{rolPago.contratoObject.empleadoObject.primer_apellido}} {{rolPago.contratoObject.empleadoObject.segundo_apellido}}
+          <label *ngIf="rolPago.contrato">{{rolPago.contrato.empleado.primer_nombre}} {{rolPago.contrato.empleado.segundo_nombre}} {{rolPago.contrato.empleado.primer_apellido}}
+            {{rolPago.contrato.empleado.segundo_apellido}}
           </label>
         </mat-cell>
       </ng-container>

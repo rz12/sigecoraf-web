@@ -16,6 +16,7 @@ import { Contrato } from '../../models/contrato';
 import { DatePipe } from '@angular/common';
 import { RolPagoDetailDialogComponent } from '../rol-pago-detail-dialog/rol-pago-detail-dialog.component';
 import { CargoService } from '../../services/cargo.service';
+import { PaginationService } from '../../../shared/services/pagination.service';
 
 @Component({
   selector: 'app-rol-pago-list',
@@ -29,23 +30,20 @@ export class RolPagoListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource();
   public length: number;
-  public pageSize: number = 20;
-  public pageIndex: number = 1;
-  public pageSizeOptions: number[] = [5, 10, 20]
   public filter: String;
   public message: String;
   public rolPago: RolPago;
   constructor(private dialogService: DialogService, public dialog: MatDialog, private seguridadService: SeguridadService,
     private viewContainerRef: ViewContainerRef, private rolPagoService: RolPagoService, private sharedService: SharedService,
-    private empleadoService: EmpleadoService, private changeDetector: ChangeDetectorRef, private contratoService: ContratoService,
-    private usuarioService: UsuarioService, private cargoService: CargoService) { }
+    private empleadoService: EmpleadoService, private changeDetector: ChangeDetectorRef, private paginationService: PaginationService,
+    private usuarioService: UsuarioService) { }
 
   ngOnInit() {
     this.rolPago = new RolPago;
   }
   ngAfterViewInit() {
     let token = this.seguridadService.getToken()
-    this.getRolPagination(token, this.pageIndex, this.pageSize, this.filter);
+    this.getRolPagination(token.token, 1, this.paginationService.pageSize, this.filter);
 
   }
   selectedRow(item, event) {
@@ -64,22 +62,7 @@ export class RolPagoListComponent implements OnInit {
 
     this.rolPagoService.rolPagoByConsolidadoList(this.consolidadoRolPago.id, token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
-        let rolesPago = data.json().data;
-        rolesPago.forEach(rolPago => {
-          this.contratoService.getContrato(token, rolPago.contrato).subscribe(contratoResponse => {
-            let contrato = contratoResponse.json().data;
-            this.empleadoService.getEmpleado(token, contratoResponse.json().data.empleado).subscribe(empleado => {
-              contrato.empleadoObject = empleado.json().data;
-              this.cargoService.getCargo(token, contratoResponse.json().data.cargo).subscribe(cargoResponse => {
-                contrato.cargoObject = cargoResponse.json().data;
-                rolPago.contratoObject = contrato;
-
-              })
-            })
-
-          })
-        });
-        this.dataSource.data = rolesPago;
+        this.dataSource.data = data.json().data;
         this.length = data.json().count;
       } else if (data.json().status == enums.HTTP_401_UNAUTHORIZED) {
         this.message = data.json().message;
@@ -91,15 +74,7 @@ export class RolPagoListComponent implements OnInit {
     this.usuarioService.isUsuario.subscribe(res => {
       this.rolPagoService.createByConsolidadoRolPago(this.consolidadoRolPago.id, res.empresa.id, token).subscribe(res => {
         res.data.forEach(rolPagoResponse => {
-          this.contratoService.getContrato(token, rolPagoResponse.contrato).subscribe(contratoResponse => {
-            let contrato = contratoResponse.json().data;
-            this.empleadoService.getEmpleado(token, contratoResponse.json().data.empleado).subscribe(empleadoResponse => {
-              contrato.empleadoObject = empleadoResponse.json().data;
-              rolPagoResponse.contratoObject = contrato;
-            })
-          })
           this.dataSource.data.push(rolPagoResponse)
-
         });
         this.length = res.count;
         this.dataSource.paginator = this.paginator;

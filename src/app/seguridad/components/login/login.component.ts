@@ -6,6 +6,7 @@ import { DialogService } from "../../../shared/dialog/services/dialog.service";
 import { DashboardComponent } from "../../../dashboard/dashboard.component";
 import { SeguridadService } from "../../services/seguridad.service";
 import { enums } from "../../../credentials";
+import { ParametrizacionService } from "../../../master/services/parametrizacion.service";
 
 @Component({
   selector: "app-login",
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   loginForm: any;
   @ViewChild(DashboardComponent) dashboardComponent: DashboardComponent;
   constructor(private usuarioService: UsuarioService, private seguridadService: SeguridadService, @Inject(FormBuilder) fb: FormBuilder, private dialogService: DialogService,
-    private viewContainerRef: ViewContainerRef, private router: Router) {
+    private viewContainerRef: ViewContainerRef, private router: Router, private parametrizacionService: ParametrizacionService) {
     this.loginForm = fb.group({
       user: fb.group({
         username: ["", Validators.required],
@@ -33,11 +34,21 @@ export class LoginComponent implements OnInit {
     this.seguridadService.autenticate(this.user).then(res => {
       if (res == true) {
         let token = this.seguridadService.getToken()
+        this.getParametros(token);
         this.router.navigate(['home'])
       } else {
         this.dialogService.notificacion('ERROR!', 'No puede iniciar sesión con las credenciales proporcionadas.', this.viewContainerRef)
       }
     });
   }
-
+  public getParametros(token) {
+    if (token) {
+      this.parametrizacionService.getParametrizaciones(token).subscribe(
+        res => {
+          this.parametrizacionService.setParametros(res.data);
+          localStorage.setItem(enums.SISTEMA_PARAM, JSON.stringify(res.data))
+          this.seguridadService.sessionTimeout(res.data)
+        });
+    }
+  }
 }
