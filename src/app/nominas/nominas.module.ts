@@ -8,7 +8,6 @@ import { CargosComponent } from './components/cargos/cargos.component';
 import { CargoDetailComponent } from './components/cargo-detail/cargo-detail.component';
 import { ContratosComponent } from './components/contratos/contratos.component';
 import { ContratoDetailComponent } from './components/contrato-detail/contrato-detail.component';
-import { RolPagoDetailComponent } from './components/rol-pago-detail/rol-pago-detail.component';
 import { CargoService } from './services/cargo.service';
 import { ContratoService } from './services/contrato.service';
 import { SeguridadService } from '../seguridad/services/seguridad.service';
@@ -49,6 +48,7 @@ import { ContratoListResolveService } from './resolvers/contrato-list-resolve.se
 import { ContratoDetailResolveService } from './resolvers/contrato-detail-resolve.service';
 import { ConsolidadoRolPagoListResolveService } from './resolvers/consolidado-rol-pago-list-resolve.service';
 import { DetalleRolPagoListComponent } from './components/detalle-rol-pago-list/detalle-rol-pago-list.component';
+import { DetalleRolPagoService } from './services/detalle-rol-pago.service';
 
 @NgModule({
   imports: [
@@ -76,7 +76,7 @@ import { DetalleRolPagoListComponent } from './components/detalle-rol-pago-list/
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,
-    ContratosComponent, ContratoDetailComponent, RolPagoListComponent, RolPagoDetailComponent, ToolBarAcctionComponent, SearchComponent,
+    ContratosComponent, ContratoDetailComponent, RolPagoListComponent, ToolBarAcctionComponent, SearchComponent,
     SelectItemComponent, DireccionesComponent, DireccionDetailDialogComponent, CargosAutcompleteComponent,
     EmpleadosAutocompleteComponent,
     ConsolidadoRolPagoListComponent,
@@ -87,7 +87,7 @@ import { DetalleRolPagoListComponent } from './components/detalle-rol-pago-list/
   entryComponents: [DireccionesComponent, DireccionDetailDialogComponent, RolPagoListComponent, RolPagoDetailDialogComponent],
   providers: [SharedService, CargoService, ContratoService, SeguridadService, RolPagoService, EmpresaService, CatalogoService,
     EmpleadoService, EmpleadoResolveService, CargoDetailResolveService, DireccionService, ItemService, ConsolidadoRolPagoService,
-    ConsolidadoRolpagoDetailResolveService, CargoListResolveService, PaginationService, EmpleadoListResolveService,
+    ConsolidadoRolpagoDetailResolveService, CargoListResolveService, PaginationService, EmpleadoListResolveService, DetalleRolPagoService,
     ContratoDetailResolveService, ContratoListResolveService, ConsolidadoRolPagoListResolveService]
 })
 export class NominasModule { }

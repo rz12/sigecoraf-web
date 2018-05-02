@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { IContrato } from '../dto/i-contrato';
 import { Observable } from 'rxjs/Observable';
 import { services, enums } from "../../credentials";
 import { SharedService } from '../../shared/services/shared.service';

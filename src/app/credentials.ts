@@ -32,6 +32,7 @@ export var services = {
     ws_nominas_rolpago_list_by_consolidado: credentials.host + '/api/v1/nominas/rol-pago/list_by_consolidado',
     ws_nominas_empleados: credentials.host + '/api/v1/nominas/empleados',
     ws_nominas_consolidado_rol_pago: credentials.host + '/api/v1/nominas/consolidado-rolpago',
+    ws_nominas_detalle_rol_pago: credentials.host + '/api/v1/nominas/detalle-rolpago',
 }
 export var enums = {
     /**

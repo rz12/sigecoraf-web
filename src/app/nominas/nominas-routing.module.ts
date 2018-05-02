@@ -6,7 +6,6 @@ import { ContratosComponent } from './components/contratos/contratos.component';
 import { CargosComponent } from './components/cargos/cargos.component';
 import { CargoDetailComponent } from './components/cargo-detail/cargo-detail.component';
 import { ContratoDetailComponent } from './components/contrato-detail/contrato-detail.component';
-import { RolPagoDetailComponent } from './components/rol-pago-detail/rol-pago-detail.component';
 import { EmpleadoDetailComponent } from './components/empleado-detail/empleado-detail.component';
 import { ConsolidadoRolPagoListComponent } from './components/consolidado-rol-pago-list/consolidado-rol-pago-list.component';
 import { ConsolidadoRolPagoDetailComponent } from './components/consolidado-rol-pago-detail/consolidado-rol-pago-detail.component';
@@ -52,7 +51,6 @@ const routes: Routes = [
     resolve: { cargoData: CargoDetailResolveService },
     canActivate: [CargoDetailResolveService]
   },
-  { path: 'rolPago-detail/:id', component: RolPagoDetailComponent },
   {
     path: 'empleado-detail/:id',
     component: EmpleadoDetailComponent,

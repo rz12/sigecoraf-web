@@ -93,13 +93,11 @@ export class RolPagoListComponent implements OnInit {
   openDialog() {
     let token = this.seguridadService.getToken();
     const dialogRef = this.dialog.open(RolPagoDetailDialogComponent, {
-      width: '500px',
+      width: '600px',
       data: { rolPago: this.rolPago }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
     })
   }
   isAllSelected() {
