@@ -26,7 +26,7 @@
           </mat-checkbox>
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedRow(row,$event )" [checked]="selection.isSelected(row)">
+          <mat-checkbox (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)">
           </mat-checkbox>
         </mat-cell>
       </ng-container>
@@ -41,7 +41,7 @@
         <button mat-raised-button (click)="confirmGenerarRolesPago()" color="primary">
           Generar Roles de Pago
         </button>
-        <button mat-raised-button color="primary" *ngIf="rolPago.id" (click)="openDialog()">
+        <button mat-raised-button color="primary" *ngIf="selection.selected.length>0" (click)="openDialog()">
           Editar
         </button>
       </div>

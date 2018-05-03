@@ -10,6 +10,7 @@ import { SharedService } from '../../../shared/services/shared.service';
 import { DialogService } from '../../../shared/dialog/services/dialog.service';
 import { PaginationService } from '../../../shared/services/pagination.service';
 import { ActivatedRoute } from '@angular/router';
+import { ConsolidadoRolPago } from '../../models/consolidado-rol-pago';
 
 @Component({
   selector: 'app-consolidado-rol-pago-list',
@@ -21,7 +22,6 @@ export class ConsolidadoRolPagoListComponent implements OnInit {
   displayedColumns = ['fecha_desde', 'fecha_hasta', 'observacion', 'validado', 'seleccionar'];
   dataSource = new MatTableDataSource();
   selection = new SelectionModel();
-  public consolidadoRolPagoSeleccionado: any;
   public urlEdit: String;
   public urlAdd = "consolidado-rolpago-detail/0"
   public codigoAdd = "ADD_CONSOLIDADO_ROLPAGO";
@@ -44,15 +44,13 @@ export class ConsolidadoRolPagoListComponent implements OnInit {
     let token = this.seguridadService.getToken()
     this.getConsolidadosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
-  selectedRow(item, event) {
-    if (event.checked) {
+  selectedRow(item) {
+    this.selection.toggle(item);
+    if (this.selection.selected.length > 0) {
       this.urlEdit = 'consolidado-rolpago-detail'
       this.urlEdit = this.urlEdit.concat('/').concat(item.id)
-      this.selection.toggle(item);
-      this.consolidadoRolPagoSeleccionado = item;
     } else {
       this.urlEdit = null;
-      this.consolidadoRolPagoSeleccionado = null;
     }
   }
   public getConsolidadosPagination(token, pageIndex, pageSize, filter) {
@@ -86,7 +84,7 @@ export class ConsolidadoRolPagoListComponent implements OnInit {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
   public confirmDelete(event) {
-    if (this.consolidadoRolPagoSeleccionado) {
+    if (this.selection.selected.length > 0) {
       this.dialogService.confirm('Eliminación', '¿Seguro desea Eliminar el Consolidado de Rol de Pago?', this.viewContainerRef)
         .subscribe(res => {
           if (res == true) {
@@ -96,17 +94,17 @@ export class ConsolidadoRolPagoListComponent implements OnInit {
     }
   }
   delete(event) {
-    if (event && this.consolidadoRolPagoSeleccionado && !this.consolidadoRolPagoSeleccionado.validado) {
+    let consolidado = this.selection.selected.length > 0 ? <ConsolidadoRolPago>this.selection.selected[0] : null;
+    if (event && consolidado && !consolidado.validado) {
       let token = this.seguridadService.getToken()
-      this.consolidadoRolPagoService.delete(token, this.consolidadoRolPagoSeleccionado).subscribe(res => {
+      this.consolidadoRolPagoService.delete(token, consolidado).subscribe(res => {
         let message = ""
         if (res.status == enums.HTTP_200_OK) {
           message = res.message;
-          const index = this.sharedService.getIndexObject(this.dataSource.data, this.consolidadoRolPagoSeleccionado);
+          const index = this.sharedService.getIndexObject(this.dataSource.data, consolidado);
           this.dataSource.data.splice(index, 1);
           this.length = this.dataSource.data.length;
           this.dataSource.paginator = this.paginator;
-          this.consolidadoRolPagoSeleccionado = null;
           this.urlEdit = null;
         } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
           message = 'Campos Obligatorios Vacíos.'

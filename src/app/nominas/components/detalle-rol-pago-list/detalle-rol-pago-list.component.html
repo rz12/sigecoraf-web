@@ -12,7 +12,11 @@
       <ng-container matColumnDef="cantidad">
         <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
         <mat-cell *matCellDef="let detalleRolPago">
-          {{detalleRolPago.cantidad}}
+          <mat-form-field class="full-width" *ngIf="detalleRolPago.estructura_detalle_rolpago && detalleRolPago.estructura_detalle_rolpago.editable">
+            <input matInput [(ngModel)]="detalleRolPago.cantidad" (keyup)="calcularDetalleRolPago(detalleRolPago)">
+          </mat-form-field>
+
+          <label *ngIf="detalleRolPago.estructura_detalle_rolpago && !detalleRolPago.estructura_detalle_rolpago.editable">{{detalleRolPago.cantidad}}</label>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="valor">

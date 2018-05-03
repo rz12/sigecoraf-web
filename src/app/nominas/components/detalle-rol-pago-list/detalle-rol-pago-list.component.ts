@@ -61,4 +61,7 @@ export class DetalleRolPagoListComponent implements OnInit {
       })
     });
   }
+  calcularDetalleRolPago(data) {
+    console.log(data);
+  }
 }

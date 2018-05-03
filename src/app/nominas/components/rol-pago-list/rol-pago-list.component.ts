@@ -33,6 +33,7 @@ export class RolPagoListComponent implements OnInit {
   public filter: String;
   public message: String;
   public rolPago: RolPago;
+  public isSelected: Boolean = false;
   constructor(private dialogService: DialogService, public dialog: MatDialog, private seguridadService: SeguridadService,
     private viewContainerRef: ViewContainerRef, private rolPagoService: RolPagoService, private sharedService: SharedService,
     private empleadoService: EmpleadoService, private changeDetector: ChangeDetectorRef, private paginationService: PaginationService,
@@ -46,14 +47,7 @@ export class RolPagoListComponent implements OnInit {
     this.getRolPagination(token.token, 1, this.paginationService.pageSize, this.filter);
 
   }
-  selectedRow(item, event) {
-    if (event.checked) {
-      this.rolPago = Object.assign({}, item);
-      this.selection.toggle(item);
-    } else {
-      this.rolPago = new RolPago();
-    }
-  }
+
   public loadPagination(event) {
     let token = this.seguridadService.getToken()
     this.getRolPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
@@ -94,7 +88,7 @@ export class RolPagoListComponent implements OnInit {
     let token = this.seguridadService.getToken();
     const dialogRef = this.dialog.open(RolPagoDetailDialogComponent, {
       width: '600px',
-      data: { rolPago: this.rolPago }
+      data: { rolPago: this.selection.selected[0] }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -28,7 +28,7 @@ export class ContratosComponent implements OnInit {
   public codigoAdd = "ADD_CONTRATO";
   public codigoEdit = "EDIT_CONTRATO";
   public message: String;
-  public contratoSeleccionado: Contrato;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private route: ActivatedRoute, private contratoService: ContratoService, private seguridadService: SeguridadService,
     private parametrizacionService: ParametrizacionService, private sharedService: SharedService, private paginationService: PaginationService,
@@ -47,12 +47,11 @@ export class ContratosComponent implements OnInit {
     let token = this.seguridadService.getToken()
     this.getContratosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
-  selectedRow(item, event) {
-    if (event.checked) {
+  selectedRow(item) {
+    this.selection.toggle(item);
+    if (this.selection.selected.length > 0) {
       this.urlEdit = 'contrato-detail';
       this.urlEdit = this.urlEdit.concat('/').concat(item.id);
-      this.contratoSeleccionado = item;
-      this.selection.toggle(item)
     } else {
       this.urlEdit = null;
     }
@@ -84,13 +83,14 @@ export class ContratosComponent implements OnInit {
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
   delete(event) {
-    if (event && this.contratoSeleccionado) {
+    let contrato = this.selection.selected.length > 0 ? <Contrato>this.selection.selected[0] : null;
+    if (event && contrato) {
       let token = this.seguridadService.getToken()
-      this.contratoService.delete(token, this.contratoSeleccionado).subscribe(res => {
+      this.contratoService.delete(token, contrato).subscribe(res => {
         let message = ""
         if (res.status == enums.HTTP_200_OK) {
           message = res.message;
-          const index = this.sharedService.getIndexObject(this.dataSource.data, this.contratoSeleccionado);
+          const index = this.sharedService.getIndexObject(this.dataSource.data, contrato);
           this.dataSource.data.splice(index, 1);
           this.length = this.dataSource.data.length;
           this.dataSource.paginator = this.paginator;
@@ -103,11 +103,13 @@ export class ContratosComponent implements OnInit {
   }
 
   public confirmDelete(event) {
-    this.dialogService.confirm('Eliminación', '¿Seguro desea Eliminar el Contrato?', this.viewContainerRef)
-      .subscribe(res => {
-        if (res == true) {
-          this.delete(event);
-        }
-      });
+    if (this.selection.selected.length > 0) {
+      this.dialogService.confirm('Eliminación', '¿Seguro desea Eliminar el Contrato?', this.viewContainerRef)
+        .subscribe(res => {
+          if (res == true) {
+            this.delete(event);
+          }
+        });
+    }
   }
 }

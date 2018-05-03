@@ -33,6 +33,7 @@ export var services = {
     ws_nominas_empleados: credentials.host + '/api/v1/nominas/empleados',
     ws_nominas_consolidado_rol_pago: credentials.host + '/api/v1/nominas/consolidado-rolpago',
     ws_nominas_detalle_rol_pago: credentials.host + '/api/v1/nominas/detalle-rolpago',
+    ws_nominas_detalle_rol_pago_list_by_rolpago: credentials.host + '/api/v1/nominas/detalle-rolpago/list_by_rolpago',
 }
 export var enums = {
     /**

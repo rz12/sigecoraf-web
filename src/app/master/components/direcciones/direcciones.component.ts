@@ -27,12 +27,10 @@ export class DireccionesComponent implements OnInit {
   public pageSizeOptions: number[] = [5, 10, 20]
   public filter: String;
   public message: String;
-  public direccion: Direccion;
   constructor(private dialogService: DialogService, public dialog: MatDialog, private seguridadService: SeguridadService,
     private viewContainerRef: ViewContainerRef, private direccionService: DireccionService, private sharedService: SharedService) { }
 
   ngOnInit() {
-    this.direccion = new Direccion();
   }
   ngAfterViewInit() {
     let token = this.seguridadService.getToken()
@@ -43,14 +41,7 @@ export class DireccionesComponent implements OnInit {
     let token = this.seguridadService.getToken()
     this.getCargosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
-  selectedRow(item, event) {
-    if (event.checked) {
-      this.direccion = Object.assign({}, item);
-      this.selection.toggle(item);
-    } else {
-      this.direccion = new Direccion();
-    }
-  }
+
   public getCargosPagination(token, pageIndex, pageSize, filter) {
     this.direccionService.direccionesLisByPersona(this.empleado.id, token.token, pageIndex, pageSize, filter).subscribe(data => {
       if (data.json().status == enums.HTTP_200_OK) {
@@ -63,10 +54,9 @@ export class DireccionesComponent implements OnInit {
   }
   openDialog() {
     let token = this.seguridadService.getToken();
-    console.log(this.direccion)
     const dialogRef = this.dialog.open(DireccionDetailDialogComponent, {
       width: '500px',
-      data: { direccion: this.direccion }
+      data: { direccion: this.selection.selected[0] }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -86,7 +76,6 @@ export class DireccionesComponent implements OnInit {
             }
             this.length = this.dataSource.data.length;
             this.dataSource.paginator = this.paginator;
-            this.direccion = new Direccion();
           } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
             message = 'Campos Obligatorios Vacíos.'
           }
@@ -96,17 +85,17 @@ export class DireccionesComponent implements OnInit {
     });
   }
   delete() {
-    if (this.direccion.id) {
+    let direccion = this.selection.selected.length > 0 ? this.selection.selected[0] : null;
+    if (direccion) {
       let token = this.seguridadService.getToken()
-      this.direccionService.delete(token, this.direccion).subscribe(res => {
+      this.direccionService.delete(token, direccion).subscribe(res => {
         let message = ""
         if (res.status == enums.HTTP_200_OK) {
           message = res.message;
-          const index = this.sharedService.getIndexObject(this.dataSource.data, this.direccion);
+          const index = this.sharedService.getIndexObject(this.dataSource.data, direccion);
           this.dataSource.data.splice(index, 1);
           this.length = this.dataSource.data.length;
           this.dataSource.paginator = this.paginator;
-          this.direccion = new Direccion();
         } else if (res.status == enums.HTTP_400_BAD_REQUEST) {
           message = 'Campos Obligatorios Vacíos.'
         }

@@ -13,7 +13,7 @@ export class DetalleRolPagoService extends SharedService {
     let opciones = []
     let opcion = { "ROL_PAGO": RolPago }
     opciones.push(opcion)
-    return this.http.get(services.ws_nominas_detalle_rol_pago, this.options(token, null, page, pageSize, filter, opciones))
+    return this.http.get(services.ws_nominas_detalle_rol_pago_list_by_rolpago, this.options(token, null, page, pageSize, filter, opciones))
   }
   createByRolPago(rolPago, empresa, token) {
     let opciones = []

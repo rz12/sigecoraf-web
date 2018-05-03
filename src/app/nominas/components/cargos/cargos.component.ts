@@ -41,11 +41,11 @@ export class CargosComponent implements OnInit {
     let token = this.seguridadService.getToken()
     this.getCargosPagination(token, Number(event.pageIndex) + 1, event.pageSize, this.filter);
   }
-  selectedRow(item, event) {
-    if (event.checked) {
+  selectedRow(item) {
+    this.selection.toggle(item);
+    if (this.selection.selected.length > 0) {
       this.urlEdit = 'cargo-detail'
       this.urlEdit = this.urlEdit.concat('/').concat(item.id)
-      this.selection.toggle(item);
     } else {
       this.urlEdit = null;
     }
