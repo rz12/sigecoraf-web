@@ -1,0 +1,41 @@
+<mat-card>
+  <mat-card-header>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+      <mat-step [stepControl]="consolidadoRolPagoForm">
+        <ng-template matStepLabel>Consolidado de Roles de Pago</ng-template>
+        <form [formGroup]="consolidadoRolPagoForm" (ngSubmit)="consolidadoRolPagoForm.valid &&save()">
+          <mat-form-field class="full-width">
+            <input matInput required formControlName="fechaDesde" [(ngModel)]="consolidadoRolPago.fecha_desde" [matDatepicker]="pickerFechaDesde"
+              placeholder="Fecha de Inicio">
+            <mat-datepicker-toggle matSuffix [for]="pickerFechaDesde"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFechaDesde></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput required formControlName="fechaHasta" [(ngModel)]="consolidadoRolPago.fecha_hasta" [matDatepicker]="pickerFechaHasta"
+              placeholder="Fecha de Fin">
+            <mat-datepicker-toggle matSuffix [for]="pickerFechaHasta"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFechaHasta></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <textarea required matInput placeholder="Descripción" [(ngModel)]="consolidadoRolPago.observacion" formControlName="observacion"></textarea>
+          </mat-form-field>
+
+          <div class="wrapper">
+            <button mat-button color="primary" type="submit">
+              <i class="material-icons">save</i>
+            </button>
+            <button mat-button color="primary" type="button" (click)="cancel()">
+              <i class="material-icons">arrow_back</i>
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Roles de Pago</ng-template>
+        <app-rol-pago-list [consolidadoRolPago]="consolidadoRolPago"></app-rol-pago-list>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>

@@ -1,1 +1,138 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.center {
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Master Styles */
+
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+
+h2,
+h3 {
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+
+body {
+  margin: 2em;
+}
+
+body,
+input[text],
+button {
+  color: #888;
+  font-family: Cambria, Georgia;
+}
+
+a {
+  cursor: pointer;
+  cursor: hand;
+}
+
+button {
+  font-family: Arial;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.button-activate {
+  background-color: #96b6db;
+  color: #eee
+}
+
+.icon-menu {
+  color: #fff;
+}
+
+.icon-menu-active {
+  color: #eee;
+}
+
+/* everywhere else */
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidebar-body {
+  min-height: 500px;
+  height: auto;
+  line-height: 48px;
+  padding: 20;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 10px;
+}
+
+.mat-card {
+  position: absolute;
+  min-height: 100% !important;
+}
+
+.flex-div {
+  padding: 20px
+}
+
+.section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.suggestions {
+  z-index: 500;
+  background: #fff;
+  border: 1px solid #80b6e1;
+  float: none;
+  width: 750px;
+  position: fixed;
+  overflow-y: scroll;
+  height: 350px;
+}
+
+.button-dashboard {
+  font-family: Arial;
+  background-color: #369;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  margin: 2px;
+}
+
+.button-dashboard-activate {
+  background-color: cornflowerblue;
+  color: #eee
+}
+
+/*
+Copyright 2017-2018 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/

@@ -1,0 +1,43 @@
+<mat-card>
+  <mat-card-content>
+
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="detalle">
+        <mat-header-cell *matHeaderCellDef> Detalle </mat-header-cell>
+        <mat-cell *matCellDef="let detalleRolPago">
+          <label *ngIf="detalleRolPago.estructura_detalle_rolpago">{{detalleRolPago.estructura_detalle_rolpago.nombre}}
+          </label>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="cantidad">
+        <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+        <mat-cell *matCellDef="let detalleRolPago">
+          <mat-form-field class="full-width" *ngIf="detalleRolPago.estructura_detalle_rolpago && detalleRolPago.estructura_detalle_rolpago.editable">
+            <input matInput [(ngModel)]="detalleRolPago.cantidad" (keyup)="calcularDetalleRolPago(detalleRolPago)">
+          </mat-form-field>
+
+          <label *ngIf="detalleRolPago.estructura_detalle_rolpago && !detalleRolPago.estructura_detalle_rolpago.editable">{{detalleRolPago.cantidad}}</label>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="valor">
+        <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+        <mat-cell *matCellDef="let detalleRolPago"> {{detalleRolPago.valor}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [length]="length" [pageSize]="paginationService.pageSize" [pageSizeOptions]="paginationService.pageSizeOptions"
+      [showFirstLastButtons]="true" (page)="loadPagination($event)">
+    </mat-paginator>
+    <mat-card-actions>
+      <div class="wrapper">
+        <button mat-raised-button (click)="confirmGenerarDetalleRolPago()" color="primary">
+          Generar Detalle de Rol de Pago
+        </button>
+      </div>
+    </mat-card-actions>
+
+  </mat-card-content>
+
+</mat-card>

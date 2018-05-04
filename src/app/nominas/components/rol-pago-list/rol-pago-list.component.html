@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-content>
+
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="contrato">
+        <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
+        <mat-cell *matCellDef="let rolPago">
+          <label *ngIf="rolPago.contrato">{{rolPago.contrato.empleado.primer_nombre}} {{rolPago.contrato.empleado.segundo_nombre}} {{rolPago.contrato.empleado.primer_apellido}}
+            {{rolPago.contrato.empleado.segundo_apellido}}
+          </label>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fecha">
+        <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+        <mat-cell *matCellDef="let rolPago">
+          {{rolPago.fecha| date:'yyyy-MM-dd HH:mm:ss'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+        <mat-cell *matCellDef="let rolPago"> {{rolPago.total}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="seleccionar">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [length]="length" [pageSize]="paginationService.pageSize" [pageSizeOptions]="paginationService.pageSizeOptions"
+      [showFirstLastButtons]="true" (page)="loadPagination($event)">
+    </mat-paginator>
+    <mat-card-actions>
+      <div class="wrapper">
+        <button mat-raised-button (click)="confirmGenerarRolesPago()" color="primary">
+          Generar Roles de Pago
+        </button>
+        <button mat-raised-button color="primary" *ngIf="selection.selected.length>0" (click)="openDialog()">
+          Editar
+        </button>
+      </div>
+    </mat-card-actions>
+
+  </mat-card-content>
+
+</mat-card>

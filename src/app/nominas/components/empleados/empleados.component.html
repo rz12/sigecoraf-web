@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Empleados</h1>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="!message">
+      <app-search (onFilter)="search($event)"></app-search>
+      <mat-divider></mat-divider>
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="nombres">
+          <mat-header-cell *matHeaderCellDef> Nombres </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.primer_nombre}} {{empleado.segundo_nombre}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="apellidos">
+          <mat-header-cell *matHeaderCellDef> Apellidos </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.primer_apellido}} {{empleado.segundo_apellido}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="numero_identificacion">
+          <mat-header-cell *matHeaderCellDef> Número de Identicación </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.numero_identificacion}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="tipo_documento">
+          <mat-header-cell *matHeaderCellDef> Tipo De Documento </mat-header-cell>
+          <mat-cell *matCellDef="let empleado">
+            <label *ngIf="empleado.tipo_documento_identificacion">{{empleado.tipo_documento_identificacion.nombre}}</label>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="celular">
+          <mat-header-cell *matHeaderCellDef> Número de Celular </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.numero_celular}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fecha_inicio">
+          <mat-header-cell *matHeaderCellDef> Fecha de Inicio </mat-header-cell>
+          <mat-cell *matCellDef="let empleado"> {{empleado.fecha_inicio}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="seleccionar">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedRow(row)"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [length]="length" [pageSize]="paginationService.pageSize" [pageSizeOptions]="paginationService.pageSizeOptions"
+        [showFirstLastButtons]="true" (page)="loadPagination($event)">
+      </mat-paginator>
+      <mat-card-actions>
+        <app-tool-bar-acction [codigoAdd]="codigoAdd" [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+      </mat-card-actions>
+    </div>
+
+    <div *ngIf="message">
+      <h1>{{message}}</h1>
+    </div>
+  </mat-card-content>
+
+</mat-card>

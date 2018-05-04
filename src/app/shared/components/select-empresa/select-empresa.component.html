@@ -1,0 +1,10 @@
+<div *ngIf="!message">
+  <mat-form-field class="full-width">
+    <mat-select placeholder="Seleccione una Empresa" required [formControl]="control" (ngModelChange)="selectItem($event)" [(ngModel)]="selectedValue">
+      <mat-option *ngFor="let empresa of empresaList" [value]="empresa.id">{{empresa.nombre}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div *ngIf="message">
+  <h2>{{message}}</h2>
+</div>

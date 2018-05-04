@@ -1,0 +1,36 @@
+<div *ngIf="!message">
+  <mat-form-field class="full-width">
+    <input matInput [(ngModel)]="filter" required [formControl]="control" (keyup)="search()" placeholder="Seleccionar Cargo"
+      name="filter">
+  </mat-form-field>
+  <div class="suggestions" *ngIf="visible">
+    <mat-table #table [dataSource]="dataSource">
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let cargo"> {{cargo.nombre}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="sueldo">
+        <mat-header-cell *matHeaderCellDef> Sueldo </mat-header-cell>
+        <mat-cell *matCellDef="let cargo"> {{cargo.sueldo}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="seleccionar">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="selectedRow(row,$event )" [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [length]="length" [pageSize]="paginationService.pageSize" [pageSizeOptions]="paginationService.pageSizeOptions"
+      [showFirstLastButtons]="true" (page)="loadPagination($event)">
+    </mat-paginator>
+
+  </div>
+  <div *ngIf="message">
+    <h1>{{message}}</h1>
+  </div>

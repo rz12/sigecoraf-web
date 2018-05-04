@@ -1,0 +1,41 @@
+<form [formGroup]="contratoForm" (ngSubmit)="contratoForm.valid && save()">
+  <mat-card>
+    <mat-card-header>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <input matInput required formControlName="fechaInicio" [(ngModel)]="contrato.fecha_inicio" [matDatepicker]="pickerFechaInicio"
+          placeholder="Fecha de Inicio">
+        <mat-datepicker-toggle matSuffix [for]="pickerFechaInicio"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFechaInicio></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput formControlName="fechaFin" [(ngModel)]="contrato.fecha_fin" [matDatepicker]="pickerFechaFin" placeholder="Fecha de Fin">
+        <mat-datepicker-toggle matSuffix [for]="pickerFechaFin"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFechaFin></mat-datepicker>
+      </mat-form-field>
+      <app-cargos-autcomplete [filter]="contrato.id && contrato.cargo?contrato.cargo.nombre:''" [control]="contratoForm.controls.cargo"
+        (notificador)="setCargo($event)"></app-cargos-autcomplete>
+      <app-empleados-autocomplete [filter]="contrato.id &&contrato.empleado?contrato.empleado.primer_nombre+' '+contrato.empleado.segundo_nombre+' '+contrato.empleado.primer_apellido+' '+contrato.empleado.segundo_apellido:''"
+        [control]="contratoForm.controls.empleado" (notificador)="setEmpleado($event)"></app-empleados-autocomplete>
+      <section>
+        <mat-checkbox [(ngModel)]="contrato.estado" formControlName="estado">Activo</mat-checkbox>
+      </section>
+      <section>
+        <mat-checkbox [(ngModel)]="contrato.mensualizar_decimos" formControlName="estado">Mensualizar Décimos</mat-checkbox>
+      </section>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="wrapper">
+        <button mat-raised-button type="submit" color="primary">
+          <i class="material-icons">save</i>
+        </button>
+        <button mat-raised-button color="primary" type="button" (click)="cancel()">
+          <i class="material-icons">arrow_back</i>
+        </button>
+      </div>
+    </mat-card-actions>
+
+  </mat-card>
+</form>

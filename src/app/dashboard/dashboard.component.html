@@ -1,0 +1,10 @@
+<div *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <nav class="container" *ngFor="let menu of menuService.getMenus()">
+    <div class="button-wrapper">
+      <button [class.button-dashboard-activate]="menu.activate" mat-button class="button-dashboard" (click)="navigate(menu)">
+        <i class="material-icons icon-menu" [class.icon-menu-active]="menu.activate">{{menu.icono}}</i>
+        <div>{{menu.nombre}}</div>
+      </button>
+    </div>
+  </nav>
+</div>

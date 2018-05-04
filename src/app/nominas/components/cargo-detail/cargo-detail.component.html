@@ -1,0 +1,30 @@
+<form [formGroup]="cargoForm" (ngSubmit)="cargoForm.valid && save()">
+  <mat-card>
+    <mat-card-header>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Nombre" required [(ngModel)]="cargo.nombre" formControlName="nombre">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input type="number" matInput placeholder="Sueldo" required [(ngModel)]="cargo.sueldo" formControlName="sueldo">
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="cargo.estado" formControlName="estado">Estado</mat-checkbox>
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="Descripción" [(ngModel)]="cargo.descripcion" formControlName="descripcion"></textarea>
+      </mat-form-field>
+      <app-select-empresa [valor]="empresa" [control]="cargoForm.controls.empresa" (notificador)="onChangeEmpresa($event)"></app-select-empresa>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="wrapper">
+        <button mat-raised-button color="primary" type="submit">
+          <i class="material-icons">save</i>
+        </button>
+        <button type="button" mat-raised-button color="primary" (click)="cancel()">
+          <i class="material-icons">arrow_back</i>
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -1,0 +1,25 @@
+<form [formGroup]="rolPagoForm" (ngSubmit)="rolPagoForm.valid && save()">
+  <h2 mat-dialog-title>Detalles de Rol de Pago</h2>
+  <div mat-dialog-content>
+    <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
+      <div class="flex-div" fxFlex="50">
+        <label>Empleado: </label>
+        <label> {{data.rolPago.contrato.empleado.primer_nombre}} {{data.rolPago.contrato.empleado.segundo_nombre}} {{data.rolPago.contrato.empleado.primer_apellido}}
+          {{data.rolPago.contrato.empleado.segundo_apellido}}
+        </label>
+      </div>
+      <div class="flex-div" fxFlex="50">
+        <div>
+          <label>Cargo: </label>
+          <label>{{data.rolPago.contrato.cargo.nombre}}</label>
+        </div>
+        <div>
+          <label> Sueldo: </label>
+          <label>{{data.rolPago.contrato.cargo.sueldo}}</label>
+        </div>
+      </div>
+    </div>
+    <app-detalle-rol-pago-list [rolPago]="data.rolPago"></app-detalle-rol-pago-list>
+
+  </div>
+</form>

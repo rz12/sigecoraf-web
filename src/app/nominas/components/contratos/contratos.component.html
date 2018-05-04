@@ -1,0 +1,76 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Contratos</h1>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="!message">
+      <app-search (onFilter)="search($event)"></app-search>
+      <mat-divider></mat-divider>
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="empleado">
+          <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
+          <mat-cell *matCellDef="let contrato">
+            <label *ngIf="contrato.empleado">{{contrato.empleado.primer_nombre}} {{contrato.empleado.segundo_nombre}} {{contrato.empleado.primer_apellido}}
+              {{contrato.empleado.segundo_apellido}}
+            </label>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="cargo">
+          <mat-header-cell *matHeaderCellDef> Cargo </mat-header-cell>
+          <mat-cell *matCellDef="let contrato">
+            <label *ngIf="contrato.cargo">{{contrato.cargo.nombre}}</label>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fecha_inicio">
+          <mat-header-cell *matHeaderCellDef> Fecha de Inicio </mat-header-cell>
+          <mat-cell *matCellDef="let contrato"> {{contrato.fecha_inicio}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fecha_fin">
+          <mat-header-cell *matHeaderCellDef> Fecha de Fin </mat-header-cell>
+          <mat-cell *matCellDef="let contrato"> {{contrato.fecha_fin}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="estado">
+          <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+          <mat-cell *matCellDef="let contrato">
+            <label *ngIf="contrato.estado">Activo</label>
+            <label *ngIf="!contrato.estado">Desactivo</label>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="mensualizar_decimos">
+          <mat-header-cell *matHeaderCellDef> Mensualizar Décimos </mat-header-cell>
+          <mat-cell *matCellDef="let contrato">
+            <label *ngIf="contrato.mensualizar_decimos">Si</label>
+            <label *ngIf="!contrato.mensualizar_decimos">No</label>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="seleccionar">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedRow(row)"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [length]="length" [pageSize]="paginationService.pageSize" [pageSizeOptions]="paginationService.pageSizeOptions"
+        [showFirstLastButtons]="true" (page)="loadPagination($event)">
+      </mat-paginator>
+      <mat-card-actions>
+        <app-tool-bar-acction (notificadorDelete)="confirmDelete($event)" [codigoAdd]="codigoAdd" [codigoDelete]="'DELETE_CONTRATO'"
+          [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+      </mat-card-actions>
+    </div>
+
+    <div *ngIf="message">
+      <h1>{{message}}</h1>
+    </div>
+  </mat-card-content>
+
+</mat-card>

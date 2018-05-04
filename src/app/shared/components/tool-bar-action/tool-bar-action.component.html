@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <button mat-button *ngIf="hasPermissionAdd" color="primary" (click)='add()'>
+    <i class="material-icons">add_box</i>
+  </button>
+  <button mat-button *ngIf="hasPermissionEdit" color="primary" (click)="edit()">
+    <i class="material-icons ">edit</i>
+  </button>
+  <button mat-button *ngIf="hasPermissionDelete" color="primary" (click)="delete()">
+    <i class="material-icons ">delete</i>
+  </button>
+</div>

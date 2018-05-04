@@ -1,0 +1,48 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Cargos</h1>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="!message">
+      <app-search (onFilter)="search($event)"></app-search>
+      <mat-divider></mat-divider>
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+          <mat-cell *matCellDef="let cargo"> {{cargo.nombre}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="sueldo">
+          <mat-header-cell *matHeaderCellDef> Sueldo </mat-header-cell>
+          <mat-cell *matCellDef="let cargo"> {{cargo.sueldo}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="seleccionar">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectedRow(row)"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [length]="length" [pageSize]="paginationService.pageSize" [pageSizeOptions]="paginationService.pageSizeOptions"
+        [showFirstLastButtons]="true" (page)="loadPagination($event)">
+      </mat-paginator>
+
+      <mat-card-actions>
+        <app-tool-bar-acction [codigoAdd]="codigoAdd" [codigoEdit]="codigoEdit" [urlAdd]="urlAdd" [urlEdit]="urlEdit"></app-tool-bar-acction>
+      </mat-card-actions>
+    </div>
+
+    <div *ngIf="message">
+      <h1>{{message}}</h1>
+    </div>
+  </mat-card-content>
+
+</mat-card>

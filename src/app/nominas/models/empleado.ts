@@ -6,4 +6,8 @@ export class Empleado extends Persona {
     fecha_ingreso_iess: Date;
     estado: Boolean;
     empresa: Empresa;
+    constructor() {
+        super();
+    }
+
 }
