@@ -47,6 +47,7 @@ export class ContratoDetailComponent implements OnInit {
 
   public save() {
     let token = this.seguridadService.getToken()
+    console.log(this.contrato)
     let response = this.contratoService.save(token, this.contrato);
     response.subscribe(res => {
       this.dialogService.notificacion('', res.message, this.viewContainerRef)
