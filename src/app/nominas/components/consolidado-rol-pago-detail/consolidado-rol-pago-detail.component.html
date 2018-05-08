@@ -36,6 +36,19 @@
         <ng-template matStepLabel>Roles de Pago</ng-template>
         <app-rol-pago-list [consolidadoRolPago]="consolidadoRolPago"></app-rol-pago-list>
       </mat-step>
+      <mat-step *ngIf="!validado">
+        <ng-template matStepLabel>Finalizar</ng-template>
+        <form [formGroup]="consolidadoRolPagoForm" (ngSubmit)="consolidadoRolPagoForm.valid &&confirmSave()">
+          <section>
+            <mat-checkbox [(ngModel)]="consolidadoRolPago.validado" formControlName="validado">Finalizar</mat-checkbox>
+          </section>
+          <div class="wrapper">
+            <button mat-button color="primary" type="submit">
+              <i class="material-icons">save</i>
+            </button>
+          </div>
+        </form>
+      </mat-step>
     </mat-horizontal-stepper>
   </mat-card-content>
 </mat-card>

@@ -1,5 +1,5 @@
 <form [formGroup]="rolPagoForm" (ngSubmit)="rolPagoForm.valid && save()">
-  <h2 mat-dialog-title>Detalles de Rol de Pago</h2>
+  <h2 mat-dialog-title>Rol de Pago</h2>
   <div mat-dialog-content>
     <div fxLayout="row" fxLayout.xs="column" fxFlexFill>
       <div class="flex-div" fxFlex="50">
@@ -21,5 +21,16 @@
     </div>
     <app-detalle-rol-pago-list [rolPago]="data.rolPago"></app-detalle-rol-pago-list>
 
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="submit" color="primary">
+      <i class="material-icons">save</i>
+    </button>
+    <button mat-button type="button" (click)="generarReporteRolPago()" color="primary">
+      <i class="material-icons">print</i>
+    </button>
+    <button mat-button (click)="onNoClick()" type="button" color="primary">
+      <i class="material-icons">arrow_back</i>
+    </button>
   </div>
 </form>

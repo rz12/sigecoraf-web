@@ -24,4 +24,10 @@ export class DetalleRolPagoService extends SharedService {
     return this.http.post(services.ws_nominas_detalle_rol_pago.concat("/0/").concat("create_detalles_by_rolpago"), {},
       this.options(token, null, null, null, null, opciones)).map(res => res.json())
   }
+  getValorByRule(detalleRolPago) {
+    let opciones = []
+    let opcion = { "DETALLE_ROL_PAGO": JSON.stringify(detalleRolPago) }
+    opciones.push(opcion)
+    return this.http.get(services.ws_nominas_detalle_rol_pago_get_valor_by_rule, this.options(null, null, null, null, null, opciones))
+  }
 }

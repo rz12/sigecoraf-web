@@ -20,6 +20,7 @@ export class ConsolidadoRolPagoDetailComponent implements OnInit {
   public consolidadoRolPago: ConsolidadoRolPago;
   public consolidadoRolPagoForm: any;
   isLinear = true;
+  public validado: Boolean = false
   constructor(private route: ActivatedRoute, private router: Router, private consolidadoRolPagoService: ConsolidadoRolPagoService,
     private seguridadService: SeguridadService, private fb: FormBuilder, private viewContainerRef: ViewContainerRef, private dialogService: DialogService) {
     this.consolidadoRolPago = new ConsolidadoRolPago();
@@ -28,6 +29,7 @@ export class ConsolidadoRolPagoDetailComponent implements OnInit {
       fechaHasta: new FormControl(moment, Validators.required),
       observacion: ["", Validators.required],
       estado: ["",],
+      validado: ["",],
     })
   }
 
@@ -37,6 +39,7 @@ export class ConsolidadoRolPagoDetailComponent implements OnInit {
       this.route.data
         .subscribe(res => {
           this.consolidadoRolPago = res.data.json().data;
+          this.validado = this.consolidadoRolPago.validado;
         });
     }
   }
@@ -48,7 +51,16 @@ export class ConsolidadoRolPagoDetailComponent implements OnInit {
       this.consolidadoRolPago = res.data;
       this.dialogService.notificacion('', res.message, this.viewContainerRef)
     })
-
+  }
+  public confirmSave() {
+    this.dialogService.confirm('Finalizar Consolidado Rol Pago', '¿Seguro desea finalizar el Consolidado de Rol de Pago?', this.viewContainerRef)
+      .subscribe(res => {
+        if (res == true) {
+          this.save();
+          let link = ['/' + 'consolidado-rolpago'];
+          this.router.navigate(link);
+        }
+      });
   }
   public cancel() {
     let link = ['/' + 'consolidado-rolpago'];

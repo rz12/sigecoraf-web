@@ -10,6 +10,13 @@
           </label>
         </mat-cell>
       </ng-container>
+      <ng-container matColumnDef="mensualiza">
+        <mat-header-cell *matHeaderCellDef> Mensualiza Décimos </mat-header-cell>
+        <mat-cell *matCellDef="let rolPago">
+          <label *ngIf="rolPago.contrato.mensualizar_decimos">Si</label>
+          <label *ngIf="!rolPago.contrato.mensualizar_decimos">No</label>
+        </mat-cell>
+      </ng-container>
       <ng-container matColumnDef="fecha">
         <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
         <mat-cell *matCellDef="let rolPago">
