@@ -26,7 +26,7 @@ export class ContratoDetailComponent implements OnInit {
 
     this.contratoForm = this.fb.group({
       fechaInicio: new FormControl(moment, Validators.required),
-      fechaFin: new FormControl(moment, Validators.required),
+      fechaFin: new FormControl(moment),
       cargo: ["", Validators.required],
       empleado: ["", Validators.required],
       estado: ["",],

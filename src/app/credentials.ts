@@ -34,6 +34,8 @@ export var services = {
     ws_nominas_consolidado_rol_pago: credentials.host + '/api/v1/nominas/consolidado-rolpago',
     ws_nominas_detalle_rol_pago: credentials.host + '/api/v1/nominas/detalle-rolpago',
     ws_nominas_detalle_rol_pago_list_by_rolpago: credentials.host + '/api/v1/nominas/detalle-rolpago/list_by_rolpago',
+    ws_nominas_detalle_rol_pago_get_valor_by_rule: credentials.host + '/api/v1/nominas/detalle-rolpago/get_valor_by_rule',
+    ws_reportes_nominas_rol_pago: credentials.host + '/reportes/v1/nominas_report/rol-pago',
 }
 export var enums = {
     /**

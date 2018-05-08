@@ -25,7 +25,7 @@ import { PaginationService } from '../../../shared/services/pagination.service';
 })
 export class RolPagoListComponent implements OnInit {
   @Input() consolidadoRolPago: ConsolidadoRolPago;
-  displayedColumns = ['contrato', 'fecha', 'total', 'seleccionar'];
+  displayedColumns = ['contrato', 'mensualiza', 'fecha', 'total', 'seleccionar'];
   selection = new SelectionModel();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource();
@@ -88,10 +88,16 @@ export class RolPagoListComponent implements OnInit {
     let token = this.seguridadService.getToken();
     const dialogRef = this.dialog.open(RolPagoDetailDialogComponent, {
       width: '600px',
-      data: { rolPago: this.selection.selected[0] }
+      data: { rolPago: Object.assign({}, this.selection.selected[0]) }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.sharedService.getIndexObject(this.dataSource.data, result);
+        this.dataSource.data.splice(index, 1)
+        this.dataSource.data.push(result)
+        this.dataSource.paginator = this.paginator;
+      }
     })
   }
   isAllSelected() {

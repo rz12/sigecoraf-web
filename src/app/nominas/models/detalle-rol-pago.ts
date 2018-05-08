@@ -7,4 +7,5 @@ export class DetalleRolPago {
     public estructura_detalle_rolpago: EstructuraDetalleRolPago;
     public rol_pago: RolPago;
     public valor: Number;
+    public cantidad: Number;
 }

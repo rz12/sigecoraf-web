@@ -49,6 +49,7 @@ import { ContratoDetailResolveService } from './resolvers/contrato-detail-resolv
 import { ConsolidadoRolPagoListResolveService } from './resolvers/consolidado-rol-pago-list-resolve.service';
 import { DetalleRolPagoListComponent } from './components/detalle-rol-pago-list/detalle-rol-pago-list.component';
 import { DetalleRolPagoService } from './services/detalle-rol-pago.service';
+import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
   imports: [
@@ -73,6 +74,7 @@ import { DetalleRolPagoService } from './services/detalle-rol-pago.service';
     MatTabsModule,
     FlexLayoutModule,
     MatAutocompleteModule,
+    CdkTableModule,
   ],
 
   declarations: [EmpleadosComponent, EmpleadoDetailComponent, CargosComponent, CargoDetailComponent, SelectEmpresaComponent,

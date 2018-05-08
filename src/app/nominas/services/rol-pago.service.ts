@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { services } from "../../credentials";
 import { SharedService } from '../../shared/services/shared.service';
 import { catchError, map } from 'rxjs/operators';
-import { Http, Headers, RequestOptions } from "@angular/http";
+import { Http, Headers, RequestOptions, ResponseContentType } from "@angular/http";
 
 @Injectable()
 export class RolPagoService extends SharedService {
@@ -33,5 +33,23 @@ export class RolPagoService extends SharedService {
     return this.http.post(services.ws_nominas_rolPagos.concat("/0/").concat("create_by_consolidado_rolpago"), {},
       this.options(token, null, null, null, null, opciones)).map(res => res.json())
   }
+  updateWithDetalles(data, token) {
+    let body = JSON.stringify(data);
+    let options = this.options(token, null, null, null, "");
+    return this.http.put(services.ws_nominas_rolPagos.concat("/" + data.id).concat("/update_with_detalles"), body,
+      this.options(token, null, null, null, null)).map(res => res.json())
+  }
+  generarReporte(data, token) {
+    let body = JSON.stringify(data);
+    let options = new RequestOptions();
+    options.responseType = ResponseContentType.Blob;
+    this.http.post(services.ws_reportes_nominas_rol_pago, data, options).subscribe(res => {
+      let blob = new Blob([(res['_body'])],
+        { type: res.headers.get("Content-Type") }
+      );
+      let urlCreator = window.URL;
+      window.open(urlCreator.createObjectURL(blob))
+    });
 
+  }
 }
