@@ -56,7 +56,7 @@ export class DireccionesComponent implements OnInit {
     let token = this.seguridadService.getToken();
     const dialogRef = this.dialog.open(DireccionDetailDialogComponent, {
       width: '500px',
-      data: { direccion: this.selection.selected[0] }
+      data: this.selection.selected.length > 0 ? { direccion: this.selection.selected[0] } : { direccion: {} }
     });
 
     dialogRef.afterClosed().subscribe(result => {
